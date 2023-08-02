@@ -1,0 +1,74 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: auto;
+  width: 70%;
+  border: 3px solid green;
+  
+  text-align: left;
+}
+
+
+
+.task {
+  margin-bottom: 10px;
+}
+
+.question {
+  margin-bottom: 10px;
+}
+
+.question input[type="radio"] {
+  display: inline;
+  margin-right: 10px;
+}
+.page {
+  display: none;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+img {
+  width: 40%;
+  height: auto;
+}
+
+/* Styling for the layout of the profile sections */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns of equal width */
+  grid-template-rows: auto auto; /* Two rows of auto height */
+  grid-gap: 10px;
+}
+
+.section1 {
+  border: 1px solid black;
+  padding: 10px;
+  grid-column: 1; /* Section 1 in the first column */
+  grid-row: 1; /* Section 1 in the first row */
+}
+
+.section2 {
+  border: 1px solid black;
+  padding: 10px;
+  grid-column: 1; /* Section 2 in the first column */
+  grid-row: 2; /* Section 2 in the second row */
+}
+
+.section3 {
+  border: 1px solid black;
+  padding: 10px;
+  grid-column: 2; /* Section 3 in the second column */
+  grid-row: 1 / span 2; /* Section 3 in the first row, spanning two rows */
+}
+
+
+
+
+
+
+
+
+
