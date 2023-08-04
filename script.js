@@ -1,4 +1,4 @@
-const apiEndpoint = 'https://34.207.92.213:8000/';
+const apiEndpoint = 'https://0kt2i8vv6d.execute-api.us-east-1.amazonaws.com/pullTaskTest';
 // Send a POST request to the Flask backend
 function midpointPush(id, condition) {
   fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
