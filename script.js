@@ -396,11 +396,11 @@ function checkAnswers() {
     }
     // Change the correct answer for question 2 in the condition above if needed
 
-    if (answer3.value === "option2" || [0,1,4].includes(condition)) {
+    if (answer3.value === "option1" || [0,1,4].includes(condition)) {
       correctAnswers++;
     }
 
-    if (answer4.value === "option1" || [0,1,4].includes(condition) ) {
+    if (answer4.value === "option2" || [0,1,4].includes(condition) ) {
       correctAnswers++;
     }
 
