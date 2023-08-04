@@ -1,6 +1,7 @@
+const apiEndpoint = 'http://34.207.92.213:8000/';
 // Send a POST request to the Flask backend
 function midpointPush(id, condition) {
-  fetch(`http://127.0.0.1:8000/midpoint_push/${id}/${condition}`, {
+  fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -20,7 +21,7 @@ function midpointPush(id, condition) {
 }
 
 function postSurveyPush(id, condition) {
-  fetch(`http://127.0.0.1:8000/post_survey_push/${id}/${condition}`, {
+  fetch(apiEndpoint + `post_survey_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -40,7 +41,7 @@ function postSurveyPush(id, condition) {
 }
 
 function endPush(id, condition) {
-  fetch(`http://127.0.0.1:8000/end_task_push/${id}/${condition}`, {
+  fetch(apiEndpoint + `end_task_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -62,7 +63,7 @@ function endPush(id, condition) {
 function midpointPullImage(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
 
-  const url = `http://127.0.0.1:8000/pull_improvement_plan_image/${id}/${condition}`;
+  const url = apiEndpoint + `pull_improvement_plan_image/${id}/${condition}`;
 
   fetch(url, { method: 'GET' })
     .then(response => response.blob())
@@ -89,7 +90,7 @@ function midpointPullImage(id, condition) {
 function midpointPullText(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
 
-  const url = `http://127.0.0.1:8000/pull_improvement_plan_text/${id}/${condition}`;
+  const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
 
   fetch(url, { method: 'GET' })
     .then(response => response.text()) // Change 'blob' to 'text'
@@ -110,7 +111,7 @@ function midpointPullText(id, condition) {
 
 function pullTasks(id, condition) {
   
-  const url = `http://127.0.0.1:8000/pull_tasks/${id}/${condition}`;
+  const url = apiEndpoint + `pull_tasks/${id}/${condition}`;
   //fetch json file from s3 bucket
   fetch(url, { method: 'GET' })
     .then(response => response.json())
@@ -126,7 +127,7 @@ function pullTasks(id, condition) {
 
 function pullResp(id, condition) {
   
-  const url = `http://127.0.0.1:8000/pull_resp/${id}/${condition}`;
+  const url = apiEndpoint + `pull_resp/${id}/${condition}`;
   //fetch json file from s3 bucket
   fetch(url, { method: 'GET' })
     .then(response => response.json())
