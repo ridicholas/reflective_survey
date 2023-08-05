@@ -1,4 +1,4 @@
-const apiEndpoint = 'https://34.207.92.213:443/';
+const apiEndpoint = 'https://refl-backend.isnicholas.com/';
 // Send a POST request to the Flask backend
 function midpointPush(id, condition) {
   fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
@@ -19,6 +19,7 @@ function midpointPush(id, condition) {
     console.log('Error:', error);
 });
 }
+
 
 function postSurveyPush(id, condition) {
   fetch(apiEndpoint + `post_survey_push/${id}/${condition}`, {
@@ -124,6 +125,22 @@ function pullTasks(id, condition) {
     }
     );
 }
+
+function hello(ap) {
+  const url = ap + `hello_world`;
+   fetch(url, { method: 'GET' })
+    .then(response => response.text())
+    .then(text => {
+      texty = text;
+    }
+    )
+    .catch(error => {
+      console.error('Error:', error);
+    }
+    );
+  
+}
+
 
 function pullResp(id, condition) {
   
