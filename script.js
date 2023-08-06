@@ -206,6 +206,7 @@ var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
 var condition = getRandomInt(7);
+var atPostSurvey = false;
 
 function saveProgress(currentPage) {
   const progressData = {
@@ -488,7 +489,7 @@ function showTrainingTaskInstructions() {
 }
 
 function showPostSurvey() {
-  const atPostSurvey = true;
+  atPostSurvey = true;
   endPush(unique_id, condition);
   document.getElementById("finishEvalPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "block";
