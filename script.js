@@ -306,7 +306,7 @@ function showQuestionPage() {
   document.getElementById("questionPage").style.display = "block";
   if ([2,3,5,6].includes(condition)) {
     document.getElementById("questionPage").innerHTML += `<div class="question">
-  <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passengers was ultimately satisfied or dissatisfied with their flight?</p>
+  <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight?</p>
   <input type="radio" name="q3" value="option1"> True
   <input type="radio" name="q3" value="option2"> False
 </div>
@@ -366,9 +366,9 @@ function showImprovementPlanResult() {
 }
 const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, airport experience, booking experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
   <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? What kind of passenger would have low expectations? What kind of passenger would have high expectations? Does the purpose of their trip matter? Does the type of ticket they purchased matter?  </p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? What aspects of the satisfaction survey might correspond to the passengers satisfaction during the flight? </p>
-  <p><b>Airport Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with their experience at the airport? What aspects of the satisfaction survey might correspond to the passengers satisfaction while they are at the airport? </p>
-  <p><b>Booking Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with the process of booking their flight? What aspects of the satisfaction survey might correspond to the passengers satisfaction while they are booking? </p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? What aspects of the satisfaction survey might correspond to the passenger's satisfaction during the flight? </p>
+  <p><b>Airport Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with their experience at the airport? What aspects of the satisfaction survey might correspond to the passenger's satisfaction while they are at the airport? </p>
+  <p><b>Booking Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with the process of booking their flight? What aspects of the satisfaction survey might correspond to the passenger's satisfaction while they are booking? </p>
   <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed?</p>
   <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. </p>`
 
@@ -469,8 +469,14 @@ function showTrainingTaskInstructions() {
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
     if ([2,3,5,6].includes(condition)) {
-      document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += concept_introduction; }
-    document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button> 
+      if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(concept_introduction) == -1) {
+        document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += concept_introduction;
+      }
+       }
+       if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConsentPage()">Back</button> }
+       <button onclick="showQuestionPage()">Continue</button>`) == -1) {
+
+    document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button> }
   <button onclick="showQuestionPage()">Continue</button>`;
       
     
@@ -479,9 +485,11 @@ function showTrainingTaskInstructions() {
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
     if ([2,3,5,6].includes(condition)) {
-      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += concept_introduction;}
+      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(concept_introduction) == -1) {
+      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += concept_introduction;} }
+      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`Click start below whenever you are ready to start making predictions!`) == -1) {
     document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>
-      <button onclick="startTrainingTasks()">Start!</button>`
+      <button onclick="startTrainingTasks()">Start!</button>`}
     
     saveProgress("trainingTaskInstructionsPagePassed");
   }
@@ -548,7 +556,7 @@ function showPostSurvey() {
     <textarea name="difference" rows="4" cols="50"></textarea></p>`
 
   if ([2,3,5,6].includes(condition)) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of Flight Expectations, Booking Experience, Airport Experience, Flight Experience, and Delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
+    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of Flight Expectations, Booking Experience, Airport Experience, In-Flight Experience, and Delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
     <textarea name="conceptsIntuitive" rows="4" cols="50"></textarea>`
 
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you find thinking about the problem in terms of concepts helpful? Why or why not?</p>
