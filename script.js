@@ -473,10 +473,9 @@ function showTrainingTaskInstructions() {
         document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += concept_introduction;
       }
        }
-       if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConsentPage()">Back</button> }
-       <button onclick="showQuestionPage()">Continue</button>`) == -1) {
+       if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConsentPage()">Back</button>`) == -1) {
 
-    document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button> }
+    document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button>
   <button onclick="showQuestionPage()">Continue</button>`; }
       
     
