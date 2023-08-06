@@ -219,7 +219,8 @@ function saveProgress(currentPage) {
     taskNum: taskNum,
     participantPassedQuiz: participantPassedQuiz,
     taskDataJSON: taskDataJSON,
-    respDataJSON: respDataJSON
+    respDataJSON: respDataJSON,
+    atPostSurvey: atPostSurvey,
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
@@ -240,6 +241,7 @@ function loadProgress() {
     participantPassedQuiz = progressData.participantPassedQuiz;
     taskDataJSON = progressData.taskDataJSON;
     respDataJSON = progressData.respDataJSON;
+    atPostSurvey = progressData.atPostSurvey;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -340,8 +342,8 @@ function showImprovementPlanTutorial() {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
     <p> On the next page you will see a horizontal bar plot that shows you how you used either the factors or concepts to come to your final decisions. For each factor/concept, a high value (blue bar extending to the right from 0) means that you generally assumed that factor/concept has a positive relationship with the passenger's overall satisfaction, 
     while a low value (red bar extending to the left from 0) means that you generally assumed that factor/concept has a negative relationship with the passenger's overall satisfaction. </p>
-    <p>Note that if we found a positive relationship between a factor/concept and the passenger's satisfaction, that means that the higher the value for the factor/concept, the more likely you were to select the satisfied rating. 
-    If we found a negative relationship between the factor/concept and the passenger's satisfaction, that means that the higher the value for the factor/concept, the more likely you were to predict that the passenger was dissatisfied.</p>
+    <p>Note that a positive relationship between a factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to select that the passenger was overall satisfied. 
+    A negative relationship between the factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
     <p> In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust the relationship you use for each factor/concept based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>
     <button onclick="showImprovementPlanResult()">Next</button>`
   }
@@ -352,6 +354,13 @@ function showImprovementPlanResult() {
   midpointPullText(unique_id, condition);
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
+  if (atPostSurvey) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>`
+  }
+  else {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>`
+  }
+  
   saveProgress("improvementPlanResultPage");
 }
 const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, airport experience, booking experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
@@ -479,6 +488,7 @@ function showTrainingTaskInstructions() {
 }
 
 function showPostSurvey() {
+  const atPostSurvey = true;
   endPush(unique_id, condition);
   document.getElementById("finishEvalPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "block";
@@ -486,7 +496,7 @@ function showPostSurvey() {
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   endBonus = endCorrects * .02
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects}/25 questions correctly, earning you a bonus of $${endBonus}.</p>
+  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${(corrs + endCorrects * 0.02)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
@@ -519,31 +529,52 @@ function showPostSurvey() {
     <input type="radio" name="race" value="Other"> Other
     <input type="radio" name="race" value="I don't wish to answer"> I don't wish to answer
 
-    <p>How many times have you flown on a commercial airline in the last 24 months?</p>
-    <input type="radio" name="flights" value="0"> 0
-    <input type="radio" name="flights" value="1-5"> 1-5
-    <input type="radio" name="flights" value="6-10"> 6-10
-    <input type="radio" name="flights" value="11-20"> 11-20
-    <input type="radio" name="flights" value="More than 20"> More than 20
+    <p>How would you rate your familiarity with staistical concepts such as regression and correlation?</p>
+    <input type="radio" name="stats" value="Very Unfamiliar"> Very Unfamiliar
+    <input type="radio" name="stats" value="Somewhat Familiar"> Somewhat Familiar
+    <input type="radio" name="stats" value="Familiar"> Familiar
+    <input type="radio" name="stats" value="Very Familiar"> Very Familiar
+    <input type="radio" name="stats" value="I don't wish to answer"> I don't wish to answer
+
+    <p>How frequently do you fly on commercial airline flights?</p>
+    <input type="radio" name="flights" value="Never"> Never
+    <input type="radio" name="flights" value="Once a year"> Once a year
+    <input type="radio" name="flights" value="2-10 times a year"> 2-10 times a year
+    <input type="radio" name="flights" value="More than 10 times a year"> More than 10 times a year
     <input type="radio" name="flights" value="I don't wish to answer"> I don't wish to answer
     
-    <p>If there was a difference in your decisions between the first 25 and last 25 tasks, what do you feel led to that difference?</p>
+    <p>If there was a difference in your decision accuracy between the first 25 and last 25 tasks, what do you feel led to that difference?</p>
     <textarea name="difference" rows="4" cols="50"></textarea></p>`
 
   if ([2,3,5,6].includes(condition)) {
+    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of Flight Expectations, Booking Experience, Airport Experience, Flight Experience, and Delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
+    <textarea name="conceptsIntuitive" rows="4" cols="50"></textarea>`
+
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you find thinking about the problem in terms of concepts helpful? Why or why not?</p>
-    <textarea name="thinking" rows="4" cols="50"></textarea>`
+    <textarea name="conceptsHelpful" rows="4" cols="50"></textarea>`
 
   }
 
   if (condition != 0) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>Did you find the improvement plan easy to interpret?</p>
-    <textarea name="interpretation" rows="2" cols="50"></textarea>
+    document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the improvement plan you received after you completed the first part of the experiment. To view that plan again, click the button below.</p>
+    <button onclick="showImprovementPlanResult()">Show Improvement Plan</button>`
 
-    <p>Did you try using the improvement plan to improve your decisions? If so, how?</p>
+
+    document.getElementById("postSurveyPage").innerHTML += `<p>How did you interpret the improvement plan?</p>
+    <textarea name="interpretation" rows="4" cols="50"></textarea>
+
+    <p>To what extent do you feel the bar chart of the improvement plan (without guidance of the arrows) captures important aspects of your decision making behavior over the first 25 tasks?</p>
+    <textarea name="captures" rows="4" cols="50"></textarea>
+
+    
+
+    <p>Did you try using the improvement plan to improve your decisions? If so, how? If not, why?</p>
     <textarea name="improvement" rows="4" cols="50"></textarea>`
-
   }
+
+  document.getElementById("postSurveyPage").innerHTML += `<p>How would you describe your experience with this survey in general?</p>
+    <textarea name="general" rows="4" cols="50"></textarea>`
+
 
   document.getElementById("postSurveyPage").innerHTML += `<p>Thanks for participating! Please click the button below to submit your responses and receive your bonus.</p>
   <button onclick="finishSurvey()">Submit</button>`
@@ -845,10 +876,10 @@ function showPreviousTask(taskType) {
   } else {
     document.getElementById("taskPages").style.display = "none";
     if (taskType == 'training') {
-      document.getElementById("trainingTaskInstructionsPage").style.display = "block";
+      showTrainingTaskInstructions();
     }
     else {
-      document.getElementById("evalTaskInstructionsPage").style.display = "block";
+      showEvalTaskInstructions();
     }
     
   }
@@ -905,16 +936,20 @@ function finishSurvey() {
       postSurveyResponses.age = getRadioValue('age');
       postSurveyResponses.education = getRadioValue('education');
       postSurveyResponses.gender = getRadioValue('gender');
+      postSurveyResponses.stats= getRadioValue('stats');
       postSurveyResponses.race = getRadioValue('race');
       postSurveyResponses.flights = getRadioValue('flights');
       postSurveyResponses.difference = getTextareaValue('difference');
+      postSurveyResponses.general = getTextareaValue('general');
       if (condition != 0) {
         postSurveyResponses.interpretation = getTextareaValue('interpretation');
+        postSurveyResponses.captures = getTextareaValue('captures');
         postSurveyResponses.improvement = getTextareaValue('improvement');
       }
       
       if ([2,3,5,6].includes(condition)) {
-        postSurveyResponses.thinking = getTextareaValue('thinking');}
+        postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
+        postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
 
       // You can now use the postSurveyResponses object to send the data to the server or process it as needed
       console.log(postSurveyResponses);
