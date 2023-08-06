@@ -477,7 +477,7 @@ function showTrainingTaskInstructions() {
        <button onclick="showQuestionPage()">Continue</button>`) == -1) {
 
     document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button> }
-  <button onclick="showQuestionPage()">Continue</button>`;
+  <button onclick="showQuestionPage()">Continue</button>`; }
       
     
     saveProgress("trainingTaskInstructionsPageFirst");
@@ -487,6 +487,7 @@ function showTrainingTaskInstructions() {
     if ([2,3,5,6].includes(condition)) {
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(concept_introduction) == -1) {
       document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += concept_introduction;} }
+
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`Click start below whenever you are ready to start making predictions!`) == -1) {
     document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>
       <button onclick="startTrainingTasks()">Start!</button>`}
