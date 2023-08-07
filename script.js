@@ -356,6 +356,7 @@ function showImprovementPlanResult() {
   midpointPullImage(unique_id, condition);
   midpointPullText(unique_id, condition);
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
+  document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
   if (atPostSurvey) {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
@@ -506,9 +507,11 @@ function showPostSurvey() {
   atPostSurvey = true;
   endPush(unique_id, condition);
   document.getElementById("finishEvalPage").style.display = "none";
+  document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "block";
   saveProgress("postSurveyPage");
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
+  corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
   endBonus = endCorrects * .02
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
