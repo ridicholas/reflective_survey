@@ -389,6 +389,7 @@ const concept_introduction = `<p>Additionally, consider how the factors availabl
 
   function showEvalTaskInstructions() {
   document.getElementById("improvementPlanResultPage").style.display = "none";
+  document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("evalTaskInstructionsPage").style.display = "block";
   document.getElementById("taskPages").style.display = "none";
   if ([2,3,5,6].includes(condition)) {
