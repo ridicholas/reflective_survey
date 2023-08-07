@@ -164,7 +164,7 @@ function compareQ6ResponsesWithAnswers(startingTaskNum, endingTaskNum, trainingT
   let corrects = 0;
   for (let i = startingTaskNum; i <= endingTaskNum; i++) {
     
-    console.log(i)
+    
     // Get the user's response and correct answer for "q6" for taskNum
     const userResponsetemp = trainingTaskResponses[i]['q6'];
     if (userResponsetemp == 'satisfied') {
@@ -305,6 +305,7 @@ function showQuestionPage() {
   document.getElementById("trainingTaskInstructionsPageFirst").style.display = "none";
   document.getElementById("questionPage").style.display = "block";
   if ([2,3,5,6].includes(condition)) {
+    if (document.getElementById("questionPage").innerHTML.indexOf("Question 3") == -1) {
     document.getElementById("questionPage").innerHTML += `<div class="question">
   <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight?</p>
   <input type="radio" name="q3" value="option1"> True
@@ -315,11 +316,11 @@ function showQuestionPage() {
   <input type="radio" name="q4" value="option1"> True
   <input type="radio" name="q4" value="option2"> False
 </div>`
-  }
-
+  } }
+  if (document.getElementById("questionPage").innerHTML.indexOf("showTrainingTaskInstructions()") == -1) {
   document.getElementById("questionPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
   <button onclick="checkAnswers()">Submit</button>
-  <p id="tryAgainMessage" style="color: red; display: none;">Sorry, your answers are not correct. Please try again.</p>`
+  <p id="tryAgainMessage" style="color: red; display: none;">Sorry, your answers are not correct. Please try again.</p>` }
 
 
   saveProgress("questionPage");
@@ -333,6 +334,7 @@ function showImprovementPlanTutorial() {
   document.getElementById("finishTrainingPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "block";
   saveProgress("improvementPlanTutorialPage");
+  if (document.getElementById("improvementPlanTutorialPage").innerHTML.indexOf("Thank you for completing the first 25 tasks!") == -1) {
   document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the first 25 tasks!</p>
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus}$. </p>`;
   if (condition == 0) {
@@ -347,7 +349,7 @@ function showImprovementPlanTutorial() {
     A negative relationship between the factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
     <p> In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust the relationship you use for each factor/concept based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>
     <button onclick="showImprovementPlanResult()">Next</button>`
-  }
+  } }
 }
 
 function showImprovementPlanResult() {
@@ -356,10 +358,12 @@ function showImprovementPlanResult() {
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
   if (atPostSurvey) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>`
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>` }
   }
   else {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>`
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }
   }
   
   saveProgress("improvementPlanResultPage");
@@ -377,10 +381,12 @@ const concept_introduction = `<p>Additionally, consider how the factors availabl
   document.getElementById("evalTaskInstructionsPage").style.display = "block";
   document.getElementById("taskPages").style.display = "none";
   if ([2,3,5,6].includes(condition)) {
+    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(concept_introduction) == -1) {
     document.getElementById("evalTaskInstructionsPage").innerHTML += concept_introduction + `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`
-    
+    }
   }
-  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start</button>`;
+  if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Start</button>`) == -1) {
+  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start</button>`; }
   saveProgress("evalTaskInstructionsPage");
 }
 
@@ -504,8 +510,9 @@ function showPostSurvey() {
   saveProgress("postSurveyPage");
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   endBonus = endCorrects * .02
+  if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${(corrs + endCorrects * 0.02)}. </p> 
+  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.02)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
@@ -553,7 +560,7 @@ function showPostSurvey() {
     <input type="radio" name="flights" value="I don't wish to answer"> I don't wish to answer
     
     <p>If there was a difference in your decision accuracy between the first 25 and last 25 tasks, what do you feel led to that difference?</p>
-    <textarea name="difference" rows="4" cols="50"></textarea></p>`
+    <textarea name="difference" rows="4" cols="50"></textarea></p>` 
 
   if ([2,3,5,6].includes(condition)) {
     document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of Flight Expectations, Booking Experience, Airport Experience, In-Flight Experience, and Delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
@@ -586,7 +593,7 @@ function showPostSurvey() {
 
 
   document.getElementById("postSurveyPage").innerHTML += `<p>Thanks for participating! Please click the button below to submit your responses and receive your bonus.</p>
-  <button onclick="finishSurvey()">Submit</button>`
+  <button onclick="finishSurvey()">Submit</button>` }
 }
 
 // Show the next page and hide the result page
@@ -820,8 +827,12 @@ function showTask(currentTask) {
   if (trainingTaskResponses[currentTask]) {
     populateTaskForm(trainingTaskResponses[currentTask]);
   }
+  else {
+    populateTaskForm(evalTaskResponses[currentTask]);
+  }
   saveProgress('taskPages');
 } 
+
 function getClass(taskData) {
   if (taskData.eco_plus) {
     return 'Economy Plus';
