@@ -61,6 +61,9 @@ function endPush(id, condition) {
 });
 }
 
+var image_not_appended = true;
+var text_not_appended = true;
+
 function midpointPullImage(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
 
@@ -80,8 +83,12 @@ function midpointPullImage(id, condition) {
 
       const pElement = document.createElement('p');
       pElement.appendChild(imageElement);
-
-      improvementPlanResultPage.appendChild(pElement);
+      
+      if (image_not_appended) {
+        improvementPlanResultPage.appendChild(pElement);
+        image_not_appended = false;
+      }
+      
     })
     .catch(error => {
       console.error('Error:', error);
@@ -102,7 +109,10 @@ function midpointPullText(id, condition) {
       textElement.style.width = '80%'; // Adjust the width as needed
       textElement.style.margin = '0 auto';
 
-      improvementPlanResultPage.appendChild(textElement);
+      if (text_not_appended) {
+
+      improvementPlanResultPage.appendChild(textElement); 
+      text_not_appended = false;}
     })
     .catch(error => {
       console.error('Error:', error);
