@@ -41,6 +41,26 @@ function postSurveyPush(id, condition) {
 });
 }
 
+function timesPush(id, condition) {
+  fetch(apiEndpoint + `times_push/${id}/${condition}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(times)
+})
+.then(function(response) {
+    if (response.ok) {
+        console.log('Data uploaded successfully');
+    } else {
+        console.log('Failed to upload data');
+    }
+})
+.catch(function(error) {
+    console.log('Error:', error);
+});
+}
+
 function endPush(id, condition) {
   fetch(apiEndpoint + `end_task_push/${id}/${condition}`, {
     method: 'POST',
@@ -204,6 +224,11 @@ var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
 var current_element = "titlePage";
+var evalStarted = false
+var times = {};
+const trainingTaskStartTime = Date.now();
+const evalTaskStartTime = Date.now();
+const experimentStartTime = Date.now();
 
 
 function getRandomInt(max) {
@@ -215,7 +240,7 @@ var participantPassedQuiz = false;
 var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
-var condition = getRandomInt(7);
+var condition = getRandomInt(4);
 var atPostSurvey = false;
 
 function saveProgress(currentPage) {
@@ -232,6 +257,13 @@ function saveProgress(currentPage) {
     taskDataJSON: taskDataJSON,
     respDataJSON: respDataJSON,
     atPostSurvey: atPostSurvey,
+    evalStarted: evalStarted,
+    times: times,
+    experimentStartTime: experimentStartTime,
+    trainingTaskStartTime: trainingTaskStartTime,
+    evalTaskStartTime: evalTaskStartTime
+
+
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
@@ -253,6 +285,11 @@ function loadProgress() {
     taskDataJSON = progressData.taskDataJSON;
     respDataJSON = progressData.respDataJSON;
     atPostSurvey = progressData.atPostSurvey;
+    evalStarted = progressData.evalStarted;
+    times = progressData.times;
+    experimentStartTime = progressData.experimentStartTime;
+    trainingTaskStartTime = progressData.trainingTaskStartTime;
+    evalTaskStartTime = progressData.evalTaskStartTime;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -304,6 +341,11 @@ document.addEventListener("DOMContentLoaded", loadProgress);
 
 
 
+
+
+
+
+
 // Show the instruction page initially
 document.getElementById("titlePage").style.display = "block";
 document.getElementById("unique").innerHTML = `Your ID: ${unique_id} , Your Condition: ${condition}`
@@ -317,12 +359,12 @@ function showQuestionPage() {
   if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("questionPage").innerHTML.indexOf("Question 3") == -1) {
     document.getElementById("questionPage").innerHTML += `<div class="question">
-  <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight?</p>
+  <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.</p>
   <input type="radio" name="q3" value="option1"> True
   <input type="radio" name="q3" value="option2"> False
 </div>
 <div class="question">
-  <p>Question 4: The concept ratings you provide will be compared to ground truth ("correct") concept values?</p>
+  <p>Question 4: The concept ratings you provide will be compared to ground truth ("correct") concept values.</p>
   <input type="radio" name="q4" value="option1"> True
   <input type="radio" name="q4" value="option2"> False
 </div>`
@@ -338,9 +380,10 @@ function showQuestionPage() {
 
 // Show the improvementPlan page and hide the finishTrainingPage
 function showImprovementPlanTutorial() {
+  times['trainingTasks'] = Date.now() - trainingTaskStartTime;
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
-  bonus = corrs * 0.02;
+  bonus = corrs * 0.04;
   document.getElementById("finishTrainingPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "block";
   saveProgress("improvementPlanTutorialPage");
@@ -349,7 +392,7 @@ function showImprovementPlanTutorial() {
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus}$. </p>`;
   if (condition == 0) {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
-    You will again be given a bonus of $0.02 for each question you answer correctly. </p>
+    You will again be given a bonus of $0.04 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
@@ -373,18 +416,23 @@ function showImprovementPlanResult() {
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>` }
   }
   else {
+    if (evalStarted) {
+      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return</button>` }
+    }
+    else {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
   }
   
   saveProgress("improvementPlanResultPage");
 }
 const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, airport experience, booking experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
-  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? What kind of passenger would have low expectations? What kind of passenger would have high expectations? Does the purpose of their trip matter? Does the type of ticket they purchased matter?  </p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? What aspects of the satisfaction survey might correspond to the passenger's satisfaction during the flight? </p>
-  <p><b>Airport Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with their experience at the airport? What aspects of the satisfaction survey might correspond to the passenger's satisfaction while they are at the airport? </p>
-  <p><b>Booking Experience (1 (Satisfied) -5 (Unsatisfied))</b> - Was the passenger satisfied with the process of booking their flight? What aspects of the satisfaction survey might correspond to the passenger's satisfaction while they are booking? </p>
-  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed?</p>
+  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? Things you might consider: What kind of passenger would have low expectations? What kind of passenger would have high expectations?  </p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction during the flight? </p>
+  <p><b>Airport Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience at the airport? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction while they are at the airport? </p>
+  <p><b>Booking Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with the process of booking their flight? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction while they are booking? </p>
+  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? Things you might consider: If there was a delay, do you think the passenger would find it significant?</p>
   <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. </p>`
 
   function showEvalTaskInstructions() {
@@ -397,8 +445,8 @@ const concept_introduction = `<p>Additionally, consider how the factors availabl
     document.getElementById("evalTaskInstructionsPage").innerHTML += concept_introduction + `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`
     }
   }
-  if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Start</button>`) == -1) {
-  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start</button>`; }
+  if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
+  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; }
   saveProgress("evalTaskInstructionsPage");
 }
 
@@ -507,7 +555,7 @@ function showTrainingTaskInstructions() {
 
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`Click start below whenever you are ready to start making predictions!`) == -1) {
     document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>
-      <button onclick="startTrainingTasks()">Start!</button>`}
+      <button onclick="startTrainingTasks()">Continue!</button>`}
     
     saveProgress("trainingTaskInstructionsPagePassed");
   }
@@ -526,7 +574,7 @@ function showPostSurvey() {
   endBonus = endCorrects * .02
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.02)}. </p> 
+  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
@@ -549,27 +597,30 @@ function showPostSurvey() {
     <input type="radio" name="gender" value="Male"> Male
     <input type="radio" name="gender" value="Female"> Female
     <input type="radio" name="gender" value="Non-Binary"> Non-Binary
+    <input type="radio" name="gender" value="Not Listed"> Not Listed <input type="text" name="Not Listed" />
     <input type="radio" name="gender" value="I don't wish to answer"> I don't wish to answer
 
-    <p>What is your race/ethnicity?</p>
-    <input type="radio" name="race" value="White"> White
-    <input type="radio" name="race" value="Black or African American"> Black or African American
+    <p>What is your race?</p>
+    <input type="radio" name="race" value="American Indian or Alaska Native"> American Indian or Alaska Native
     <input type="radio" name="race" value="Asian"> Asian
-    <input type="radio" name="race" value="Hispanic or Latino"> Hispanic or Latino
+    <input type="radio" name="race" value="Black or African American"> Black or African American
+    <input type="radio" name="race" value="Native Hawaiian or Other Pacific Islander"> Native Hawaiian or Other Pacific Islander
+    <input type="radio" name="race" value="White"> White
     <input type="radio" name="race" value="Other"> Other
     <input type="radio" name="race" value="I don't wish to answer"> I don't wish to answer
 
     <p>How would you rate your familiarity with staistical concepts such as regression and correlation?</p>
-    <input type="radio" name="stats" value="Very Unfamiliar"> Very Unfamiliar
-    <input type="radio" name="stats" value="Somewhat Familiar"> Somewhat Familiar
-    <input type="radio" name="stats" value="Familiar"> Familiar
-    <input type="radio" name="stats" value="Very Familiar"> Very Familiar
-    <input type="radio" name="stats" value="I don't wish to answer"> I don't wish to answer
+    <input type="radio" name="stats" value="Very Unfamiliar"> Very Unfamiliar&emsp;&emsp;&emsp;
+    <input type="radio" name="stats" value="Somewhat Familiar"> Somewhat Familiar&emsp;&emsp;&emsp;
+    <input type="radio" name="stats" value="Familiar"> Familiar&emsp;&emsp;&emsp;
+    <input type="radio" name="stats" value="Very Familiar"> Very &emsp;&emsp;&emsp;
+    <input type="radio" name="stats" value="I don't wish to answer"> I don't wish to answer&emsp;&emsp;&emsp;
 
-    <p>How frequently do you fly on commercial airline flights?</p>
+    <p>How frequently do you fly on commercial airline flights? (A round trip would count as two flights)</p>
     <input type="radio" name="flights" value="Never"> Never
     <input type="radio" name="flights" value="Once a year"> Once a year
-    <input type="radio" name="flights" value="2-10 times a year"> 2-10 times a year
+    <input type="radio" name="flights" value="1-5 times a year"> 1-5 times a year
+    <input type="radio" name="flights" value="6-10 times a year"> 6-10 times a year
     <input type="radio" name="flights" value="More than 10 times a year"> More than 10 times a year
     <input type="radio" name="flights" value="I don't wish to answer"> I don't wish to answer
     
@@ -577,7 +628,7 @@ function showPostSurvey() {
     <textarea name="difference" rows="4" cols="50"></textarea></p>` 
 
   if ([2,3,5,6].includes(condition)) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of Flight Expectations, Booking Experience, Airport Experience, In-Flight Experience, and Delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
+    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of the passenger's expectations, booking experience, airport experience, in-flight experience, and delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
     <textarea name="conceptsIntuitive" rows="4" cols="50"></textarea>`
 
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you find thinking about the problem in terms of concepts helpful? Why or why not?</p>
@@ -612,6 +663,8 @@ function showPostSurvey() {
 
 // Show the next page and hide the result page
 function startTrainingTasks() {
+  const trainingTaskStartTime = Date.now();
+  const evalTaskStartTime = Date.now();
   document.getElementById("trainingTaskInstructionsPagePassed").style.display = "none";
   document.getElementById("taskPages").style.display = "block";
   showTask(taskNum);
@@ -627,6 +680,8 @@ function showLastTrainingTask() {
 }
 
 function startEvalTasks() {
+  const evalTaskStartTime = Date.now();
+  evalStarted = true;
   document.getElementById("evalTaskInstructionsPage").style.display = "none";
   document.getElementById("taskPages").style.display = "block";
   if (taskNum == totalTrainingTasks) {
@@ -696,6 +751,7 @@ function showNextTask(taskType) {
         document.getElementById("finishTrainingPage").style.display = "block";
       }
       else {
+        times['evalTasks'] = Date.now() - evalTaskStartTime;
         document.getElementById("finishEvalPage").style.display = "block";
       }
     }
@@ -742,7 +798,7 @@ function showTask(currentTask) {
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
       <h2>Completed Flight Details</h2>
-      <p>Flight Distance: <span id="flightDistance"></span></p>
+      <p>Flight Distance: <span id="flightDistance"></span> km</p>
       <p>Departure Delay (Minutes): <span id="departureDelay"></span></p>
       <p>Arrival Delay (Minutes): <span id="arrivalDelay"></span></p>
     </div>
@@ -768,7 +824,7 @@ function showTask(currentTask) {
 
   if ([2,3,5,6].includes(condition)) {
   task_concept_text = `<div class="question">
-  <p>Does this passenger have high expectations?</p>
+  <p>Did this passenger have high expectations prior to their flight?</p>
   <div class="choices">
   <label><input type="radio" name="q1" value="1"> 1 (Low)&emsp;&emsp;&ensp;&ensp;&ensp;&nbsp;&ensp;&ensp; </label>
   <label><input type="radio" name="q1" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
@@ -778,7 +834,7 @@ function showTask(currentTask) {
   </div>
 </div>
 <div class="question">
-   <p>Was this passenger satisfied with their Booking Experience?</p>
+   <p>Was this passenger satisfied with their booking experience?</p>
    <div class="choices">
    <label><input type="radio" name="q2" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
    <label> <input type="radio" name="q2" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
@@ -788,7 +844,7 @@ function showTask(currentTask) {
   </div>
 </div>
 <div class="question">
-  <p>Was this passenger satisfied with their Airport Experience?</p>
+  <p>Was this passenger satisfied with their airport experience?</p>
   <div class="choices">
   <label><input type="radio" name="q3" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
   <label><input type="radio" name="q3" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
@@ -798,7 +854,7 @@ function showTask(currentTask) {
   </div>
 </div>
 <div class="question">
-  <p>Was this passenger satisfied with their Flight Experience?</p>
+  <p>Was this passenger satisfied with their in-flight experience?</p>
   <div class="choices">
   <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
   <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
@@ -818,9 +874,38 @@ function showTask(currentTask) {
   </div>
 </div>` }
   else { task_concept_text = `` }
+
+  if (currentTask == 4) {
+  attention_check1 = `<div class="question">
+  <p>Select value "2" below.</p>
+  <div class="choices">
+  <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="5"> 5 (Very Satisfied)</label>
+  </div>` }
+  else {attention_check1 = ``}
+
+  if (currentTask == 2) {
+
+  
+  attention_check2 = `<div class="question">
+  <p>Select value "4" below.</p>
+  <div class="choices">
+  <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="q4" value="5"> 5 (Very Satisfied)</label>
+  </div>`}
+  else {
+    attention_check2 = ``}
+  
+
   
   document.getElementById("taskPages").innerHTML = profileInfo + `
-    <div class="task">` + task_concept_text + `
+    <div class="task">` + task_concept_text + attention_check1 + attention_check2 + `
     
     <div class="question">
       <p>Was this passenger overall satisfied with the flight?</p>
@@ -965,6 +1050,7 @@ function storeTaskResponses() {
 
 // Add event listener to the form submission
 function finishSurvey() {
+      times['experimentTime'] = Date.now() - experimentStartTime;
   
       // Get the user's responses for all input fields and store them in postSurveyResponses
       postSurveyResponses.age = getRadioValue('age');
@@ -988,6 +1074,7 @@ function finishSurvey() {
       // You can now use the postSurveyResponses object to send the data to the server or process it as needed
       console.log(postSurveyResponses);
       postSurveyPush(unique_id, condition);
+      timesPush(unique_id, condition);
 
       // Hide the survey and show the thank you page
       document.getElementById('postSurveyPage').style.display = 'none';
