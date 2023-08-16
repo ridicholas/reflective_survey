@@ -838,7 +838,7 @@ function showTask(currentTask) {
 
   
 
-  if ([2,3,5,6].includes(condition)) {
+  if ([2,3].includes(condition)) {
   task_concept_text = `<div class="question">
   <p>Did this passenger have high expectations prior to their flight?</p>
   <div class="choices">
@@ -918,7 +918,12 @@ function showTask(currentTask) {
   else {
     attention_check2 = ``}
   
-
+  if (condition != 0) {
+    improvementPlanButton = `<button onclick="showImprovementPlan()">Show Improvement Plan</button>`
+  }
+  else {
+    improvementPlanButton = ``
+  }
   
   document.getElementById("taskPages").innerHTML = profileInfo + `
     <div class="task">` + task_concept_text + attention_check1 + attention_check2 + `
@@ -931,7 +936,7 @@ function showTask(currentTask) {
       </div>
     </div>
 
-    <button onclick="show${instructionType}TaskInstructions()">Show Instructions</button>
+    <button onclick="show${instructionType}TaskInstructions()">Show Instructions</button>` + improvementPlanButton + `
     <button onclick="showPreviousTask('${taskType}')">Previous Task</button>
       <button onclick="showNextTask('${taskType}')">Next Task</button>
     </div>
