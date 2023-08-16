@@ -1050,6 +1050,8 @@ function checkForAttention() {
   var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
 
   taskQuestions.forEach(function (question) {
+  
+    if (question.checked) {
 
   if (question.name == 'attn1' && question.value != "2") {
     showAttentionFailPage();
@@ -1057,7 +1059,7 @@ function checkForAttention() {
 
   if (question.name == 'attn2' && question.value != "4") {
     showAttentionFailPage();
-  } } );
+  } } });
 }
 
 function showAttentionFailPage() {
