@@ -226,9 +226,9 @@ var postSurveyResponses = {}
 var current_element = "titlePage";
 var evalStarted = false
 var times = {};
-const trainingTaskStartTime = Date.now();
-const evalTaskStartTime = Date.now();
-const experimentStartTime = Date.now();
+var trainingTaskStartTime = Date.now();
+var evalTaskStartTime = Date.now();
+var experimentStartTime = Date.now();
 
 
 function getRandomInt(max) {
