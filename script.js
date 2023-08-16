@@ -576,7 +576,7 @@ function showPostSurvey() {
   saveProgress("postSurveyPage");
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
-  endBonus = endCorrects * .02
+  endBonus = endCorrects * 0.04
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
   In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04)}. </p> 
@@ -618,15 +618,15 @@ function showPostSurvey() {
     <input type="radio" name="stats" value="Very Unfamiliar"> Very Unfamiliar&emsp;&emsp;&emsp;
     <input type="radio" name="stats" value="Somewhat Familiar"> Somewhat Familiar&emsp;&emsp;&emsp;
     <input type="radio" name="stats" value="Familiar"> Familiar&emsp;&emsp;&emsp;
-    <input type="radio" name="stats" value="Very Familiar"> Very &emsp;&emsp;&emsp;
+    <input type="radio" name="stats" value="Very Familiar"> Very Familiar &emsp;&emsp;&emsp;
     <input type="radio" name="stats" value="I don't wish to answer"> I don't wish to answer&emsp;&emsp;&emsp;
 
     <p>How frequently do you fly on commercial airline flights? (A round trip would count as two flights)</p>
-    <input type="radio" name="flights" value="Never"> Never
-    <input type="radio" name="flights" value="Once a year"> Once a year
-    <input type="radio" name="flights" value="1-5 times a year"> 1-5 times a year
-    <input type="radio" name="flights" value="6-10 times a year"> 6-10 times a year
-    <input type="radio" name="flights" value="More than 10 times a year"> More than 10 times a year
+    <input type="radio" name="flights" value="Never"> Never &emsp;&emsp;&emsp;
+    <input type="radio" name="flights" value="Once a year"> Once a year &emsp;&emsp;&emsp;
+    <input type="radio" name="flights" value="1-5 times a year"> 1-5 times a year &emsp;&emsp;&emsp;
+    <input type="radio" name="flights" value="6-10 times a year"> 6-10 times a year &emsp;&emsp;&emsp;
+    <input type="radio" name="flights" value="More than 10 times a year"> More than 10 times a year &emsp;&emsp;&emsp;
     <input type="radio" name="flights" value="I don't wish to answer"> I don't wish to answer
     
     <p>If there was a difference in your decision accuracy between the first 25 and last 25 tasks, what do you feel led to that difference?</p>
@@ -662,7 +662,7 @@ function showPostSurvey() {
     <textarea name="general" rows="4" cols="50"></textarea>`
 
 
-  document.getElementById("postSurveyPage").innerHTML += `<p>Thanks for participating! Please click the button below to submit your responses and receive your bonus.</p>
+  document.getElementById("postSurveyPage").innerHTML += `<p>Thanks for participating! Please click the button below to submit your responses and receive your payment.</p>
   <button onclick="finishSurvey()">Submit</button>` }
 }
 
