@@ -415,6 +415,7 @@ function showImprovementPlanResult() {
   midpointPullText(unique_id, condition);
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
+  document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
   if (atPostSurvey) {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
@@ -688,6 +689,8 @@ function startEvalTasks() {
   const evalTaskStartTime = Date.now();
   evalStarted = true;
   document.getElementById("evalTaskInstructionsPage").style.display = "none";
+  document.getElementById("improvementPlanResultPage").style.display = "none";
+
   document.getElementById("taskPages").style.display = "block";
   if (taskNum == totalTrainingTasks) {
     taskNum = 1 + totalEvalTasks;
