@@ -1039,7 +1039,7 @@ function storeTaskResponses() {
 
   taskQuestions.forEach(function (question) {
     
-    if (question.name != 'attn1' && question.name != 'attn2') {
+    
     if (question.checked) {
       var responseKey = question.name;
       var responseValue = question.value;
@@ -1050,7 +1050,7 @@ function storeTaskResponses() {
       if (!(question.name in taskResponses)) {
         taskResponses[question.name] = "";
       }
-    } }
+    } 
   });
 
   return taskResponses;
