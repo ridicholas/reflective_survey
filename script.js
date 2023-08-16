@@ -919,7 +919,7 @@ function showTask(currentTask) {
     attention_check2 = ``}
   
   if (condition != 0 && taskType == "eval") {
-    improvementPlanButton = `<button onclick="showImprovementPlan()">Show Improvement Plan</button>`
+    improvementPlanButton = `<button onclick="showImprovementPlanResult()">Show Improvement Plan</button>`
   }
   else {
     improvementPlanButton = ``
