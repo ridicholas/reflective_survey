@@ -1,8 +1,8 @@
 const apiEndpoint = 'https://refl-backend.isnicholas.com/';
 // Send a POST request to the Flask backend
 function midpointPush(id, condition) {
-  delete trainingTaskResponses[4]['attn2'];
-  delete trainingTaskResponses[2]['attn1'];
+  delete trainingTaskResponses[4]['attn1'];
+  delete trainingTaskResponses[2]['attn2'];
   fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
@@ -669,7 +669,6 @@ function showPostSurvey() {
 // Show the next page and hide the result page
 function startTrainingTasks() {
   const trainingTaskStartTime = Date.now();
-  const evalTaskStartTime = Date.now();
   document.getElementById("trainingTaskInstructionsPagePassed").style.display = "none";
   document.getElementById("taskPages").style.display = "block";
   showTask(taskNum);
