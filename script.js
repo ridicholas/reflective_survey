@@ -719,9 +719,10 @@ function checkTaskAnswers() {
     var attn2answer = document.querySelector('input[name="attn2"]:checked');}
   
 
-  if ([2,4].includes(taskNum)) {
-    if (attn1answer == null || attn2answer == null) {
-      return false; }}
+  if (taskNum == 4 & attn1answer == null) {
+      return false; }
+  if (taskNum == 2 & attn2answer == null) {
+      return false; }
 
   if ([2,3,5,6].includes(condition)) {
     return ((q1_ans && q2_ans && q3_ans && q4_ans && q5_ans && q6_ans) != null)
