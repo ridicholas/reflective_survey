@@ -725,6 +725,7 @@ function checkTaskAnswers() {
 }
 
 function showNextTask(taskType) {
+  checkForAttention();
   if (taskType == 'training') {
 
     trainingTaskResponses[taskNum] = storeTaskResponses();
@@ -1039,19 +1040,24 @@ function storeTaskResponses() {
         taskResponses[question.name] = "";
       }
     } }
-
-    if (question.name == 'attn1' && question.value != "2") {
-      showAttentionFailPage();
-    } 
-
-    if (question.name == 'attn2' && question.value != "4") {
-      showAttentionFailPage();
-    } 
-
-
   });
 
   return taskResponses;
+}
+
+function checkForAttention() {
+
+  var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
+
+  taskQuestions.forEach(function (question) {
+
+  if (question.name == 'attn1' && question.value != "2") {
+    showAttentionFailPage();
+  } 
+
+  if (question.name == 'attn2' && question.value != "4") {
+    showAttentionFailPage();
+  } } );
 }
 
 function showAttentionFailPage() {
