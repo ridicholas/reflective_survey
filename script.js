@@ -918,7 +918,7 @@ function showTask(currentTask) {
   else {
     attention_check2 = ``}
   
-  if (condition != 0) {
+  if (condition != 0 && taskType == "eval") {
     improvementPlanButton = `<button onclick="showImprovementPlan()">Show Improvement Plan</button>`
   }
   else {
