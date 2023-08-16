@@ -465,6 +465,7 @@ function checkAnswers() {
   var answer1 = document.querySelector('input[name="q1"]:checked');
   var answer2 = document.querySelector('input[name="q2"]:checked');
 
+
   if ([2,3,5,6].includes(condition)) {
   var answer3 = document.querySelector('input[name="q3"]:checked');
   var answer4 = document.querySelector('input[name="q4"]:checked');
@@ -712,7 +713,16 @@ function checkTaskAnswers() {
   var q4_ans = document.querySelector('input[name="q4"]:checked');
   var q5_ans = document.querySelector('input[name="q5"]:checked');
   var q6_ans = document.querySelector('input[name="q6"]:checked');
+  if (currentTask == 2) {
+    var attn1answer = document.querySelector('input[name="attn1"]:checked'); }
+    if (currentTask == 4) {
+    var attn2answer = document.querySelector('input[name="attn2"]:checked');}
   
+
+  if ([2,4].includes(currentTask)) {
+    if (attn1answer == null || attn2answer == null) {
+      return false; }}
+      
   if ([2,3,5,6].includes(condition)) {
     return ((q1_ans && q2_ans && q3_ans && q4_ans && q5_ans && q6_ans) != null)
   } else {
