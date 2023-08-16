@@ -418,7 +418,7 @@ function showImprovementPlanResult() {
   else {
     if (evalStarted) {
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return</button>` }
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return To Survey</button>` }
     }
     else {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
@@ -879,11 +879,11 @@ function showTask(currentTask) {
   attention_check1 = `<div class="question">
   <p>Select value "2" below.</p>
   <div class="choices">
-  <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="5"> 5 (Very Satisfied)</label>
+  <label> <input type="radio" name="attn1" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn1" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn1" value="5"> 5 (Very Satisfied)</label>
   </div>` }
   else {attention_check1 = ``}
 
@@ -893,11 +893,11 @@ function showTask(currentTask) {
   attention_check2 = `<div class="question">
   <p>Select value "4" below.</p>
   <div class="choices">
-  <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="5"> 5 (Very Satisfied)</label>
+  <label> <input type="radio" name="attn2" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn2" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn2" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
+  <label> <input type="radio" name="attn2" value="5"> 5 (Very Satisfied)</label>
   </div>`}
   else {
     attention_check2 = ``}
@@ -1026,6 +1026,8 @@ function storeTaskResponses() {
   var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
 
   taskQuestions.forEach(function (question) {
+    
+    if (question.name != 'attn1' && question.name != 'attn2') {
     if (question.checked) {
       var responseKey = question.name;
       var responseValue = question.value;
@@ -1036,17 +1038,26 @@ function storeTaskResponses() {
       if (!(question.name in taskResponses)) {
         taskResponses[question.name] = "";
       }
-      
-      
+    } }
+
+    if (question.name == 'attn1' && question.value != "2") {
+      showAttentionFailPage();
+    } 
+
+    if (question.name == 'attn2' && question.value != "4") {
+      showAttentionFailPage();
+    } 
 
 
-    }
   });
 
   return taskResponses;
 }
 
-
+function showAttentionFailPage() {
+  document.getElementById("taskPages").style.display = "none";
+  document.getElementById("attentionFailPage").style.display = "block";
+}
 
 // Add event listener to the form submission
 function finishSurvey() {
