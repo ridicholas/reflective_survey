@@ -713,9 +713,9 @@ function checkTaskAnswers() {
   var q4_ans = document.querySelector('input[name="q4"]:checked');
   var q5_ans = document.querySelector('input[name="q5"]:checked');
   var q6_ans = document.querySelector('input[name="q6"]:checked');
-  if (taskNum == 2) {
+  if (taskNum == 4) {
     var attn1answer = document.querySelector('input[name="attn1"]:checked'); }
-    if (taskNum == 4) {
+    if (taskNum == 2) {
     var attn2answer = document.querySelector('input[name="attn2"]:checked');}
   
 
