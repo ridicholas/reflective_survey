@@ -327,6 +327,7 @@ function loadProgress() {
     } else if (current_element == "taskPages") {
       document.getElementById("taskPages").style.display = "block";
       showTask(taskNum);
+      populateDataFromJSON(taskNum);
     } else if (current_element == "tutorialResultPage") {
       document.getElementById("tutorialResultPage").style.display = "block";
     } else if (current_element == "postSurveyPage") {
@@ -938,11 +939,12 @@ function showTask(currentTask) {
   populateDataFromJSON(currentTask);
   
   // Check if there are stored responses for the current task
-  if (trainingTaskResponses[currentTask]) {
+  if (trainingTaskResponses[currentTask] != undefined) {
     populateTaskForm(trainingTaskResponses[currentTask]);
   }
   else {
-    populateTaskForm(evalTaskResponses[currentTask]);
+    if (evalTaskResponses[currentTask] != undefined) {
+    populateTaskForm(evalTaskResponses[currentTask]); }
   }
   saveProgress('taskPages');
 } 
