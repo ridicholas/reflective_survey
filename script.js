@@ -1085,9 +1085,9 @@ function storeTaskResponses() {
 
 function checkForAttention() {
 
-  var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
+  var questions = document.querySelectorAll('.commitQuestion input[type="radio"]');
 
-  taskQuestions.forEach(function (question) {
+  questions.forEach(function (question) {
   
     if (question.checked) {
 
