@@ -1,8 +1,8 @@
 const apiEndpoint = 'https://refl-backend.isnicholas.com/';
 // Send a POST request to the Flask backend
 function midpointPush(id, condition) {
-  delete trainingTaskResponses[4]['attn1'];
-  delete trainingTaskResponses[2]['attn2'];
+  //delete trainingTaskResponses[4]['attn1'];
+  //delete trainingTaskResponses[2]['attn2'];
   fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
@@ -233,6 +233,7 @@ var times = {};
 var trainingTaskStartTime = Date.now();
 var evalTaskStartTime = Date.now();
 var experimentStartTime = Date.now();
+var timesFailedQuiz = 0;
 
 
 function getRandomInt(max) {
@@ -332,6 +333,14 @@ function loadProgress() {
       document.getElementById("tutorialResultPage").style.display = "block";
     } else if (current_element == "postSurveyPage") {
       showPostSurvey();
+    } else if (current_element == "commitPage") {
+      showCommitPage();
+    } else if (current_element == "finishTrainingPage") {
+      document.getElementById("finishTrainingPage").style.display = "block";
+    } else if (current_element == "finishEvalPage") {
+      document.getElementById("finishEvalPage").style.display = "block";
+    } else if (current_element == "finishPage") {
+      document.getElementById("finishPage").style.display = "block";
     }
 
     
@@ -530,7 +539,12 @@ function checkAnswers() {
   }
 }
 
+function showCommitPage() { 
+  document.getElementById("consentPage").style.display = "none";
+  document.getElementById("commitPage").style.display = "block";
+  saveProgress("commitPage");
 
+}
 
 // Show the task instructions page and hide the result page
 function showTrainingTaskInstructions() {
@@ -743,7 +757,7 @@ function checkTaskAnswers() {
 }
 
 function showNextTask(taskType) {
-  checkForAttention();
+  
   if (taskType == 'training') {
 
     trainingTaskResponses[taskNum] = storeTaskResponses();
@@ -1077,17 +1091,17 @@ function checkForAttention() {
   
     if (question.checked) {
 
-  if (question.name == 'attn1' && question.value != "2") {
+  if (question.name == 'commitQ' && question.value != "Yes") {
     showAttentionFailPage();
-  } 
-
-  if (question.name == 'attn2' && question.value != "4") {
-    showAttentionFailPage();
-  } } });
+  } else {
+    showTrainingTaskInstructions();
+  }
+} 
+else {alert("Please answer all questions.")}});
 }
 
 function showAttentionFailPage() {
-  document.getElementById("taskPages").style.display = "none";
+  document.getElementById("commitPage").style.display = "none";
   document.getElementById("attentionFailPage").style.display = "block";
 }
 

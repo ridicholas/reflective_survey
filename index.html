@@ -45,7 +45,7 @@ The main researcher conducting this study is Maytal Saar-Tsechansky, a professor
 </p>
 <p><i>If you want to participate in this study, click the [Agree] button to start the survey.</i></p>
 
-    <button onclick="showTrainingTaskInstructions()">Agree</button>
+    <button onclick="showCommitPage()">Agree</button>
   </div>
 
   <div id="questionPage" class="page">
@@ -186,10 +186,21 @@ You will also have access to the passenger's survey responses indicating their s
   </div>
 
   <div id="finishEvalPage" class="page">
-    <h1>Finished Part 2?</h1>
     <p>Are you done with all 25 tasks? You will not be able to go back once you click done below.</p>
     <button onclick="showLastEvalTask()">Go Back</button>
     <button onclick="showPostSurvey()">Done</button>
+  </div>
+
+  <div id="commitPage" class="page">
+    <h1>Finished Part 2?</h1>
+    <p>We care about the quality of our survey data. It is important that you provide thoughtful answers to each question in this survey.</p>
+    <div class="question">
+      <p>Do you commit to providing thoughtful answers in this survey?</p>
+      <input type="radio" name="commitQ" value="No"> No, I will not
+      <input type="radio" name="commitQ" value="Yes"> Yes, I will
+      <input type="radio" name="commitQ" value="Niether"> I can't promise either way
+    </div>
+    <button onclick="checkForAttention()">Submit</button>
   </div>
 
     <div id="postSurveyPage" class="page">
