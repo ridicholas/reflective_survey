@@ -1093,12 +1093,14 @@ function checkForAttention() {
 
   if (question.name == 'commitQ' && question.value != "Yes") {
     showAttentionFailPage();
+    return true;
   } else {
     showTrainingTaskInstructions();
+    return true;
   }
 } 
-else {alert("Please answer all questions.")}});
-}
+});
+alert("Please answer all questions.")}
 
 function showAttentionFailPage() {
   document.getElementById("commitPage").style.display = "none";
