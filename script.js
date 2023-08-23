@@ -1091,10 +1091,11 @@ function storeTaskResponses() {
 function checkForAttention() {
 
   var questions = document.querySelectorAll('.commitQuestion input[type="radio"]');
-
+  var anyChecked = false;
   questions.forEach(function (question) {
   
     if (question.checked) {
+      anyChecked = true;
 
   if (question.name == 'commitQ' && question.value != "Yes") {
     showAttentionFailPage();
@@ -1105,7 +1106,8 @@ function checkForAttention() {
   }
 } 
 });
-alert("Please answer all questions.")}
+if (anyChecked == false) {
+alert("Please answer all questions.")} }
 
 function showAttentionFailPage() {
   document.getElementById("commitPage").style.display = "none";
