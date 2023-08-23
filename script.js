@@ -116,7 +116,7 @@ function midpointPullImage(id, condition) {
       
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error: Image not found, please wait a few seconds and refresh the page.');
     }); 
 }
 
@@ -406,7 +406,7 @@ function showImprovementPlanTutorial() {
   saveProgress("improvementPlanTutorialPage");
   if (document.getElementById("improvementPlanTutorialPage").innerHTML.indexOf("Thank you for completing the first 25 tasks!") == -1) {
   document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the first 25 tasks!</p>
-  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus}$. </p>`;
+  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. </p>`;
   if (condition == 0) {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
     You will again be given a bonus of $0.04 for each question you answer correctly. </p>
@@ -600,7 +600,7 @@ function showPostSurvey() {
   endBonus = endCorrects * 0.04
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04)}. </p> 
+  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04).toFixed(2)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
