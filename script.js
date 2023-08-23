@@ -3,6 +3,7 @@ const apiEndpoint = 'https://refl-backend.isnicholas.com/';
 function midpointPush(id, condition) {
   //delete trainingTaskResponses[4]['attn1'];
   //delete trainingTaskResponses[2]['attn2'];
+  trainingTaskResponses[25]['timesFailedQuiz'] = timesFailedQuiz;
   fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
     method: 'POST',
     headers: {
@@ -266,7 +267,8 @@ function saveProgress(currentPage) {
     times: times,
     experimentStartTime: experimentStartTime,
     trainingTaskStartTime: trainingTaskStartTime,
-    evalTaskStartTime: evalTaskStartTime
+    evalTaskStartTime: evalTaskStartTime,
+    timesFailedQuiz: timesFailedQuiz
 
 
   };
@@ -295,6 +297,7 @@ function loadProgress() {
     experimentStartTime = progressData.experimentStartTime;
     trainingTaskStartTime = progressData.trainingTaskStartTime;
     evalTaskStartTime = progressData.evalTaskStartTime;
+    timesFailedQuiz = progressData.timesFailedQuiz;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -533,6 +536,7 @@ function checkAnswers() {
       // Access questionnaire responses using quizResponses
     } else {
       document.getElementById("tryAgainMessage").style.display = "block";
+      timesFailedQuiz += 1;
     }
   } else {
     alert("Please answer all questions.");
@@ -552,6 +556,7 @@ function showTrainingTaskInstructions() {
   document.getElementById("questionPage").style.display = "none";
   document.getElementById("tutorialResultPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
+  document.getElementById("commitPage").style.display = "none";
 
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
