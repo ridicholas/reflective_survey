@@ -431,6 +431,8 @@ function showImprovementPlanResult() {
   document.getElementById("improvementPlanResultPage").style.display = "block";
   if (atPostSurvey) {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
+      document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="showEvalTaskInstructions()">Next</button>`, ``)
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>` }
   }
   else {
@@ -977,9 +979,9 @@ function showTask(currentTask) {
 } 
 
 function getClass(taskData) {
-  if (taskData.eco_plus) {
+  if (taskData["Class_Eco Plus"]) {
     return 'Economy Plus';
-  } else if (taskData.class_business) {
+  } else if (taskData["Class_Business"]) {
     return 'Business';
   } else {
     return 'Economy';
@@ -987,7 +989,7 @@ function getClass(taskData) {
 }
 
 function populateDataFromJSON(currentTask) {
-  const taskData = taskDataJSON.find(task => task.Task === currentTask);
+  var taskData = taskDataJSON.find(task => task.Task === currentTask);
   if (!taskData) {
     console.error(`Task data not found for Task ${currentTask}`);
     return;
@@ -996,8 +998,8 @@ function populateDataFromJSON(currentTask) {
   document.getElementById('age').innerText = taskData.Age;
   document.getElementById('gender').innerText = taskData.Gender_Male === 1 ? 'Male' : 'Female';
   document.getElementById('class').innerText = getClass(taskData);
-  document.getElementById('typeOfTravel').innerText = taskData.Type_of_Travel_Business_travel === 1 ? 'Business travel' : 'Personal travel';
-  document.getElementById('customerType').innerText = taskData.Customer_Type_Loyal_Customer === 1 ? 'Loyal Customer' : 'Non-Loyal Customer';
+  document.getElementById('typeOfTravel').innerText = taskData["Type of Travel_Business travel"] === 1 ? 'Business travel' : 'Personal travel';
+  document.getElementById('customerType').innerText = taskData["Customer Type_Loyal Customer"] === 1 ? 'Loyal Customer' : 'Non-Loyal Customer';
   document.getElementById('flightDistance').innerText = taskData['Flight Distance'];
   document.getElementById('departureDelay').innerText = taskData['Departure Delay in Minutes'];
   document.getElementById('arrivalDelay').innerText = taskData['Arrival Delay in Minutes'];
