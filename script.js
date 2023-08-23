@@ -129,14 +129,14 @@ function midpointPullText(id, condition) {
     .then(response => response.text()) // Change 'blob' to 'text'
     .then(text => {
       const textElement = document.createElement('p');
-      textElement.textContent = text;
+      textElement.textContent = text.replace(RegExp('<p>', 'g'), '').replace(RegExp('</p>', 'g'), '');
 
       textElement.style.width = '80%'; // Adjust the width as needed
       textElement.style.margin = '0 auto';
 
       if (text_not_appended) {
 
-      improvementPlanResultPage.appendChild(textElement); 
+      improvementPlanResultPage.appendChild(textElement);
       text_not_appended = false;}
     })
     .catch(error => {
@@ -435,7 +435,7 @@ function showImprovementPlanResult() {
   }
   else {
     if (evalStarted) {
-      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Return To Survey</button>`) == -1) {
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return To Survey</button>` }
     }
     else {
