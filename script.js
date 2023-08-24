@@ -447,13 +447,11 @@ function showImprovementPlanResult() {
   
   saveProgress("improvementPlanResultPage");
 }
-const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, airport experience, booking experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
+const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
   <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? Things you might consider: What kind of passenger would have low expectations? What kind of passenger would have high expectations?  </p>
   <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction during the flight? </p>
-  <p><b>Airport Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience at the airport? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction while they are at the airport? </p>
-  <p><b>Booking Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with the process of booking their flight? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction while they are booking? </p>
   <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? Things you might consider: If there was a delay, do you think the passenger would find it significant?</p>
-  <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. </p>`
+  <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. Try and use your concept ratings when coming to a final decision about the passenger's overall flight satisfaction.</p>`
 
   function showEvalTaskInstructions() {
   document.getElementById("improvementPlanResultPage").style.display = "none";
@@ -736,8 +734,8 @@ function checkTaskAnswers() {
   var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
 
   var q1_ans = document.querySelector('input[name="q1"]:checked');
-  var q2_ans = document.querySelector('input[name="q2"]:checked');
-  var q3_ans = document.querySelector('input[name="q3"]:checked');
+  //var q2_ans = document.querySelector('input[name="q2"]:checked');
+  //var q3_ans = document.querySelector('input[name="q3"]:checked');
   var q4_ans = document.querySelector('input[name="q4"]:checked');
   var q5_ans = document.querySelector('input[name="q5"]:checked');
   var q6_ans = document.querySelector('input[name="q6"]:checked');
@@ -753,7 +751,7 @@ function checkTaskAnswers() {
       return false; }
 
   if ([2,3,5,6].includes(condition)) {
-    return ((q1_ans && q2_ans && q3_ans && q4_ans && q5_ans && q6_ans) != null)
+    return ((q1_ans && q4_ans && q5_ans && q6_ans) != null)
   } else {
     return (q6_ans != null)
   }
@@ -871,26 +869,6 @@ function showTask(currentTask) {
   <label><input type="radio" name="q1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label><input type="radio" name="q1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label><input type="radio" name="q1" value="5"> 5 (High)</label>
-  </div>
-</div>
-<div class="question">
-   <p>Was this passenger satisfied with their booking experience?</p>
-   <div class="choices">
-   <label><input type="radio" name="q2" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
-   <label> <input type="radio" name="q2" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-   <label> <input type="radio" name="q2" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-   <label><input type="radio" name="q2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-   <label><input type="radio" name="q2" value="5"> 5 (Very Satisfied)</label>
-  </div>
-</div>
-<div class="question">
-  <p>Was this passenger satisfied with their airport experience?</p>
-  <div class="choices">
-  <label><input type="radio" name="q3" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
-  <label><input type="radio" name="q3" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q3" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q3" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q3" value="5"> 5 (Very Satisfied)</label>
   </div>
 </div>
 <div class="question">
