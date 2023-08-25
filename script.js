@@ -124,6 +124,7 @@ function midpointPullText(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
+  var textDataJSON;
 
   fetch(url, { method: 'GET' })
     .then(response => response.json()) // Change 'blob' to 'text'
@@ -133,6 +134,8 @@ function midpointPullText(id, condition) {
     .catch(error => {
       console.error('Error:', error);
     });
+
+    return textDataJSON;
 }
 
 
@@ -259,7 +262,8 @@ function saveProgress(currentPage) {
     experimentStartTime: experimentStartTime,
     trainingTaskStartTime: trainingTaskStartTime,
     evalTaskStartTime: evalTaskStartTime,
-    timesFailedQuiz: timesFailedQuiz
+    timesFailedQuiz: timesFailedQuiz,
+    textDataJSON: textDataJSON
 
 
   };
@@ -289,6 +293,7 @@ function loadProgress() {
     trainingTaskStartTime = progressData.trainingTaskStartTime;
     evalTaskStartTime = progressData.evalTaskStartTime;
     timesFailedQuiz = progressData.timesFailedQuiz;
+    textDataJSON = progressData.textDataJSON;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -415,7 +420,7 @@ function showImprovementPlanTutorial() {
 
 function showImprovementPlanResult() {
   midpointPullImage(unique_id, condition);
-  midpointPullText(unique_id, condition);
+  var textDataJSON = midpointPullText(unique_id, condition);
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
