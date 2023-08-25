@@ -110,7 +110,7 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
       
       if (image_not_appended) {
-        improvementPlanResultPage.append(pElement);
+        improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[-1]);
         image_not_appended = false;
       }
       
@@ -428,7 +428,7 @@ function showImprovementPlanResult() {
   document.getElementById("improvementPlanResultPage").style.display = "block";
   //loop through elements of textDataJSON dictionary
   for (const [key, value] of Object.entries(textDataJSON))
-   { console.log(key, value)
+   { 
     //append each element to page as a paragraph
 
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
