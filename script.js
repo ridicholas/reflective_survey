@@ -891,7 +891,7 @@ function showTask(currentTask) {
   </div>
 </div> ` 
 
-if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p>Please consider your concept ratings above when answering the following question.</p>`}}
+if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
   else { task_concept_text = `` }
 
   if (currentTask == 4) {
@@ -904,7 +904,7 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p>Please consid
   <label> <input type="radio" name="attn1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="5"> 5 (Very Satisfied)</label>
   </div>
-  <p>Please consider your concept ratings above when answering the following question.</p>` }
+  <p><b>Please consider your concept ratings above when answering the following question.</b></p>` }
   else {attention_check1 = ``}
 
   if (currentTask == 2) {
@@ -919,7 +919,7 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p>Please consid
   <label> <input type="radio" name="attn2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="5"> 5 (Very Satisfied)</label>
   </div>
-  <p>Please consider your concept ratings above when answering the following question.</p>`}
+  <p><b>Please consider your concept ratings above when answering the following question.</b></p>`}
   else {
     attention_check2 = ``}
   
