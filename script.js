@@ -110,7 +110,7 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
       
       if (image_not_appended) {
-        improvementPlanResultPage.appendChild(pElement);
+        improvementPlanResultPage.prepend(pElement);
         image_not_appended = false;
       }
       
@@ -126,18 +126,9 @@ function midpointPullText(id, condition) {
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
 
   fetch(url, { method: 'GET' })
-    .then(response => response.text()) // Change 'blob' to 'text'
-    .then(text => {
-      const textElement = document.createElement('p');
-      textElement.textContent = text.replace(RegExp('<p>', 'g'), '').replace(RegExp('</p>', 'g'), '');
-
-      textElement.style.width = '80%'; // Adjust the width as needed
-      textElement.style.margin = '0 auto';
-
-      if (text_not_appended) {
-
-      improvementPlanResultPage.appendChild(textElement);
-      text_not_appended = false;}
+    .then(response => response.json()) // Change 'blob' to 'text'
+    .then(data => {
+      textDataJSON = data;
     })
     .catch(error => {
       console.error('Error:', error);
@@ -429,6 +420,14 @@ function showImprovementPlanResult() {
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
+  //loop through elements of textDataJSON
+  for (let i = 0; i < textDataJSON.length; i++) {
+    //append each element to page as a paragraph
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(textDataJSON[i]) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<p>${textDataJSON[i]}</p>` }
+  }
+
+
   if (atPostSurvey) {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
       document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
@@ -890,7 +889,8 @@ function showTask(currentTask) {
   <label><input type="radio" name="q5" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label><input type="radio" name="q5" value="5"> 5 (Significant Delays)</label>
   </div>
-</div>` }
+</div> 
+<p>Please consider your concept ratings above when answering the following question.</p>` }
   else { task_concept_text = `` }
 
   if (currentTask == 4) {
