@@ -110,7 +110,7 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
       
       if (image_not_appended) {
-        improvementPlanResultPage.prepend(pElement);
+        improvementPlanResultPage.append(pElement);
         image_not_appended = false;
       }
       
@@ -121,21 +121,21 @@ function midpointPullImage(id, condition) {
 }
 
 function midpointPullText(id, condition) {
-  const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
+  
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
-  var textDataJSON;
 
   fetch(url, { method: 'GET' })
-    .then(response => response.json()) // Change 'blob' to 'text'
+    .then(response => response.json())
     .then(data => {
       textDataJSON = data;
-    })
+    }
+    )
     .catch(error => {
       console.error('Error:', error);
-    });
+    }
+    );
 
-    return textDataJSON;
 }
 
 
@@ -419,17 +419,20 @@ function showImprovementPlanTutorial() {
 }
 
 function showImprovementPlanResult() {
+  saveProgress("improvementPlanResultPage");
   midpointPullImage(unique_id, condition);
-  var textDataJSON = midpointPullText(unique_id, condition);
+  midpointPullText(unique_id, condition);
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
-  //loop through elements of textDataJSON
-  for (let i = 0; i < textDataJSON.length; i++) {
+  //loop through elements of textDataJSON dictionary
+  for (const [key, value] of Object.entries(textDataJSON))
+   { console.log(key, value)
     //append each element to page as a paragraph
-    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(textDataJSON[i]) == -1) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<p>${textDataJSON[i]}</p>` }
+
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
   }
 
 
@@ -449,7 +452,6 @@ function showImprovementPlanResult() {
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
   }
   
-  saveProgress("improvementPlanResultPage");
 }
 const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
   <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? Things you might consider: What kind of passenger would have low expectations? What kind of passenger would have high expectations?  </p>
