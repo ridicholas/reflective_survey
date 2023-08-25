@@ -889,8 +889,9 @@ function showTask(currentTask) {
   <label><input type="radio" name="q5" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label><input type="radio" name="q5" value="5"> 5 (Significant Delays)</label>
   </div>
-</div> 
-<p>Please consider your concept ratings above when answering the following question.</p>` }
+</div> ` 
+
+if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p>Please consider your concept ratings above when answering the following question.</p>`}}
   else { task_concept_text = `` }
 
   if (currentTask == 4) {
@@ -902,7 +903,8 @@ function showTask(currentTask) {
   <label> <input type="radio" name="attn1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="5"> 5 (Very Satisfied)</label>
-  </div>` }
+  </div>
+  <p>Please consider your concept ratings above when answering the following question.</p>` }
   else {attention_check1 = ``}
 
   if (currentTask == 2) {
@@ -916,7 +918,8 @@ function showTask(currentTask) {
   <label> <input type="radio" name="attn2" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="5"> 5 (Very Satisfied)</label>
-  </div>`}
+  </div>
+  <p>Please consider your concept ratings above when answering the following question.</p>`}
   else {
     attention_check2 = ``}
   
