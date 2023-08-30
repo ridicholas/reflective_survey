@@ -88,6 +88,7 @@ function endPush(id, condition) {
 
 var image_not_appended = true;
 var text_not_appended = true;
+var textDataJSON = {};
 
 function midpointPullImage(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
