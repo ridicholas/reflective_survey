@@ -111,7 +111,7 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
       
       if (image_not_appended) {
-        improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-1]);
+        improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-2]);
         image_not_appended = false;
       }
       
@@ -400,6 +400,7 @@ function showImprovementPlanTutorial() {
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
   bonus = corrs * 0.04;
   document.getElementById("finishTrainingPage").style.display = "none";
+  document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "block";
   saveProgress("improvementPlanTutorialPage");
   if (document.getElementById("improvementPlanTutorialPage").innerHTML.indexOf("Thank you for completing the first 25 tasks!") == -1) {
@@ -452,6 +453,7 @@ function showImprovementPlanResult() {
     }
     else {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showImprovementPlanTutorial()">Back</button>`
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
   }
   
