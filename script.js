@@ -424,17 +424,18 @@ function showImprovementPlanResult() {
   saveProgress("improvementPlanResultPage");
   midpointPullImage(unique_id, condition);
   midpointPullText(unique_id, condition);
-  document.getElementById("improvementPlanTutorialPage").style.display = "none";
-  document.getElementById("postSurveyPage").style.display = "none";
-  document.getElementById("taskPages").style.display = "none";
-  document.getElementById("improvementPlanResultPage").style.display = "block";
-
   //loop through elements of textDataJSON dictionary
   for (const [key, value] of Object.entries(textDataJSON)) { 
     //append each element to page as a paragraph
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
       document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-}
+  }
+  document.getElementById("improvementPlanTutorialPage").style.display = "none";
+  document.getElementById("postSurveyPage").style.display = "none";
+  document.getElementById("taskPages").style.display = "none";
+  document.getElementById("improvementPlanResultPage").style.display = "block";
+
+
 
 
 
@@ -451,7 +452,7 @@ function showImprovementPlanResult() {
     }
     else {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
-    document.getElementById("improvementPlanResultPage").append(`<button onclick="showEvalTaskInstructions()">Next</button>`) }}
+    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
   }
   
 }
