@@ -130,12 +130,7 @@ function midpointPullText(id, condition) {
     .then(response => response.json())
     .then(data => {
       textDataJSON = data;
-        //loop through elements of textDataJSON dictionary
-      for (const [key, value] of Object.entries(textDataJSON)) { 
-        //append each element to page as a paragraph
-        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-          document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
- }
+
     }
     )
     .catch(error => {
@@ -434,6 +429,13 @@ function showImprovementPlanResult() {
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
 
+  //loop through elements of textDataJSON dictionary
+  for (const [key, value] of Object.entries(textDataJSON)) { 
+    //append each element to page as a paragraph
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
+}
+
 
 
   if (atPostSurvey) {
@@ -449,7 +451,7 @@ function showImprovementPlanResult() {
     }
     else {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
+    document.getElementById("improvementPlanResultPage").append(`<button onclick="showEvalTaskInstructions()">Next</button>`) }}
   }
   
 }
