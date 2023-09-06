@@ -495,6 +495,13 @@ function showImprovementPlanResult() {
   }
   else {
     if (evalStarted) {
+      var inner = document.getElementById('improvementPlanResultPage')
+      var buttons = inner.getElementsByTagName('button');
+      if (buttons) {
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].remove();
+        }
+      }
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Return To Survey</button>`) == -1) {
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return To Survey</button>` }
     }
