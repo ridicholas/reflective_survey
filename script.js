@@ -464,7 +464,7 @@ function showImprovementPlanResult() {
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
   midpointPullText(unique_id, condition);
-  if (textDataJSON.length > 0) {
+  if (Object.keys(textDataJSON).length  > 0) {
   //loop through elements of textDataJSON dictionary
     for (const [key, value] of Object.entries(textDataJSON)) { 
       //append each element to page as a paragraph
