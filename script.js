@@ -135,7 +135,9 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
       
       if (image_not_appended) {
-        improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-2]);
+        var inner = document.getElementById('improvementPlanResultPage')
+        var buttons = inner.getElementsByTagName('button');
+        improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-buttons.length]);
         image_not_appended = false;
       }
       
