@@ -46,6 +46,30 @@ function postSurveyPush(id, condition) {
 });
 }
 
+function participantPush(id, condition) {
+  fetch(apiEndpoint + `participant_push/${id}/${condition}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(urlParams)
+})
+.then(function(response) {
+    if (response.ok) {
+        console.log('Data uploaded successfully');
+    } else {
+        console.log('Failed to upload data');
+    }
+})
+.catch(function(error) {
+    console.log('Error:', error);
+});
+}
+
+
+
+
+
 function timesPush(id, condition) {
   fetch(apiEndpoint + `times_push/${id}/${condition}`, {
     method: 'POST',
@@ -217,7 +241,7 @@ function compareQ6ResponsesWithAnswers(startingTaskNum, endingTaskNum, trainingT
 
 // Store the participant's responses
 
-var unique_id = Math.floor(Math.random() * Date.now()).toString(16)
+
 
 var quizResponses = {};
 var trainingTaskResponses = {};
@@ -231,6 +255,15 @@ var trainingTaskStartTime = Date.now();
 var evalTaskStartTime = Date.now();
 var experimentStartTime = Date.now();
 var timesFailedQuiz = 0;
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+//var unique_id = Math.floor(Math.random() * Date.now()).toString(16)
+var unique_id = urlParams.get('participant_id');
+urlParams['condition'] = condition
+urlParams['type'] = 'pre-pilot'
+urlParams['completed'] = false
+urlParams['bonus'] = 0
+
 
 
 function getRandomInt(max) {
@@ -265,7 +298,8 @@ function saveProgress(currentPage) {
     trainingTaskStartTime: trainingTaskStartTime,
     evalTaskStartTime: evalTaskStartTime,
     timesFailedQuiz: timesFailedQuiz,
-    textDataJSON: textDataJSON
+    textDataJSON: textDataJSON,
+    urlParams: urlParams
 
 
   };
@@ -296,6 +330,7 @@ function loadProgress() {
     evalTaskStartTime = progressData.evalTaskStartTime;
     timesFailedQuiz = progressData.timesFailedQuiz;
     textDataJSON = progressData.textDataJSON;
+    urlParams = progressData.urlParams;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -399,6 +434,8 @@ function showImprovementPlanTutorial() {
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
   bonus = corrs * 0.04;
+  urlParams['bonus'] = bonus
+  participantPush(unique_id, condition)
   document.getElementById("finishTrainingPage").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "block";
@@ -423,7 +460,10 @@ function showImprovementPlanTutorial() {
 
 function showImprovementPlanResult() {
   saveProgress("improvementPlanResultPage");
-  midpointPullImage(unique_id, condition);
+  document.getElementById("improvementPlanTutorialPage").style.display = "none";
+  document.getElementById("postSurveyPage").style.display = "none";
+  document.getElementById("taskPages").style.display = "none";
+  document.getElementById("improvementPlanResultPage").style.display = "block";
   midpointPullText(unique_id, condition);
   //loop through elements of textDataJSON dictionary
   for (const [key, value] of Object.entries(textDataJSON)) { 
@@ -431,16 +471,21 @@ function showImprovementPlanResult() {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
       document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
   }
-  document.getElementById("improvementPlanTutorialPage").style.display = "none";
-  document.getElementById("postSurveyPage").style.display = "none";
-  document.getElementById("taskPages").style.display = "none";
-  document.getElementById("improvementPlanResultPage").style.display = "block";
+  midpointPullImage(unique_id, condition);
+
 
 
 
 
 
   if (atPostSurvey) {
+    var inner = document.getElementById('improvementPlanResultPage')
+    var buttons = inner.getElementsByTagName('button');
+    if (buttons) {
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].remove();
+      }
+    }
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
       document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
       document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="showEvalTaskInstructions()">Next</button>`, ``)
@@ -458,9 +503,9 @@ function showImprovementPlanResult() {
   }
   
 }
-const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that there is no ground truth to these concepts. These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
-  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Would this passenger have low or high expectations for their flight? Things you might consider: What kind of passenger would have low expectations? What kind of passenger would have high expectations?  </p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? Things you might consider: What aspects of the trip details and satisfaction survey might correspond to the passenger's satisfaction during the flight? </p>
+const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that the passengers did not provide their ratings for these concepts (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
+  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? Things you might consider: Would a passenger in a higher class have lower or higher expections? What about whether a passenger is loyal or disloyal to the airline? Could the purpose of the travel matter?</p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? Things you might consider: Which factors on the survey response form filled out by the passenger could indicate whether they were satisfied during the flight? </p>
   <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? Things you might consider: If there was a delay, do you think the passenger would find it significant?</p>
   <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. Try and use your concept ratings when coming to a final decision about the passenger's overall flight satisfaction.</p>`
 
@@ -483,6 +528,7 @@ function showConsentPage() {
   document.getElementById("titlePage").style.display = "none";
   document.getElementById("trainingTaskInstructionsPageFirst").style.display = "none";
   document.getElementById("consentPage").style.display = "block";
+  participantPush(unique_id, condition);
   saveProgress("consentPage");
 }
 
@@ -609,6 +655,8 @@ function showPostSurvey() {
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
   endBonus = endCorrects * 0.04
+  fullBonus = ((corrs + endCorrects) * 0.04).toFixed(2)
+  urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
   In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04).toFixed(2)}. </p> 
@@ -665,7 +713,7 @@ function showPostSurvey() {
     <textarea name="difference" rows="4" cols="50"></textarea></p>` 
 
   if ([2,3,5,6].includes(condition)) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of the passenger's expectations, booking experience, airport experience, in-flight experience, and delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
+    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of the passenger's expectations, in-flight experience, and delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
     <textarea name="conceptsIntuitive" rows="4" cols="50"></textarea>`
 
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you find thinking about the problem in terms of concepts helpful? Why or why not?</p>
@@ -1112,7 +1160,8 @@ function showAttentionFailPage() {
 // Add event listener to the form submission
 function finishSurvey() {
       times['experimentTime'] = Date.now() - experimentStartTime;
-  
+      urlParams['completed'] = true;
+      participantPush(unique_id, condition);
       // Get the user's responses for all input fields and store them in postSurveyResponses
       postSurveyResponses.age = getRadioValue('age');
       postSurveyResponses.education = getRadioValue('education');
@@ -1139,7 +1188,7 @@ function finishSurvey() {
 
       // Hide the survey and show the thank you page
       document.getElementById('postSurveyPage').style.display = 'none';
-      document.getElementById('thankYou').style.display = 'block';
+      window.location.replace("https://connect.cloudresearch.com/participant/project/acb3e3f16b4a439d9bbf999688fc3515/complete");
 
     };
 
