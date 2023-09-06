@@ -154,7 +154,7 @@ function midpointPullText(id, condition) {
     .then(response => response.json())
     .then(data => {
       textDataJSON = data;
-      midpointPullImage(unique_id, condition);
+      //midpointPullImage(unique_id, condition);
       showImprovementPlanResult();
     }
     )
@@ -472,7 +472,7 @@ function showImprovementPlanResult() {
     if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
       document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
   }
-  //midpointPullImage(unique_id, condition);
+  midpointPullImage(unique_id, condition);
 
 
 
