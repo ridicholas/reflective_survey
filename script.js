@@ -154,8 +154,6 @@ function midpointPullText(id, condition) {
     .then(response => response.json())
     .then(data => {
       textDataJSON = data;
-      //midpointPullImage(unique_id, condition);
-      showImprovementPlanResult();
     }
     )
     .catch(error => {
@@ -455,7 +453,7 @@ function showImprovementPlanTutorial() {
     <p>Note that a positive relationship between a factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to select that the passenger was overall satisfied. 
     A negative relationship between the factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
     <p> In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust the relationship you use for each factor/concept based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>
-    <button onclick="midpointPullText(${unique_id}, ${condition})">Next</button>`
+    <button onclick="showImprovementPlanResult()">Next</button>`
   } }
 }
 
@@ -465,13 +463,16 @@ function showImprovementPlanResult() {
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
-  //midpointPullText(unique_id, condition);
+  midpointPullText(unique_id, condition);
+  if (textDataJSON.length > 0) {
   //loop through elements of textDataJSON dictionary
-  for (const [key, value] of Object.entries(textDataJSON)) { 
-    //append each element to page as a paragraph
-    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-  }
+    for (const [key, value] of Object.entries(textDataJSON)) { 
+      //append each element to page as a paragraph
+      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
+    } }
+  else {console.log('failed to load textDataJSON')
+    midpointPullText(unique_id, condition);}
   midpointPullImage(unique_id, condition);
 
 
