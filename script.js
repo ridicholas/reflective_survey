@@ -483,7 +483,7 @@ async function showImprovementPlanResult() {
   else {console.log('failed to load textDataJSON')
         if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
             document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-        } }
+        } 
   
   
   
