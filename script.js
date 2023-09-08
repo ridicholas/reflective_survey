@@ -155,8 +155,7 @@ function midpointPullText(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
-      textDataJSON = data;
-      return textDataJSON;
+      return data;
     }
     )
     .catch(error => {
