@@ -147,7 +147,7 @@ function midpointPullImage(id, condition) {
     }); 
 }
 
-function midpointPullText(id, condition) {
+async function midpointPullText(id, condition) {
   
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
@@ -155,7 +155,7 @@ function midpointPullText(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
-      return data;
+      textDataJSON = data;
     }
     )
     .catch(error => {
@@ -467,12 +467,11 @@ function showImprovementPlanResult() {
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
-  var tries = 0;
-  while ((Object.keys(textDataJSON).length == 0) && (tries < 1)) {
-    textDataJSON = midpointPullText(unique_id, condition);
-    console.log(Object.keys(textDataJSON));
-    tries += 1;
-  }
+
+
+  await midpointPullText(unique_id, condition);
+
+
   
   if (Object.keys(textDataJSON).length  > 0) {
   //loop through elements of textDataJSON dictionary
@@ -481,20 +480,10 @@ function showImprovementPlanResult() {
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
         document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
     } }
-  else {console.log('failed to load textDataJSON, trying again')
-  var tries = 0;
-  while ((Object.keys(textDataJSON).length == 0) && (tries < 1)) {
-    textDataJSON = midpointPullText(unique_id, condition);
-    console.log(Object.keys(textDataJSON));
-    tries += 1;
-  }
-    if (Object.keys(textDataJSON).length  > 0) {
-      //loop through elements of textDataJSON dictionary
-        for (const [key, value] of Object.entries(textDataJSON)) { 
-          //append each element to page as a paragraph
-          if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+  else {console.log('failed to load textDataJSON')
+        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
             document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-        } }}
+        } }
   
   
   
