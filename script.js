@@ -264,6 +264,7 @@ urlParams['condition'] = condition
 urlParams['type'] = 'pre-pilot'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
+urlParams['commitFail'] = false
 
 
 
@@ -399,7 +400,6 @@ document.addEventListener("DOMContentLoaded", loadProgress);
 
 // Show the instruction page initially
 document.getElementById("titlePage").style.display = "block";
-document.getElementById("unique").innerHTML = `Your ID: ${unique_id} , Your Condition: ${condition}`
 pullTasks(unique_id, condition);
 pullResp(unique_id, condition);
 
@@ -1164,6 +1164,8 @@ if (anyChecked == false) {
 alert("Please answer all questions.")} }
 
 function showAttentionFailPage() {
+  urlParams['commitFail'] = true;
+  participantPush(unique_id, condition);
   document.getElementById("commitPage").style.display = "none";
   document.getElementById("attentionFailPage").style.display = "block";
 }
