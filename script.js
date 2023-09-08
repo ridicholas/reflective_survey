@@ -467,7 +467,12 @@ function showImprovementPlanResult() {
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
-  midpointPullText(unique_id, condition);
+  tries = 0;
+  while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
+    midpointPullText(unique_id, condition);
+    tries += 1;
+  }
+  
   if (Object.keys(textDataJSON).length  > 0) {
   //loop through elements of textDataJSON dictionary
     for (const [key, value] of Object.entries(textDataJSON)) { 
