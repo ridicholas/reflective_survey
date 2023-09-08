@@ -147,7 +147,7 @@ function midpointPullImage(id, condition) {
     }); 
 }
 
-async function midpointPullText(id, condition) {
+  function midpointPullText(id, condition) {
   
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
@@ -156,6 +156,12 @@ async function midpointPullText(id, condition) {
     .then(response => response.json())
     .then(data => {
       textDataJSON = data;
+        //loop through elements of textDataJSON dictionary
+    for (const [key, value] of Object.entries(textDataJSON)) { 
+      //append each element to page as a paragraph
+      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
+    }
     }
     )
     .catch(error => {
@@ -461,7 +467,7 @@ function showImprovementPlanTutorial() {
   } }
 }
 
-async function showImprovementPlanResult() {
+ function showImprovementPlanResult() {
   
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
@@ -469,21 +475,14 @@ async function showImprovementPlanResult() {
   document.getElementById("improvementPlanResultPage").style.display = "block";
 
 
-  await midpointPullText(unique_id, condition);
+  midpointPullText(unique_id, condition);
 
 
   
-  if (Object.keys(textDataJSON).length  > 0) {
-  //loop through elements of textDataJSON dictionary
-    for (const [key, value] of Object.entries(textDataJSON)) { 
-      //append each element to page as a paragraph
-      if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-        document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-    } }
-  else {console.log('failed to load textDataJSON')
-        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-            document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-        } 
+
+ 
+
+         
   
   
   
