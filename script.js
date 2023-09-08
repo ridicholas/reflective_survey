@@ -467,7 +467,7 @@ function showImprovementPlanResult() {
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
-  tries = 0;
+  var tries = 0;
   while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
     midpointPullText(unique_id, condition);
     tries += 1;
@@ -480,9 +480,23 @@ function showImprovementPlanResult() {
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
         document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
     } }
-  else {console.log('failed to load textDataJSON')
-    midpointPullText(unique_id, condition);}
-  midpointPullImage(unique_id, condition);
+  else {console.log('failed to load textDataJSON, trying again')
+  var tries = 0;
+  while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
+    midpointPullText(unique_id, condition);
+    tries += 1;
+  }
+    if (Object.keys(textDataJSON).length  > 0) {
+      //loop through elements of textDataJSON dictionary
+        for (const [key, value] of Object.entries(textDataJSON)) { 
+          //append each element to page as a paragraph
+          if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+            document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
+        } }}
+  
+  
+  
+    midpointPullImage(unique_id, condition);
 
 
 
