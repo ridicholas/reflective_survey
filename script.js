@@ -297,11 +297,15 @@ const queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 //var unique_id = Math.floor(Math.random() * Date.now()).toString(16)
 var unique_id = urlParams.get('participantId');
+var assignment_id = urlParams.get('assignmentId');
+var project_id = urlParams.get('projectId');
 urlParams['condition'] = condition
 urlParams['type'] = 'pre-pilot'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
+urlParams['assignmentId'] = assignment_id
+urlParams['projectId'] = project_id
 
 
 
