@@ -470,6 +470,7 @@ function showImprovementPlanResult() {
   var tries = 0;
   while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
     midpointPullText(unique_id, condition);
+    console.log(Object.keys(textDataJSON));
     tries += 1;
   }
   
@@ -484,6 +485,7 @@ function showImprovementPlanResult() {
   var tries = 0;
   while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
     midpointPullText(unique_id, condition);
+    console.log(Object.keys(textDataJSON));
     tries += 1;
   }
     if (Object.keys(textDataJSON).length  > 0) {
