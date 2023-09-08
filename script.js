@@ -768,8 +768,7 @@ function showPostSurvey() {
     <textarea name="general" rows="4" cols="50"></textarea>`
 
 
-  document.getElementById("postSurveyPage").innerHTML += `<p>Thanks for participating! Please click the button below to submit your responses and receive your payment.</p>
-  <button onclick="finishSurvey()">Submit</button>` }
+  document.getElementById("postSurveyPage").innerHTML += `<button onclick="finishSurvey()">Submit</button>` }
 }
 
 // Show the next page and hide the result page
