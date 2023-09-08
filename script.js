@@ -304,6 +304,7 @@ urlParams['type'] = 'pre-pilot'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
+urlParams['participantID'] = unique_id
 urlParams['assignmentId'] = assignment_id
 urlParams['projectId'] = project_id
 
