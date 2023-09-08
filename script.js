@@ -156,6 +156,7 @@ function midpointPullText(id, condition) {
     .then(response => response.json())
     .then(data => {
       textDataJSON = data;
+      return textDataJSON;
     }
     )
     .catch(error => {
@@ -462,14 +463,14 @@ function showImprovementPlanTutorial() {
 }
 
 function showImprovementPlanResult() {
-  saveProgress("improvementPlanResultPage");
+  
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "block";
   var tries = 0;
-  while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
-    midpointPullText(unique_id, condition);
+  while ((Object.keys(textDataJSON).length == 0) && (tries < 1)) {
+    textDataJSON = midpointPullText(unique_id, condition);
     console.log(Object.keys(textDataJSON));
     tries += 1;
   }
@@ -483,8 +484,8 @@ function showImprovementPlanResult() {
     } }
   else {console.log('failed to load textDataJSON, trying again')
   var tries = 0;
-  while ((Object.keys(textDataJSON).length == 0) && (tries < 5)) {
-    midpointPullText(unique_id, condition);
+  while ((Object.keys(textDataJSON).length == 0) && (tries < 1)) {
+    textDataJSON = midpointPullText(unique_id, condition);
     console.log(Object.keys(textDataJSON));
     tries += 1;
   }
@@ -535,6 +536,8 @@ function showImprovementPlanResult() {
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showImprovementPlanTutorial()">Back</button>`
     document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
   }
+
+  saveProgress("improvementPlanResultPage");
   
 }
 const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that the passengers did not provide their ratings for these concepts (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
