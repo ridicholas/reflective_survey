@@ -379,6 +379,8 @@ function loadProgress() {
       document.getElementById("finishEvalPage").style.display = "block";
     } else if (current_element == "finishPage") {
       document.getElementById("finishPage").style.display = "block";
+    } else if (current_element == 'attentionFailPage') { 
+      showAttentionFailPage();
     }
 
     
@@ -1168,6 +1170,7 @@ function showAttentionFailPage() {
   participantPush(unique_id, condition);
   document.getElementById("commitPage").style.display = "none";
   document.getElementById("attentionFailPage").style.display = "block";
+  saveProgress("attentionFailPage");
 }
 
 // Add event listener to the form submission
