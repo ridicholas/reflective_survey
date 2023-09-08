@@ -147,7 +147,7 @@ function midpointPullImage(id, condition) {
     }); 
 }
 
-  function midpointPullText(id, condition) {
+  async function midpointPullText(id, condition) {
   
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
@@ -467,7 +467,7 @@ function showImprovementPlanTutorial() {
   } }
 }
 
- function showImprovementPlanResult() {
+ async function showImprovementPlanResult() {
   
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
@@ -475,7 +475,7 @@ function showImprovementPlanTutorial() {
   document.getElementById("improvementPlanResultPage").style.display = "block";
 
 
-  midpointPullText(unique_id, condition);
+  await midpointPullText(unique_id, condition);
 
 
   
@@ -486,7 +486,7 @@ function showImprovementPlanTutorial() {
   
   
   
-    midpointPullImage(unique_id, condition);
+  midpointPullImage(unique_id, condition);
 
 
 
