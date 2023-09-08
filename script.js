@@ -461,7 +461,7 @@ function showImprovementPlanTutorial() {
   } }
 }
 
-function showImprovementPlanResult() {
+async function showImprovementPlanResult() {
   
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
