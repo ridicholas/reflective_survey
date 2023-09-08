@@ -1217,9 +1217,14 @@ function finishSurvey() {
 
       // Hide the survey and show the thank you page
       document.getElementById('postSurveyPage').style.display = 'none';
-      window.location.replace("https://connect.cloudresearch.com/participant/project/acb3e3f16b4a439d9bbf999688fc3515/complete");
+      document.getElementById('thankYou').style.display = 'block';
+      
 
     };
+
+    function redirect() {
+      window.location.replace("https://connect.cloudresearch.com/participant/project/acb3e3f16b4a439d9bbf999688fc3515/complete");
+    }
 
     // Function to get the value of the selected radio button
     function getRadioValue(name) {
