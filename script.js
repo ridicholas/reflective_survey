@@ -299,7 +299,7 @@ var urlParams = new URLSearchParams(queryString);
 var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
-urlParams['condition'] = condition
+
 urlParams['type'] = 'pre-pilot'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
@@ -307,6 +307,7 @@ urlParams['commitFail'] = false
 urlParams['participantID'] = unique_id
 urlParams['assignmentId'] = assignment_id
 urlParams['projectId'] = project_id
+
 
 
 
@@ -321,6 +322,7 @@ var totalEvalTasks = 25;
 var taskNum = 1;
 var condition = getRandomInt(4);
 var atPostSurvey = false;
+urlParams['condition'] = condition
 
 function saveProgress(currentPage) {
   const progressData = {
@@ -478,6 +480,7 @@ function showImprovementPlanTutorial() {
   times['trainingTasks'] = Date.now() - trainingTaskStartTime;
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
+  urlParams['part1correct'] = corrs
   bonus = corrs * 0.04;
   urlParams['bonus'] = bonus
   participantPush(unique_id, condition)
@@ -685,7 +688,8 @@ function showPostSurvey() {
   saveProgress("postSurveyPage");
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
-  endBonus = endCorrects * 0.04
+  urlParams['part2correct'] = endCorrects;
+  endBonus = endCorrects * 0.04;
   fullBonus = ((corrs + endCorrects) * 0.04).toFixed(2)
   urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
