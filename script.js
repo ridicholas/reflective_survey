@@ -114,6 +114,16 @@ var image_not_appended = true;
 var text_not_appended = true;
 var textDataJSON = {};
 
+function removeButtons(curr_page) {
+  var inner = document.getElementById(curr_page)
+  var buttons = inner.getElementsByTagName('button');
+  if (buttons) {
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].remove();
+    }
+  }
+}
+
 function midpointPullImage(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
 
@@ -425,6 +435,8 @@ function loadProgress() {
       document.getElementById("finishPage").style.display = "block";
     } else if (current_element == 'attentionFailPage') { 
       showAttentionFailPage();
+    } else if (current_element == 'conceptTrainingInstructions') {
+      showConceptInstructions();
     }
 
     
@@ -537,25 +549,69 @@ function showImprovementPlanTutorial() {
   saveProgress("improvementPlanResultPage");
   
 }
-const concept_introduction = `<p>Additionally, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays. A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that the passengers did not provide their ratings for these concepts (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. Each concept can be loosely defined as follows: </p>
-  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? Things you might consider: Would a passenger in a higher class have lower or higher expections? What about whether a passenger is loyal or disloyal to the airline? Could the purpose of the travel matter?</p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? Things you might consider: Which factors on the survey response form filled out by the passenger could indicate whether they were satisfied during the flight? </p>
-  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? Things you might consider: If there was a delay, do you think the passenger would find it significant?</p>
-  <p>When solving this task, think about which factors are important to each concept, and think about which factors and concepts are important to an airline passenger's overall flight satisfaction. Try and use your concept ratings when coming to a final decision about the passenger's overall flight satisfaction.</p>`
+const concept_introduction = `<p>In addition to thinking about factors, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays.
+ A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  
+ For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that the passengers did not provide their ratings for these concepts
+  (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. 
+  While there is no true or "correct" value for these concepts, we provide you with guidance on how to reason and rate the concepts so that they can be most useful to you when making your final passenger satisfaction predictions.
+  Each concept can be generally defined as follows: </p>
+  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? When rating passenger expectations, note that the higher the class of the passenger, the higher the passengers expectations would be. If the reason for the passenger's travel was business, or if the passenger is a loyal customer, that passenger would also have higher expectations. For example, you might rate a passenger that is in business class, is a loyal customer, and traveling for business reasons, as someone that has a 5 for expectations. A passenger that has is traveling in economy class for personal reasons and is disloyal would likely have a 1 for expectations.</p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? For this concept, consider all of the passenger's survey responses that correspond to their experience during the flight such as food and drink, seat comfort, inflight entertainment, cleanliness, and on-board service. The higher the passenger's ratings for these aspects of the flight, the higher their in-flight satisfaction should be.</p>
+  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? When rating the delays concept, consider the arrival delay and the departure delay. The higher one or both of these values, the higher the value of the delays concept. Consider the relative values of arrival and departure delays from flight to flight. The flights with the lowest arrival and departure delay times should be rated with a 1, while flights with higher arrival and departure delay times should be rated with a 5. </p>
+  <p>When solving this task, think about how the concept ratings your gave can be used to predict the airline passenger's overall flight satisfaction.</p>`
 
   function showEvalTaskInstructions() {
   document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("evalTaskInstructionsPage").style.display = "block";
   document.getElementById("taskPages").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+  
   if ([2,3,5,6].includes(condition)) {
-    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(concept_introduction) == -1) {
-    document.getElementById("evalTaskInstructionsPage").innerHTML += concept_introduction + `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`
+    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(<button onclick="showConceptInstructions()">Continue</button>) == -1) {
+    document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
     }
   }
   if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
   document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; }
   saveProgress("evalTaskInstructionsPage");
+}
+
+function showConceptInstructions() {
+  document.getElementById("evalTaskInstructionsPage").style.display = "none";
+  document.getElementById("trainingTaskInstructionsPagePassed").style.display = "none";
+  document.getElementById("trainingTaskInstructionsPageFirst").style.display = "none";
+  document.getElementById("taskPages").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "block";
+  if (document.getElementById("conceptTrainingInstructionsPage").indexOf(concept_introduction) == -1) {
+    document.getElementById("conceptTrainingInstructionsPage").innerHTML += concept_introduction
+  }
+
+  if (current_element == 'evalTaskInstructionsPage') {
+    removeButtons('conceptTrainingInstructionsPage');
+    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML +=`  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` + `<button onclick="showEvalTaskInstructions()">Back</button>`
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start!</button>`; }
+  }
+
+  if (current_element == 'trainingTaskInstructionsPagePassed') {
+    removeButtons('conceptTrainingInstructionsPage');
+    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Continue</button>`) == -1) {
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` +  `<button onclick="showTrainingTaskInstructions()">Back</button>`;
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; }
+  } 
+
+  if (current_element == 'trainingTaskInstructionsPageFirst') {
+    removeButtons('conceptTrainingInstructionsPage');
+    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button>`) == -1) {
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
+    <button onclick="showQuestionPage()">Continue</button>`; }
+  } 
+
+
+  saveProgress("conceptTrainingInstructionsPage");
+
+
 }
 
 function showConsentPage() {
@@ -648,18 +704,16 @@ function showTrainingTaskInstructions() {
   document.getElementById("tutorialResultPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("commitPage").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+
 
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
-    if ([2,3,5,6].includes(condition)) {
-      if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(concept_introduction) == -1) {
-        document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += concept_introduction;
+    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(<button onclick="showConceptInstructions()">Continue</button>) == -1) {
+      document.getElementById("trainingTaskInstructionsFirst").innerHTML += `<button onclick="showConcentPage()">Back</button>`
+      document.getElementById("trainingTaskInstructionsFirst").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
       }
-       }
-       if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConsentPage()">Back</button>`) == -1) {
-
-    document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConsentPage()">Back</button>
-  <button onclick="showQuestionPage()">Continue</button>`; }
+       
       
     
     saveProgress("trainingTaskInstructionsPageFirst");
@@ -667,12 +721,8 @@ function showTrainingTaskInstructions() {
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
     if ([2,3,5,6].includes(condition)) {
-      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(concept_introduction) == -1) {
-      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += concept_introduction;} }
-
-      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`Click start below whenever you are ready to start making predictions!`) == -1) {
-    document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>
-      <button onclick="startTrainingTasks()">Continue!</button>`}
+      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
+      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
     
     saveProgress("trainingTaskInstructionsPagePassed");
   }
