@@ -709,7 +709,7 @@ function showTrainingTaskInstructions() {
 
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
-    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(<button onclick="showConceptInstructions()">Continue</button>) == -1) {
+    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsFirst").innerHTML += `<button onclick="showConcentPage()">Back</button>`
       document.getElementById("trainingTaskInstructionsFirst").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
       }
