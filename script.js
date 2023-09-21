@@ -568,7 +568,7 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
   
   if ([2,3,5,6].includes(condition)) {
-    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(<button onclick="showConceptInstructions()">Continue</button>) == -1) {
+    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
     document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
     }
   }
