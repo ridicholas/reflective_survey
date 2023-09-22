@@ -297,6 +297,7 @@ var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
 var current_element = "titlePage";
+var current_page = "titlePage";
 var evalStarted = false
 var times = {};
 var trainingTaskStartTime = Date.now();
