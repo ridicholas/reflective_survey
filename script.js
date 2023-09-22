@@ -713,9 +713,14 @@ function showTrainingTaskInstructions() {
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
     coming_from = "trainingTaskInstructionsPageFirst";
+    if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
-      }
+      } }
+    else {
+      if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showQuestionPage()">Continue</button>`) == -1) {
+        document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showQuestionPage()">Continue</button>`;}
+    }
        
       
     
@@ -727,6 +732,10 @@ function showTrainingTaskInstructions() {
     if ([2,3,5,6].includes(condition)) {
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
+    else {  
+      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Continue</button>`) == -1) {
+        document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` +  `<button onclick="showTrainingTaskInstructions()">Back</button>`;
+        document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; } }
     
     saveProgress("trainingTaskInstructionsPagePassed");
   }
