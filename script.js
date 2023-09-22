@@ -118,8 +118,10 @@ function removeButtons(curr_page) {
   var inner = document.getElementById(curr_page)
   var buttons = inner.getElementsByTagName('button');
   if (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].remove();
+    length = buttons.length
+    for (var i = 0; i < length; i++) {
+      buttons[0].remove();
+      console.log(i)
     }
   }
 }
@@ -603,8 +605,10 @@ function showConceptInstructions() {
 
   if (coming_from == 'trainingTaskInstructionsPagePassed') {
     //removeButtons('conceptTrainingInstructionsPage');
-    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<p><strong>Click start below whenever you are ready to start making predictions!</strong></p><button onclick="showTrainingTaskInstructions()">Back</button><button onclick="startTrainingTasks()">Start!</button>`) == -1) {
-      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p><button onclick="showTrainingTaskInstructions()">Back</button><button onclick="startTrainingTasks()">Start!</button>`;}
+    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`) == -1) {
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;}
+      if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button><button onclick="startTrainingTasks()">Start!</button>`) == -1) {
+        document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button><button onclick="startTrainingTasks()">Start!</button>`;}
     }
   
 
