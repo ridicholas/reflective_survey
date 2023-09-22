@@ -360,7 +360,7 @@ function saveProgress(currentPage) {
 
 
   };
-  var current_page = currentPage;
+  current_page = currentPage;
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
 }
