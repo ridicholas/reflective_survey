@@ -437,7 +437,7 @@ function loadProgress() {
       document.getElementById("finishPage").style.display = "block";
     } else if (current_element == 'attentionFailPage') { 
       showAttentionFailPage();
-    } else if (current_element == 'conceptTrainingInstructions') {
+    } else if (current_element == 'conceptTrainingInstructionsPage') {
       showConceptInstructions();
     }
 
