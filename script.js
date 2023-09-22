@@ -356,7 +356,8 @@ function saveProgress(currentPage) {
     evalTaskStartTime: evalTaskStartTime,
     timesFailedQuiz: timesFailedQuiz,
     textDataJSON: textDataJSON,
-    urlParams: urlParams
+    urlParams: urlParams,
+    coming_from: coming_from
 
 
   };
@@ -388,6 +389,7 @@ function loadProgress() {
     timesFailedQuiz = progressData.timesFailedQuiz;
     textDataJSON = progressData.textDataJSON;
     urlParams = progressData.urlParams;
+    coming_from = progressData.coming_from;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
