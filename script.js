@@ -857,6 +857,7 @@ function showPostSurvey() {
 function startTrainingTasks() {
   const trainingTaskStartTime = Date.now();
   document.getElementById("trainingTaskInstructionsPagePassed").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
   document.getElementById("taskPages").style.display = "block";
   showTask(taskNum);
   saveProgress("taskPages");
