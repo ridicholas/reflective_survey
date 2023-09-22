@@ -359,6 +359,7 @@ function saveProgress(currentPage) {
 
 
   };
+  var current_page = currentPage;
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
 }
@@ -555,9 +556,9 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. 
   While there is no true or "correct" value for these concepts, we provide you with guidance on how to reason and rate the concepts so that they can be most useful to you when making your final passenger satisfaction predictions.
   Each concept can be generally defined as follows: </p>
-  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? When rating passenger expectations, note that the higher the class of the passenger, the higher the passenger's expectations would be. If the reason for the passenger's travel was business, or if the passenger is a loyal customer, that passenger would also have higher expectations. For example, you might rate a passenger that is in business class, is a loyal customer, and traveling for business reasons, as someone that has a 5 for expectations. A passenger that is traveling in <i>economy class for personal reasons and is disloyal would likely have a 1 for expectations.</p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? For this concept, consider all of the passenger's survey responses that correspond to their experience during the flight such as food and drink, seat comfort, inflight entertainment, cleanliness, and on-board service. The higher the passenger's ratings for these aspects of the flight, the higher their in-flight satisfaction should be.</p>
-  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? When rating the delays concept, consider the arrival delay and the departure delay. The higher one or both of these values, the higher the value of the delays concept. Consider the relative values of arrival and departure delays from flight to flight. The flights with the lowest arrival and departure delay times should be rated with a 1, while flights with higher arrival and departure delay times should be rated with a 5. </p>
+  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? When rating passenger expectations, note that the higher the class of the passenger, the higher the passenger's expectations would be. If the reason for the passenger's travel was business, or if the passenger is a loyal customer, that passenger would also have higher expectations. For example, you might rate a passenger that is in <i>business class</i>, is a <i>loyal customer</i>, and traveling for <i>business reasons</i>, as someone that has a 5 for expectations. A passenger that is traveling in <i>economy class</i> for <i>personal reasons</i> and is <i>disloyal</i> would likely have a 1 for expectations.</p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? For this concept, consider all of the passenger's survey responses that correspond to their experience during the flight such as <i>food and drink, seat comfort, inflight entertainment, cleanliness, and on-board service</i>. The higher the passenger's ratings for these aspects of the flight, the higher their in-flight satisfaction should be.</p>
+  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? When rating the delays concept, consider the arrival delay and the departure delay. The higher one or both of these values, the higher the value of the delays concept. Consider the relative values of <i>arrival</i> and <i>departure delays</i> from flight to flight. The flights with the lowest arrival and departure delay times should be rated with a 1, while flights with higher arrival and departure delay times should be rated with a 5. </p>
   <p>When solving this task, think about how the concept ratings your gave can be used to predict the airline passenger's overall flight satisfaction.</p>`
 
   function showEvalTaskInstructions() {
@@ -587,21 +588,21 @@ function showConceptInstructions() {
     document.getElementById("conceptTrainingInstructionsPage").innerHTML += concept_introduction
   }
 
-  if (current_element == 'evalTaskInstructionsPage') {
+  if (current_page == 'evalTaskInstructionsPage') {
     removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML +=`  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` + `<button onclick="showEvalTaskInstructions()">Back</button>`
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start!</button>`; }
   }
 
-  if (current_element == 'trainingTaskInstructionsPagePassed') {
+  if (current_page == 'trainingTaskInstructionsPagePassed') {
     removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Continue</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` +  `<button onclick="showTrainingTaskInstructions()">Back</button>`;
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; }
   } 
 
-  if (current_element == 'trainingTaskInstructionsPageFirst') {
+  if (current_page == 'trainingTaskInstructionsPageFirst') {
     removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
