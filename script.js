@@ -467,6 +467,8 @@ pullResp(unique_id, condition);
 // Show the questionnaire page and hide the instruction page
 function showQuestionPage() {
   document.getElementById("trainingTaskInstructionsPageFirst").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+
   document.getElementById("questionPage").style.display = "block";
   if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("questionPage").innerHTML.indexOf("Question 3") == -1) {
@@ -570,6 +572,7 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
   coming_from = 'evalTaskInstructionsPage';
+  removeButtons('conceptTrainingInstructionsPage');
   
   if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
@@ -731,6 +734,7 @@ function showTrainingTaskInstructions() {
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
     coming_from = "trainingTaskInstructionsPagePassed";
+    removeButtons('conceptTrainingInstructionsPage');
     if ([2,3,5,6].includes(condition)) {
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
