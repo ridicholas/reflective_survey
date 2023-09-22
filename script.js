@@ -297,7 +297,7 @@ var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
 var current_element = "titlePage";
-var current_page = "titlePage";
+var coming_from = "titlePage";
 var evalStarted = false
 var times = {};
 var trainingTaskStartTime = Date.now();
@@ -360,7 +360,6 @@ function saveProgress(currentPage) {
 
 
   };
-  current_page = currentPage;
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
 }
@@ -568,6 +567,7 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   document.getElementById("evalTaskInstructionsPage").style.display = "block";
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+  coming_from = 'evalTaskInstructionsPage';
   
   if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
@@ -589,22 +589,22 @@ function showConceptInstructions() {
     document.getElementById("conceptTrainingInstructionsPage").innerHTML += concept_introduction
   }
 
-  if (current_page == 'evalTaskInstructionsPage') {
-    removeButtons('conceptTrainingInstructionsPage');
+  if (coming_from == 'evalTaskInstructionsPage') {
+    //removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML +=`  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` + `<button onclick="showEvalTaskInstructions()">Back</button>`
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start!</button>`; }
   }
 
-  if (current_page == 'trainingTaskInstructionsPagePassed') {
-    removeButtons('conceptTrainingInstructionsPage');
+  if (coming_from == 'trainingTaskInstructionsPagePassed') {
+    //removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Continue</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` +  `<button onclick="showTrainingTaskInstructions()">Back</button>`;
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; }
   } 
 
-  if (current_page == 'trainingTaskInstructionsPageFirst') {
-    removeButtons('conceptTrainingInstructionsPage');
+  if (coming_from == 'trainingTaskInstructionsPageFirst') {
+    //removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
     <button onclick="showQuestionPage()">Continue</button>`; }
@@ -707,10 +707,12 @@ function showTrainingTaskInstructions() {
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("commitPage").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+  
 
 
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
+    coming_from = "trainingTaskInstructionsPageFirst";
     if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
       }
@@ -721,6 +723,7 @@ function showTrainingTaskInstructions() {
   }
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
+    coming_from = "trainingTaskInstructionsPagePassed";
     if ([2,3,5,6].includes(condition)) {
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
       document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
