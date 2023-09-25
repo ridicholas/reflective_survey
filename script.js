@@ -1161,7 +1161,7 @@ function getClass(taskData) {
 }
 
 function populateDataFromJSON(currentTask) {
-  var taskData = taskDataJSON.find(task => task.Task === currentTask);
+  var taskData = selectedTasks[currentTask];
   if (!taskData) {
     console.error(`Task data not found for Task ${currentTask}`);
     return;
