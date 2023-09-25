@@ -225,7 +225,7 @@ function pullTasks(id, condition) {
       taskDataJSON = data;
       var totalItems = Object.keys(taskDataJSON).length;
       var numItems = 50;
-      var indices = [];
+      
       
       while (indices.length < numItems) {
         const randomIndex = Math.floor(Math.random() * totalItems);
@@ -310,6 +310,7 @@ function compareQ6ResponsesWithAnswers(startingTaskNum, endingTaskNum, trainingT
 var quizResponses = {};
 var selectedTasks = {};
 var trainingTaskResponses = {};
+var indices = [];
 var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
