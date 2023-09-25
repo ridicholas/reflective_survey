@@ -233,9 +233,11 @@ function pullTasks(id, condition) {
           indices.push(randomIndex);
         }
       }
-
+      
+      var i = 0;
       indices.forEach(index => {
-        selectedTasks[index] = taskDataJSON[index];
+        selectedTasks[i] = taskDataJSON[index];
+        i++;
       });
     }
     )
