@@ -744,7 +744,7 @@ function showTrainingTaskInstructions() {
       document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
     else {  
       if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Start!</button>`) == -1) {
-        document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` +  `<button onclick="showTrainingTaskInstructions()">Back</button>`;
+        document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;
         document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; } }
     
     saveProgress("trainingTaskInstructionsPagePassed");
