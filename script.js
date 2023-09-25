@@ -235,7 +235,7 @@ function pullTasks(id, condition) {
       }
 
       indices.forEach(index => {
-        selectedTasks[index] = tasksData[index];
+        selectedTasks[index] = taskDataJSON[index];
       });
     }
     )
