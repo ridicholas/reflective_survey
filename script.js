@@ -223,6 +223,20 @@ function pullTasks(id, condition) {
     .then(response => response.json())
     .then(data => {
       taskDataJSON = data;
+      var totalItems = Object.keys(taskDataJSON).length;
+      var numItems = 50;
+      var indices = [];
+      
+      while (indices.length < numItems) {
+        const randomIndex = Math.floor(Math.random() * totalItems);
+        if (!indices.includes(randomIndex)) {
+          indices.push(randomIndex);
+        }
+      }
+
+      indices.forEach(index => {
+        selectedTasks[index] = tasksData[index];
+      });
     }
     )
     .catch(error => {
@@ -294,6 +308,7 @@ function compareQ6ResponsesWithAnswers(startingTaskNum, endingTaskNum, trainingT
 
 
 var quizResponses = {};
+var selectedTasks = {};
 var trainingTaskResponses = {};
 var evalTaskResponses = {}
 var surveyResponses = {}
@@ -359,7 +374,9 @@ function saveProgress(currentPage) {
     timesFailedQuiz: timesFailedQuiz,
     textDataJSON: textDataJSON,
     urlParams: urlParams,
-    coming_from: coming_from
+    coming_from: coming_from, 
+    selectedTasks: selectedTasks,
+    indices: indices
 
 
   };
@@ -392,6 +409,8 @@ function loadProgress() {
     textDataJSON = progressData.textDataJSON;
     urlParams = progressData.urlParams;
     coming_from = progressData.coming_from;
+    selectedTasks = progressData.selectedTasks;
+    indices = progressData.indices;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
