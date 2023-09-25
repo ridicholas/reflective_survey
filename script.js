@@ -733,7 +733,6 @@ function showTrainingTaskInstructions() {
        
       
     
-    saveProgress("trainingTaskInstructionsPageFirst");
   }
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
@@ -1071,8 +1070,9 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
   <label> <input type="radio" name="attn1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="5"> 5 (Very Satisfied)</label>
-  </div>
-  <p><b>Please consider your concept ratings above when answering the following question.</b></p>` }
+  </div>`;
+  if ([2,3].includes(condition)) {
+    attention_check1 += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
   else {attention_check1 = ``}
 
   if (currentTask == 2) {
@@ -1086,8 +1086,9 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
   <label> <input type="radio" name="attn2" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="5"> 5 (Very Satisfied)</label>
-  </div>
-  <p><b>Please consider your concept ratings above when answering the following question.</b></p>`}
+  </div>`;
+  if ([2,3].includes(condition)) {
+    attention_check2 += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
   else {
     attention_check2 = ``}
   
