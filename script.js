@@ -25,6 +25,30 @@ function midpointPush(id, condition) {
 });
 }
 
+function midpointPush_questions(id, condition) {
+  //delete trainingTaskResponses[4]['attn1'];
+  //delete trainingTaskResponses[2]['attn2'];
+  fetch(apiEndpoint + `midpoint_push/${id}/${condition}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+
+
+    body: JSON.stringify(selectedTasks)
+})
+.then(function(response) {
+    if (response.ok) {
+        console.log('Data uploaded successfully');
+    } else {
+        console.log('Failed to upload data');
+    }
+})
+.catch(function(error) {
+    console.log('Error:', error);
+});
+}
+
 
 function postSurveyPush(id, condition) {
   fetch(apiEndpoint + `post_survey_push/${id}/${condition}`, {
@@ -270,7 +294,14 @@ function pullResp(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
-      respDataJSON = data;
+      var temp_respDataJSON = data;
+      var respDataJSON = {};
+      var i = 0;
+      indices.forEach(index => {
+        respDataJSON[i] = temp_repDataJSON[index];
+        i++;
+      });
+
     }
     )
     .catch(error => {
