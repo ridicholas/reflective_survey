@@ -294,11 +294,11 @@ function pullResp(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
-      var temp_respDataJSON = data;
-      var respDataJSON = {};
+      temp_respDataJSON = data;
+      respDataJSON = {};
       var i = 0;
       indices.forEach(index => {
-        respDataJSON[i] = temp_repDataJSON[index];
+        respDataJSON[i] = temp_respDataJSON[index];
         i++;
       });
 
@@ -346,6 +346,7 @@ var trainingTaskResponses = {};
 var indices = [];
 var taskDataJSON = {};
 var respDataJSON = {};
+var temp_respDataJSON = {};
 var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
@@ -401,6 +402,7 @@ function saveProgress(currentPage) {
     participantPassedQuiz: participantPassedQuiz,
     taskDataJSON: taskDataJSON,
     respDataJSON: respDataJSON,
+    temp_respDataJSON,
     atPostSurvey: atPostSurvey,
     evalStarted: evalStarted,
     times: times,
@@ -447,6 +449,7 @@ function loadProgress() {
     coming_from = progressData.coming_from;
     selectedTasks = progressData.selectedTasks;
     indices = progressData.indices;
+    temp_respDataJSON = progressData.temp_respDataJSON;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -1276,6 +1279,7 @@ function storeTaskResponses() {
   var taskResponses = {};
   var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
 
+  var i = 0;
   taskQuestions.forEach(function (question) {
     
     
@@ -1290,7 +1294,11 @@ function storeTaskResponses() {
         taskResponses[question.name] = "";
       }
     } 
+
+    taskResponses['taskIndex'] = indices[i]
   });
+
+  
 
   return taskResponses;
 }
