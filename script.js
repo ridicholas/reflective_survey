@@ -520,7 +520,6 @@ document.addEventListener("DOMContentLoaded", loadProgress);
 // Show the instruction page initially
 document.getElementById("titlePage").style.display = "block";
 pullTasks(unique_id, condition);
-pullResp(unique_id, condition);
 
 // Show the questionnaire page and hide the instruction page
 function showQuestionPage() {
@@ -777,6 +776,7 @@ function showTrainingTaskInstructions() {
 
   if (participantPassedQuiz == false) {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
+    pullResp(unique_id, condition);
     coming_from = "trainingTaskInstructionsPageFirst";
     if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
