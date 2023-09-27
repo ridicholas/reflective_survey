@@ -652,14 +652,16 @@ function showConceptInstructions() {
   }
 
   if (coming_from == 'evalTaskInstructionsPage') {
-    //removeButtons('conceptTrainingInstructionsPage');
+    removeButtons('conceptTrainingInstructionsPage');
+    if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`) == -1) {
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;}
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Start!</button>`) == -1) {
-      document.getElementById("conceptTrainingInstructionsPage").innerHTML +=`  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>` + `<button onclick="showEvalTaskInstructions()">Back</button>`
+      document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Back</button>`
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Start!</button>`; }
   }
 
   if (coming_from == 'trainingTaskInstructionsPagePassed') {
-    //removeButtons('conceptTrainingInstructionsPage');
+    removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;}
       if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button><button onclick="startTrainingTasks()">Start!</button>`) == -1) {
@@ -668,7 +670,7 @@ function showConceptInstructions() {
   
 
   if (coming_from == 'trainingTaskInstructionsPageFirst') {
-    //removeButtons('conceptTrainingInstructionsPage');
+    removeButtons('conceptTrainingInstructionsPage');
     if (document.getElementById("conceptTrainingInstructionsPage").innerHTML.indexOf(`<button onclick="showTrainingTaskInstructions()">Back</button>`) == -1) {
       document.getElementById("conceptTrainingInstructionsPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
     <button onclick="showQuestionPage()">Continue</button>`; }}
