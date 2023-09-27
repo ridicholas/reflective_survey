@@ -170,13 +170,7 @@ function midpointPullImage(id, condition) {
       pElement.appendChild(imageElement);
 
       if (atPostSurvey) {
-        var inner = document.getElementById('improvementPlanResultPage')
-        var buttons = inner.getElementsByTagName('button');
-        if (buttons) {
-          for (var i = 0; i < buttons.length; i++) {
-            buttons[i].remove();
-          }
-        }
+        removeButtons('improvementPlanResultPage');
         if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
           document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
           document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="showEvalTaskInstructions()">Next</button>`, ``)
@@ -824,7 +818,7 @@ function showPostSurvey() {
   urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects} ouf of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04).toFixed(2)}. </p> 
+  In the second part, you answered ${endCorrects} out of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04).toFixed(2)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
