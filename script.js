@@ -347,6 +347,7 @@ var indices = [];
 var taskDataJSON = {};
 var respDataJSON = {};
 var temp_respDataJSON = {};
+var temp_respDataJSON = {};
 var evalTaskResponses = {}
 var surveyResponses = {}
 var postSurveyResponses = {}
