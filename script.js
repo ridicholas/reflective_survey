@@ -932,6 +932,7 @@ function startEvalTasks() {
   evalStarted = true;
   document.getElementById("evalTaskInstructionsPage").style.display = "none";
   document.getElementById("improvementPlanResultPage").style.display = "none";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
 
   document.getElementById("taskPages").style.display = "block";
   if (taskNum == totalTrainingTasks) {
