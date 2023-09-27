@@ -989,10 +989,10 @@ function showNextTask(taskType) {
   
   if (taskType == 'training') {
 
-    trainingTaskResponses[taskNum] = storeTaskResponses();
+    trainingTaskResponses[taskNum] = storeTaskResponses(taskNum);
   }
   else {
-    evalTaskResponses[taskNum] = storeTaskResponses();
+    evalTaskResponses[taskNum] = storeTaskResponses(taskNum);
   }
 
   if (checkTaskAnswers()) {
@@ -1233,9 +1233,9 @@ function showPreviousTask(taskType) {
   
   if (taskType == 'training') {
 
-    trainingTaskResponses[taskNum] = storeTaskResponses(); }
+    trainingTaskResponses[taskNum] = storeTaskResponses(taskNum); }
   else {
-    evalTaskResponses[taskNum] = storeTaskResponses();}
+    evalTaskResponses[taskNum] = storeTaskResponses(taskNum);}
   
   if (taskType == 'training') {
     minTask = 1
@@ -1275,11 +1275,11 @@ function populateTaskForm(taskResponses) {
 
 
 // Get the responses for the current task
-function storeTaskResponses() {
+function storeTaskResponses(task_number) {
   var taskResponses = {};
   var taskQuestions = document.querySelectorAll('.task input[type="radio"]');
 
-  var i = 0;
+  
   taskQuestions.forEach(function (question) {
     
     
@@ -1295,7 +1295,8 @@ function storeTaskResponses() {
       }
     } 
 
-    taskResponses['taskIndex'] = indices[i]
+    taskResponses['taskIndex'] = indices[task_number-1]
+    
   });
 
   
