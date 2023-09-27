@@ -145,7 +145,6 @@ function removeButtons(curr_page) {
     length = buttons.length
     for (var i = 0; i < length; i++) {
       buttons[0].remove();
-      console.log(i)
     }
   }
 }
@@ -629,15 +628,16 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
   coming_from = 'evalTaskInstructionsPage';
-  removeButtons('conceptTrainingInstructionsPage');
+  //removeButtons('conceptTrainingInstructionsPage');
+  removeButtons('evalTaskInstructionsPage');
   
   if ([2,3,5,6].includes(condition)) {
     if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
     document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
     }
-  }
+  } else {
   if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
-  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; }
+  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; } }
   saveProgress("evalTaskInstructionsPage");
 }
 
@@ -921,6 +921,7 @@ function startTrainingTasks() {
 function showLastTrainingTask() {
   document.getElementById("finishTrainingPage").style.display = "none";
   document.getElementById("taskPages").style.display = "block";
+  document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
   taskNum = totalTrainingTasks;
   showTask(taskNum);
   saveProgress("taskPages");
