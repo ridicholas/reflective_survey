@@ -362,7 +362,7 @@ var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
 
-urlParams['type'] = 'pre-pilot'
+urlParams['type'] = 'pre-pilot2'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
