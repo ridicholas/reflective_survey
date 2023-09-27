@@ -294,11 +294,9 @@ function pullResp(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
-      temp_respDataJSON = data;
-      respDataJSON = {};
       var i = 0;
       indices.forEach(index => {
-        respDataJSON[i] = temp_respDataJSON[index];
+        respDataJSON[i] = data[index];
         i++;
       });
 
@@ -346,7 +344,6 @@ var trainingTaskResponses = {};
 var indices = [];
 var taskDataJSON = {};
 var respDataJSON = {};
-var temp_respDataJSON = {};
 var temp_respDataJSON = {};
 var evalTaskResponses = {}
 var surveyResponses = {}
