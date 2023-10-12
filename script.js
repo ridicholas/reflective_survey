@@ -1335,31 +1335,33 @@ function finishSurvey() {
       urlParams['completed'] = true;
       participantPush(unique_id, condition);
       // Get the user's responses for all input fields and store them in postSurveyResponses
-      postSurveyResponses.age = getRadioValue('age');
-      postSurveyResponses.education = getRadioValue('education');
-      postSurveyResponses.gender = getRadioValue('gender');
-      postSurveyResponses.stats= getRadioValue('stats');
-      postSurveyResponses.race = getRadioValue('race');
-      postSurveyResponses.flights = getRadioValue('flights');
-      postSurveyResponses.difference = getTextareaValue('difference');
-      postSurveyResponses.general = getTextareaValue('general');
-      if (condition != 0) {
-        postSurveyResponses.interpretation = getTextareaValue('interpretation');
-        postSurveyResponses.captures = getTextareaValue('captures');
-        postSurveyResponses.improvement = getTextareaValue('improvement');
-      }
+      //postSurveyResponses.age = getRadioValue('age');
+      //postSurveyResponses.education = getRadioValue('education');
+      //postSurveyResponses.gender = getRadioValue('gender');
+      //postSurveyResponses.stats= getRadioValue('stats');
+      //postSurveyResponses.race = getRadioValue('race');
+      //postSurveyResponses.flights = getRadioValue('flights');
+      //postSurveyResponses.difference = getTextareaValue('difference');
+      //postSurveyResponses.general = getTextareaValue('general');
+      //if (condition != 0) {
+      //  postSurveyResponses.interpretation = getTextareaValue('interpretation');
+      //  postSurveyResponses.captures = getTextareaValue('captures');
+      //  postSurveyResponses.improvement = getTextareaValue('improvement');
+      //}
       
-      if ([2,3,5,6].includes(condition)) {
-        postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
-        postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
+      //if ([2,3,5,6].includes(condition)) {
+      //  postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
+      //  postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
 
       // You can now use the postSurveyResponses object to send the data to the server or process it as needed
-      console.log(postSurveyResponses);
-      postSurveyPush(unique_id, condition);
+      //console.log(postSurveyResponses);
+      midpointPush(unique_id, condition);
+      //postSurveyPush(unique_id, condition);
       timesPush(unique_id, condition);
 
       // Hide the survey and show the thank you page
       document.getElementById('postSurveyPage').style.display = 'none';
+      document.getElementById('finishTrainingPage').style.display = 'none';
       document.getElementById('thankYou').style.display = 'block';
       
 
