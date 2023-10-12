@@ -246,7 +246,7 @@ function pullTasks(id, condition) {
       
       while (indices.length < numItems) {
         const randomIndex = Math.floor(Math.random() * totalItems);
-        if (!indices.includes(randomIndex)) {
+        if (!indices.includes(randomIndex) and ![0,1,2,3].includes(randomIndex)) {
           indices.push(randomIndex);
         }
       }
@@ -356,7 +356,7 @@ var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
 
-urlParams['type'] = 'pre-pilot2'
+urlParams['type'] = 'ruijiangs_experiment'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
@@ -376,7 +376,7 @@ var participantPassedQuiz = false;
 var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
-var condition = getRandomInt(4);
+var condition = 0;
 var atPostSurvey = false;
 urlParams['condition'] = condition
 
@@ -548,7 +548,7 @@ function showImprovementPlanTutorial() {
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
   urlParams['part1correct'] = corrs
-  bonus = corrs * 0.04;
+  bonus = corrs * 0.1;
   urlParams['bonus'] = bonus
   participantPush(unique_id, condition)
   document.getElementById("finishTrainingPage").style.display = "none";
@@ -560,7 +560,7 @@ function showImprovementPlanTutorial() {
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. </p>`;
   if (condition == 0) {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
-    You will again be given a bonus of $0.04 for each question you answer correctly. </p>
+    You will again be given a bonus of $0.1 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
@@ -813,8 +813,8 @@ function showPostSurvey() {
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
   urlParams['part2correct'] = endCorrects;
-  endBonus = endCorrects * 0.04;
-  fullBonus = ((corrs + endCorrects) * 0.04).toFixed(2)
+  endBonus = endCorrects * 0.1;
+  fullBonus = ((corrs + endCorrects) * 0.1).toFixed(2)
   urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
@@ -1157,10 +1157,10 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
     <div class="task">` + task_concept_text + attention_check1 + attention_check2 + `
     
     <div class="question">
-      <p>Was this passenger overall satisfied with the flight?</p>
+      <p>Which action do you recommend for this passenger?</p>
       <div class="choices">
-      <label><input type="radio" name="q6" value="not_satisfied"> Not Satisfied&ensp;&ensp;&ensp;&ensp;&ensp;</label>
-      <label><input type="radio" name="q6" value="satisfied"> Satisfied</label>
+      <label><input type="radio" name="q6" value="not_satisfied"> Send Cash Coupon&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+      <label><input type="radio" name="q6" value="satisfied"> Send Word Apology</label>
       </div>
     </div>
 

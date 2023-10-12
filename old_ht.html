@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey Form</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  
+  <div id="titlePage" class="page">
+    <h1>Airline Passenger Satisfaction Prediction</h1>
+    <h1 id="unique"></h1>
+    <p>This HIT is part of a scientific research project conducted by the University of Texas. Your decision to complete this HIT is voluntary, and your responses are anonymous. The results of the research may be presented at scientific meetings, published in scientific journals, or made publicly available to other researchers. Clicking on the 'Accept' button on the bottom of the page indicates that you are at least 18 years of age, you are able to read and write comfortably in English, and you agree to complete the HIT voluntarily.<p>
+
+    <p>You will be shown a series of airline passenger profiles and survey responses and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight along with other possible questions. You will use information about the passenger's trip (travel class, reason for travel, etc.) and the passenger's survey responses on how they felt about various components of the flight to make your prediction decision. This prediction task is broken up into two stages. You will complete half of the tasks in the first stage. You will then be provided with additional information not available to you in the first stage. You will then be asked to make predictions for the remaining tasks.
+</p>
+    <button onclick="showConsentPage()">Accept</button>
+  </div>
+
+    <div id="consentPage" class="page">
+    <h1>Consent Form</h1>
+    <p><b>Purpose:</b><br>
+        You are being asked to participate in a research study being conducted by researchers at the University of Texas system.  Participation is voluntary. The purpose of this research study is to help researchers develop AI-advising tools that can lead to better decision outcomes. 
+</p>
+
+<p>NOTE: This is an initial pilot version of the study. If you run into any technical issues while taking this study, even if they do not prevent you from completing the study, please reach out to the main researcher (contact info below), this will help us ensure that the study platform works as intended. Thank you!</p>
+<p><b>Procedures:</b><br>
+If you choose to be in the study, you will be asked to complete a series of tasks. The experiment should take around 30-60 minutes to complete.
+</p>
+<p><b>Confidentiality:</b><br>
+Your Mechanical Turk Worker ID will be used to distribute the payment to you, but we will not store your worker ID with your survey responses. Please be aware that your MTurk Workers ID can potentially be linked to information about you on your Amazon Public Profile page, however we will not access any personally identifying information from your Amazon Public Profile. Additionally, your MTurk worker IDs will NOT be shared with anyone. 
+</p>
+<p><b>What this study is about:</b><br>
+This is a study about identifying which factors and concepts related to airline travel can be used to predict airline passenger satisfaction. The goal is to accurately predict whether airline passengers would be satisfied with their journeys given information about their specific flight experiences. 
+</p>
+<p><b>What we will ask you to do:</b><br>
+This study will be divided into several components. First, you will then be introduced via a tutorial to the airline passenger satisfaction prediction task. The tutorial will describe the prediction goal and all factors/features that will be available to you with definitions. After the tutorial you will be asked to answer a series of questions about the content in the tutorial page to confirm you understood the tutorial. You will then move on to the prediction task during which you will be shown a series of passenger profiles and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight. The passenger's ultimate (dis)satisfaction with their flight has a ground truth response that was provided by the passenger but will not be revealed to you. Therefore, there is a correct answer for each task that you will be predicting. After the first round of questions, you will have a short break and will be provided with information on how you did over the first set of questions. You will then be asked to answer another set of questions, just like in the previous round. Finally, you will be asked to answer some more demographic and survey style questions describing your experience with the experiment. 
+</p>
+<p><b>Costs/Payments:</b><br>
+This study will pay $7.25 for completion of the study and should not take more than 60 minutes to complete. You will also be provided with additional incentive compensation dependent on how many prediction tasks you answer correctly, at a rate of $0.04 per correct task answer. There are 50 tasks eligible for the additional incentive bonus, so you can receive a maximum additional incentive compensation of $2.00. You must complete the experiment in its entirety to be eligible for payment. MTurk worker IDs will be collected for the purposes of distributing compensation. 
+</p>
+<p><b>PLEASE NOTE: This study contains a number of attention checks to make sure that participants are finishing the tasks honestly and completely. As long as you read the instructions and complete the tasks in good faith, your HIT will be approved. If you fail the attention checks, your HIT will be rejected. </b></p>
+<p><b>Disclaimer: </b><br>
+Any work performed on MTurk can be linked to the user's public profile page. Thus, workers may wish to restrict what information they choose to share in their public profile.
+</p>
+<p><b>If you have questions:</b><br>
+The main researcher conducting this study is Nicholas Wolczynski, a researcher at the University of Texas at Austin. If you have questions about this study, you may contact Nicholas Wolczynski at nwol@utexas.edu.   
+</p>
+<p><i>If you want to participate in this study, click the [Agree] button to start the survey.</i></p>
+
+    <button onclick="showCommitPage()">Agree</button>
+  </div>
+
+  <div id="questionPage" class="page">
+    <h1>Before we begin, please select whether the following statements are true or false to confirm that you are familiar with the experiment task and reward structure.</h1>
+    <div class="question">
+      <p>Question 1: A factor is a piece of information about each passenger and their flight.</p>
+      <input type="radio" name="q1" value="option1"> True
+      <input type="radio" name="q1" value="option2"> False
+    </div>
+
+    <div class="question">
+      <p>Question 2: You will be paid a base rate plus a bonus for each correct prediction of whether the passenger was overall satisfied or dissastified with their flight.</p>
+      <input type="radio" name="q2" value="option1"> True
+      <input type="radio" name="q2" value="option2"> False
+    </div>
+
+    
+  </div>
+
+  <div id="tutorialResultPage" class="page">
+    <h1>Result</h1>
+    <p>Excellent work! You have answered all questions correctly. You will now be shown the task instructions again and will be able to refer to them throughout the study.</p>
+    <button onclick="showTrainingTaskInstructions()">Go to Task Instructions</button>
+  </div>
+
+  <div id="trainingTaskInstructionsPageFirst" class="page">
+    <h1>Part 1 Task Instructions: Factors</h1>
+    <p>You will be shown a series of airline passenger satisfaction survey responses filled out by airline passengers after they completed a flight. Each passenger rated their satisfaction of several flight related factors on a scale of 1-5 (with 1 being least satisfied and 5 being most satisfied). Along with each passenger's survey responses, you will have access to basic passenger information such as their age, the class they flew in, their airline loyalty status, the amount of time they flew, and whether they experienced delays on the flight. Given this information about each passenger, your task is to predict how the passenger responsed to the question: "How satisfied were you with the flight overall?" Your job is to predict whether each passenger responded to this question with "satisfied" or "dissatisfied." The true overall satisfaction is known but hidden to you. For each task, if you correctly predict the passenger's satisfaction, you will earn an additional $0.04. </p>
+
+    
+    <p><b>Factors</b> are pieces of information about each passenger and their flight. For each passenger, you will have access to the following <b>factors</b>: </p>
+    <p><em>
+Gender: Reported gender of the passenger (Female, Male)<br>
+Customer Type: The customer type (Loyal customer, disloyal customer). Loyal customers frequently use the same airline and participate in the airline's rewards programs.<br>
+Age: The reported age of the passenger.<br>
+Type of Travel: Purpose of the flight of the passenger (Personal Travel, Business Travel)<br>
+Class: Travel class in the plane of the passenger (Business, Economy, Economy Plus)<br>
+Flight distance: What was the distance in kilometers (km) of the passenger's flight? For reference, a flight from New York City to London is 5,567km.<br>
+Arrival Delay in Minutes: Minutes flight was delayed from scheduled arrival time.<br>
+Departure Delay in Minutes: Minutes flight was delayed from scheduled departure time.<br></em><br>
+You will also have access to the passenger's survey responses which are the passenger's ratings (1: least satisfied, 5: most satisfied) indicating their satisfaction regarding the following aspects of their flight: <br><br>
+<em></em>&ensp;Inflight wifi service: How satisfied was the passenger with the plane's on board wifi service?<br>
+&ensp;Convenience of Departure/Arrival time: How satisfied was the passenger with the booked departure and arrival times (Note: this is only for booking time, so it does not consider any delays). <br>
+&ensp;Ease of online booking: Did the passenger find the online booking process (act of purchasing the flight ticket online) easy and convenient?<br>
+&ensp;Gate location: Was the passenger satisfied with where their gate was located at the airport?<br>
+&ensp;Food and drink: Was the passenger satisfied with the food and drink offered on the flight?<br>
+&ensp;Seat comfort: Did the passenger find their seat on the plane to be comfortable?<br>
+&ensp;Inflight entertainment: Was the passenger satisfied with the inflight entertainment options on the flight?<br>
+&ensp;On-board service: Was the passenger satisfied with the level of service offered on the flight?<br>
+&ensp;Baggage handling: Was the passenger satisfied with how their baggage was handled?<br>
+&ensp;Check-in service: Did the passenger find the process of checking-in to their flight to be easy and convenient?<br>
+&ensp;Cleanliness: Did the passenger find the plane interior to be clean?<br>
+ </em>
+
+</p>
+
+  </div>
+
+
+  <div id="trainingTaskInstructionsPagePassed" class="page">
+    <h1>Part 1 Task Instructions: Factors</h1>
+
+    <p>Great job! You succesfully answered all comprehension questions correctly, and can now begin making predictions. Below you will again find the task instructions for your convenience. Additionally, once you begin making predictions, you will be able to navigate back to the instructions page at any time.</p>
+    <p>You will be shown a series of airline passenger satisfaction survey responses filled out by airline passengers after they completed a flight. Each passenger rated their satisfaction of several flight related factors on a scale of 1-5 (with 1 being least satisfied and 5 being most satisfied). Along with each passenger's survey responses, you will have access to basic passenger information such as their age, the class they flew in, their airline loyalty status, the amount of time they flew, and whether they experienced delays on the flight. Given this information about each passenger, your task is to predict how the passenger responsed to the question: "How satisfied were you with the flight overall?" Your job is to predict whether each passenger responded to this question with "satisfied" or "dissatisfied." The true overall satisfaction is known but hidden to you. For each task, if you correctly predict the passenger's satisfaction, you will earn an additional $0.04. </p>
+
+    
+    <p><b>Factors</b> are pieces of information about each passenger and their flight. For each passenger, you will have access to the following <b>factors</b>: </p>
+    <p><em>
+Gender: Reported gender of the passenger (Female, Male)<br>
+Customer Type: The customer type (Loyal customer, disloyal customer). Loyal customers frequently use the same airline and participate in the airline's rewards programs.<br>
+Age: The reported age of the passenger.<br>
+Type of Travel: Purpose of the flight of the passenger (Personal Travel, Business Travel)<br>
+Class: Travel class in the plane of the passenger (Business, Economy, Economy Plus)<br>
+Flight distance: What was the distance in kilometers of the passenger's flight? For reference, a flight from New York City to London is 5,567km.<br>
+Arrival Delay in Minutes: Minutes flight was delayed from scheduled arrival time.<br>
+Departure Delay in Minutes: Minutes flight was delayed from scheduled departure time.<br></em><br>
+You will also have access to the passenger's survey responses which are the passenger's ratings (1: least satisfied, 5: most satisfied) indicating their satisfaction regarding the following aspects of their flight: <br><br>
+<em></em>&ensp;Inflight wifi service: How satisfied was the passenger with the plane's on board wifi service?<br>
+&ensp;Convenience of Departure/Arrival time: How satisfied was the passenger with the booked departure and arrival times (Note: this is only for booking time, so it does not consider any delays). <br>
+&ensp;Ease of online booking: Did the passenger find the online booking process (act of purchasing the flight ticket online) easy and convenient?<br>
+&ensp;Gate location: Was the passenger satisfied with where their gate was located at the airport?<br>
+&ensp;Food and drink: Was the passenger satisfied with the food and drink offered on the flight?<br>
+&ensp;Seat comfort: Did the passenger find their seat on the plane to be comfortable?<br>
+&ensp;Inflight entertainment: Was the passenger satisfied with the inflight entertainment options on the flight?<br>
+&ensp;On-board service: Was the passenger satisfied with the level of service offered on the flight?<br>
+&ensp;Baggage handling: Was the passenger satisfied with how their baggage was handled?<br>
+&ensp;Check-in service: Did the passenger find the process of checking-in to their flight to be easy and convenient?<br>
+&ensp;Cleanliness: Did the passenger find the plane interior to be clean?<br>
+ </em>
+
+</p>
+    
+    
+  </div>
+
+  <div id="conceptTrainingInstructionsPage" class="page">
+    <h1>Concept Instructions</h1>    
+    
+  </div>
+
+    <div id="evalTaskInstructionsPage" class="page">
+    <h1>Part 2 Task Instructions: Factors</h1>
+    <p>Below you will see the same instructions you were shown for Part 1 for your convenience. Feel free to skip over these instructions and begin the second part of the study once you are ready. You will be able to return to these instructions at any time while making predictions. </p>
+    <p>You will be shown a series of airline passenger satisfaction survey responses filled out by airline passengers after they completed a flight. Each passenger rated their satisfaction of several flight related factors on a scale of 1-5 (with 1 being least satisfied and 5 being most satisfied). Along with each passenger's survey responses, you will have access to basic passenger information such as their age, the class they flew in, their airline loyalty status, the amount of time they flew, and whether they experienced delays on the flight. Given this information about each passenger, your task is to predict how the passenger responsed to the question: "How satisfied were you with the flight overall?" Your job is to predict whether each passenger responded to this question with "satisfied" or "dissatisfied." The true overall satisfaction is known but hidden to you. For each task, if you correctly predict the passenger's satisfaction, you will earn an additional $0.04. </p>
+
+    
+    <p><b>Factors</b> are pieces of information about each passenger and their flight. For each passenger, you will have access to the following <b>factors</b>: </p>
+    <p><em>
+Gender: Reported gender of the passenger (Female, Male)<br>
+Customer Type: The customer type (Loyal customer, disloyal customer). Loyal customers frequently use the same airline and participate in the airline's rewards programs.<br>
+Age: The reported age of the passenger.<br>
+Type of Travel: Purpose of the flight of the passenger (Personal Travel, Business Travel)<br>
+Class: Travel class in the plane of the passenger (Business, Economy, Economy Plus)<br>
+Flight distance: What was the distance in kilometers (km) of the passenger's flight? For reference, a flight from New York City to London is 5,567km.<br>
+Arrival Delay in Minutes: Minutes flight was delayed from scheduled arrival time.<br>
+Departure Delay in Minutes: Minutes flight was delayed from scheduled departure time.<br></em><br>
+You will also have access to the passenger's survey responses which are the passenger's ratings (1: least satisfied, 5: most satisfied) indicating their satisfaction regarding the following aspects of their flight: <br><br>
+<em></em>&ensp;Inflight wifi service: How satisfied was the passenger with the plane's on board wifi service?<br>
+&ensp;Convenience of Departure/Arrival time: How satisfied was the passenger with the booked departure and arrival times (Note: this is only for booking time, so it does not consider any delays). <br>
+&ensp;Ease of online booking: Did the passenger find the online booking process (act of purchasing the flight ticket online) easy and convenient?<br>
+&ensp;Gate location: Was the passenger satisfied with where their gate was located at the airport?<br>
+&ensp;Food and drink: Was the passenger satisfied with the food and drink offered on the flight?<br>
+&ensp;Seat comfort: Did the passenger find their seat on the plane to be comfortable?<br>
+&ensp;Inflight entertainment: Was the passenger satisfied with the inflight entertainment options on the flight?<br>
+&ensp;On-board service: Was the passenger satisfied with the level of service offered on the flight?<br>
+&ensp;Baggage handling: Was the passenger satisfied with how their baggage was handled?<br>
+&ensp;Check-in service: Did the passenger find the process of checking-in to their flight to be easy and convenient?<br>
+&ensp;Cleanliness: Did the passenger find the plane interior to be clean?<br>
+ </em>
+
+</p>
+
+  </div>
+  
+  <div class="page" id="taskPages"></div>
+
+  <div id="finishTrainingPage" class="page">
+    <h1>Finished Part 1?</h1>
+    <p>Are you done with all 25 tasks? You will not be able to go back once you click done below.</p>
+    <button onclick="showLastTrainingTask()">Go Back</button>
+    <button onclick="showImprovementPlanTutorial()">Done</button>
+
+  </div>
+
+  <div id="finishEvalPage" class="page">
+    <h1>Finished Part 2?</h1>
+    <p>Are you done with all 25 tasks? You will not be able to go back once you click done below.</p>
+    <button onclick="showLastEvalTask()">Go Back</button>
+    <button onclick="showPostSurvey()">Done</button>
+  </div>
+
+  <div id="commitPage" class="page">
+    
+    <p>We care about the quality of our survey data. It is important that you provide thoughtful answers to each question in this survey.</p>
+    <div class="commitQuestion">
+      <p>Do you commit to providing thoughtful answers in this survey?</p>
+      <input type="radio" name="commitQ" value="No"> No, I will not
+      <input type="radio" name="commitQ" value="Yes"> Yes, I will
+      <input type="radio" name="commitQ" value="Niether"> I can't promise either way
+    </div>
+    <button onclick="checkForAttention()">Submit</button>
+  </div>
+
+    <div id="postSurveyPage" class="page">
+    <h1>Post Survey Page</h1>
+  </div>
+
+  <div id="thankYou" class="page">
+    <h1>Thank you for participating!</h1>
+      <p>Please expect your bonus payout to be processed within the next few days. Please click the button below to confirm completion of the study and navigate back to CloudResearch. Without clicking the button below, CloudResearch will not register this study as completed and there may be delays getting this HIT approved.</p>
+    <button onclick="redirect()">Complete</button>
+  </div>
+
+  <div id="improvementPlanTutorialPage" class="page">
+    <h1>Part 1 Results</h1>
+  </div>
+
+  <div id="attentionFailPage" class="page">
+    <h1>Thank You!</h1>
+    <p>Thank you for participating in the study so far. Unfortunately we require participants to commit to providing thoughtful answers to the study.</p>
+  </div>
+
+    <div id="improvementPlanResultPage" class="page">
+    <h1>Improvement Plan Page</h1>
+    <p>You should see your improvement plan below (image and text). If it is not loaded, it could be because it is still being generated based on your responses (it can take up to a minute). Please wait and refresh the page if you do not see it.</p>
+    <p>The text discusses the suggested improvement for each feature below, and the arrows in the image show how strong the suggested change should be (longer arrows indicate a stronger adjustment is necessary)</p>
+    
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
