@@ -246,7 +246,7 @@ function pullTasks(id, condition) {
       
       while (indices.length < numItems) {
         const randomIndex = Math.floor(Math.random() * totalItems);
-        if (!indices.includes(randomIndex) and ![0,1,2,3].includes(randomIndex)) {
+        if ((!indices.includes(randomIndex)) and (![0,1,2,3].includes(randomIndex))) {
           indices.push(randomIndex);
         }
       }
