@@ -1333,6 +1333,9 @@ function showAttentionFailPage() {
 function finishSurvey() {
       times['experimentTime'] = Date.now() - experimentStartTime;
       urlParams['completed'] = true;
+      corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
+      bonus = corrs*0.1;
+      urlParams['bonus'] = bonus;
       participantPush(unique_id, condition);
       // Get the user's responses for all input fields and store them in postSurveyResponses
       //postSurveyResponses.age = getRadioValue('age');
