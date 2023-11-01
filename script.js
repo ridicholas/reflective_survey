@@ -757,6 +757,8 @@ function showTrainingTaskInstructions() {
   document.getElementById("taskPages").style.display = "none";
   document.getElementById("commitPage").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
+
+  
   
 
 
@@ -764,14 +766,12 @@ function showTrainingTaskInstructions() {
     document.getElementById("trainingTaskInstructionsPageFirst").style.display = "block";
     pullResp(unique_id, condition);
     coming_from = "trainingTaskInstructionsPageFirst";
-    if ([2,3,5,6].includes(condition)) {
-    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
-      document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
-      } }
-    else {
-      if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showQuestionPage()">Continue</button>`) == -1) {
+
+    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(concept_introduction) == -1) {
+      document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += concept_introduction}
+    if (document.getElementById("trainingTaskInstructionsPageFirst").innerHTML.indexOf(`<button onclick="showQuestionPage()">Continue</button>`) == -1) {
         document.getElementById("trainingTaskInstructionsPageFirst").innerHTML += `<button onclick="showQuestionPage()">Continue</button>`;}
-    }
+    
        
       
     
@@ -779,6 +779,9 @@ function showTrainingTaskInstructions() {
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
     coming_from = "trainingTaskInstructionsPagePassed";
+
+    if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(concept_introduction) == -1) {
+      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += concept_introduction}
     
     if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Start!</button>`) == -1) {
         document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;
@@ -1178,7 +1181,7 @@ function populateDataFromJSON(currentTask) {
   conceptValues[currentTask-1] = {}
   conceptValues[currentTask-1]['value'] = 1
   if (taskData["Customer Type_Loyal Customer"] === 1) {
-    conceptValues[currentTask-1]['value'] += 1
+    conceptValues[currentTask-1]['value'] += 2
   }
   if (getClass(taskData) == 'Business') {
     conceptValues[currentTask-1]['value'] += 2
@@ -1344,9 +1347,9 @@ function finishSurvey() {
         postSurveyResponses.improvement = getTextareaValue('improvement');
       }
       
-      if ([2,3,5,6].includes(condition)) {
-        postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
-        postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
+      
+      postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
+      postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');
 
       // You can now use the postSurveyResponses object to send the data to the server or process it as needed
       console.log(postSurveyResponses);
