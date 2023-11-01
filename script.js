@@ -619,7 +619,9 @@ const concept_introduction = `<p>In addition to factors - which are direct attri
   //removeButtons('conceptTrainingInstructionsPage');
   removeButtons('evalTaskInstructionsPage');
   
-  
+  if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(concept_introduction) == -1) {
+    document.getElementById("evalTaskInstructionsPage").innerHTML += concept_introduction}
+
   if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
   document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; } }
   saveProgress("evalTaskInstructionsPage");
@@ -1190,7 +1192,7 @@ function populateDataFromJSON(currentTask) {
     conceptValues[currentTask-1]['value'] += 1
   }
 
-  conceptValues[currentTask-1]['inflight'] = calculateAverage([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']])
+  conceptValues[currentTask-1]['inflight'] = Math.round(calculateAverage([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']]))
   var delayTotal = taskData['Departure Delay in Minutes'] + taskData['Arrival Delay in Minutes']
   conceptValues[currentTask-1]['delay'] = 1
   if (delayTotal > 0) {
