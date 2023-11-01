@@ -1187,7 +1187,7 @@ function populateDataFromJSON(currentTask) {
     conceptValues[currentTask-1]['value'] += 1
   }
 
-  conceptValues[currentTask-1]['inflight'] = math.round(collect([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']]).average())
+  conceptValues[currentTask-1]['inflight'] = Math.round(collect([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']]).average())
   var delayTotal = taskData['Departure Delay in Minutes'] + taskData['Arrival Delay in Minutes']
   conceptValues[currentTask-1]['delay'] = 1
   if (delayTotal > 0) {
@@ -1210,6 +1210,8 @@ function populateDataFromJSON(currentTask) {
 
   document.getElementById('cvalue').innerText = conceptValues[currentTask-1]['value'];
   document.getElementById('cinflight').innerText = conceptValues[currentTask-1]['inflight'];
+  document.getElementById('cdelays').innerText = conceptValues[currentTask-1]['delay'];
+  document.getElementById('creason').innerText = conceptValues[currentTask-1]['reason'];
 
 
   
