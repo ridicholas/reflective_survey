@@ -91,9 +91,6 @@ function participantPush(id, condition) {
 }
 
 
-
-
-
 function timesPush(id, condition) {
   fetch(apiEndpoint + `times_push/${id}/${condition}`, {
     method: 'POST',
@@ -246,7 +243,7 @@ function pullTasks(id, condition) {
       
       while (indices.length < numItems) {
         const randomIndex = Math.floor(Math.random() * totalItems);
-        if ((!indices.includes(randomIndex)) & (![0,1,2,3].includes(randomIndex))) {
+        if (!indices.includes(randomIndex)) {
           indices.push(randomIndex);
         }
       }
@@ -356,7 +353,7 @@ var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
 
-urlParams['type'] = 'ruijiangs_experiment'
+urlParams['type'] = 'pre-pilot2'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
@@ -376,8 +373,9 @@ var participantPassedQuiz = false;
 var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
-var condition = 0;
+var condition = getRandomInt(4);
 var atPostSurvey = false;
+var conceptValues = {};
 urlParams['condition'] = condition
 
 function saveProgress(currentPage) {
@@ -489,9 +487,7 @@ function loadProgress() {
       document.getElementById("finishPage").style.display = "block";
     } else if (current_element == 'attentionFailPage') { 
       showAttentionFailPage();
-    } else if (current_element == 'conceptTrainingInstructionsPage') {
-      showConceptInstructions();
-    }
+    } 
 
     
 
@@ -520,7 +516,7 @@ function showQuestionPage() {
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
 
   document.getElementById("questionPage").style.display = "block";
-  if ([2,3,5,6].includes(condition)) {
+  if ([0,1,2,3,4,5,6].includes(condition)) {
     if (document.getElementById("questionPage").innerHTML.indexOf("Question 3") == -1) {
     document.getElementById("questionPage").innerHTML += `<div class="question">
   <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.</p>
@@ -548,7 +544,7 @@ function showImprovementPlanTutorial() {
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
   urlParams['part1correct'] = corrs
-  bonus = corrs * 0.1;
+  bonus = corrs * 0.04;
   urlParams['bonus'] = bonus
   participantPush(unique_id, condition)
   document.getElementById("finishTrainingPage").style.display = "none";
@@ -560,7 +556,7 @@ function showImprovementPlanTutorial() {
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. </p>`;
   if (condition == 0) {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
-    You will again be given a bonus of $0.1 for each question you answer correctly. </p>
+    You will again be given a bonus of $0.04 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
@@ -604,16 +600,14 @@ function showImprovementPlanTutorial() {
   saveProgress("improvementPlanResultPage");
   
 }
-const concept_introduction = `<p>In addition to thinking about factors, consider how the factors available come together to form the following concepts: passenger expectations, in-flight experience, and delays.
- A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.  
- For each passenger, given the information available, rate each of the concepts on a scale of 1-5. Note that the passengers did not provide their ratings for these concepts
-  (there is no true or "correct" concept rating). These are just there to help you reason about the task, and there are no right or wrong answers. 
-  While there is no true or "correct" value for these concepts, we provide you with guidance on how to reason and rate the concepts so that they can be most useful to you when making your final passenger satisfaction predictions.
-  Each concept can be generally defined as follows: </p>
-  <p><b>Passenger Expectations (1 (Low) - 5 (High))</b> - Did this passenger have high or low expectations for their flight (before the flight took place)? When rating passenger expectations, note that the higher the class of the passenger, the higher the passenger's expectations would be. If the reason for the passenger's travel was business, or if the passenger is a loyal customer, that passenger would also have higher expectations. For example, you might rate a passenger that is in <i>business class</i>, is a <i>loyal customer</i>, and traveling for <i>business reasons</i>, as someone that has a 5 for expectations. A passenger that is traveling in <i>economy class</i> for <i>personal reasons</i> and is <i>disloyal</i> would likely have a 1 for expectations.</p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - Was the passenger satisfied with their experience during the flight (on plane)? For this concept, consider all of the passenger's survey responses that correspond to their experience during the flight such as <i>food and drink, seat comfort, inflight entertainment, cleanliness, and on-board service</i>. The higher the passenger's ratings for these aspects of the flight, the higher their in-flight satisfaction should be.</p>
-  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - Was the passenger's flight significantly delayed? When rating the delays concept, consider the arrival delay and the departure delay. The higher one or both of these values, the higher the value of the delays concept. Consider the relative values of <i>arrival</i> and <i>departure delays</i> from flight to flight. The flights with the lowest arrival and departure delay times should be rated with a 1, while flights with higher arrival and departure delay times should be rated with a 5. </p>
-  <p>When solving this task, think about how the concept ratings your gave can be used to predict the airline passenger's overall flight satisfaction.</p>`
+const concept_introduction = `<p>In addition to factors - which are direct attributes (information) about either the passenger, the flight, or the passenger's survey responses - we also provide you with a set of key concepts to consider: passenger value, in-flight experience, delays, and reason for travel. 
+ A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight. Each concept is calculated using some of the factors already avaialable, and thus contains no additional information about the passenger. Concepts are ways of combining factors to create a more abstract representation of the passenger's experience that can be useful towards making predictions.
+  Each concept is defined as follows: </p>
+  <p><b>Passenger Value (1 (Low) - 5 (High))</b> - This concept makes use of the passenger class and customer loyalty factors. A disloyal passenger in economy class gets a value rating of 1. If a passenger is loyal, +1 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - This concept consider's the passenger's survey responses that describe their experience during the flight. It is calculated by averaging the following factors: 'Inflight wifi service','Food and drink', 'Seat comfort', 'Inflight entertainment', 'On-board service','Inflight service', 'Cleanliness.'</p>
+  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - This concept considers the delays experienced by the passenger on this flight. First, the sum of arrival and departure delay time in minutes is calculated. If the sum is 0, the delays concept gets a rating of 1. If the sum is greater than 0 but less than 30, the delays value gets a rating of 2. The delays value then increases by 1 at each 30 minute increment, with total delays greater than 90 minutes receiving a rating of 5.</p>
+  <p><b>Delays (0 (Personal) - 1 (Business))</b> - The final concept is the passenger's reason for travel. This concept is derived from a single factor. If the passenger was traveling for personal reasons, this concept gets a value of 0, otherwise, it gets a value of 1.</p>
+  <p>These final concept values will be calculated and presented to you for each task. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction.</p>`
 
   function showEvalTaskInstructions() {
   document.getElementById("improvementPlanResultPage").style.display = "none";
@@ -625,15 +619,11 @@ const concept_introduction = `<p>In addition to thinking about factors, consider
   //removeButtons('conceptTrainingInstructionsPage');
   removeButtons('evalTaskInstructionsPage');
   
-  if ([2,3,5,6].includes(condition)) {
-    if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
-    document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`
-    }
-  } else {
+  
   if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
   document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; } }
   saveProgress("evalTaskInstructionsPage");
-}
+
 
 function showConceptInstructions() {
   document.getElementById("evalTaskInstructionsPage").style.display = "none";
@@ -717,11 +707,11 @@ function checkAnswers() {
     }
     // Change the correct answer for question 2 in the condition above if needed
 
-    if (answer3.value === "option1" || [0,1,4].includes(condition)) {
+    if (answer3.value === "option1") {
       correctAnswers++;
     }
 
-    if (answer4.value === "option2" || [0,1,4].includes(condition) ) {
+    if (answer4.value === "option2" ) {
       correctAnswers++;
     }
 
@@ -789,19 +779,15 @@ function showTrainingTaskInstructions() {
   else {
     document.getElementById("trainingTaskInstructionsPagePassed").style.display = "block";
     coming_from = "trainingTaskInstructionsPagePassed";
-    removeButtons('conceptTrainingInstructionsPage');
-    if ([2,3,5,6].includes(condition)) {
-      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="showConceptInstructions()">Continue</button>`) == -1) {
-      document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="showConceptInstructions()">Continue</button>`;} }
-    else {  
-      if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Start!</button>`) == -1) {
+    
+    if (document.getElementById("trainingTaskInstructionsPagePassed").innerHTML.indexOf(`<button onclick="startTrainingTasks()">Start!</button>`) == -1) {
         document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `  <p><strong>Click start below whenever you are ready to start making predictions!</strong></p>`;
         document.getElementById("trainingTaskInstructionsPagePassed").innerHTML += `<button onclick="startTrainingTasks()">Start!</button>`; } }
     
     saveProgress("trainingTaskInstructionsPagePassed");
   }
   
-}
+
 
 function showPostSurvey() {
   atPostSurvey = true;
@@ -813,8 +799,8 @@ function showPostSurvey() {
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
   urlParams['part2correct'] = endCorrects;
-  endBonus = endCorrects * 0.1;
-  fullBonus = ((corrs + endCorrects) * 0.1).toFixed(2)
+  endBonus = endCorrects * 0.04;
+  fullBonus = ((corrs + endCorrects) * 0.04).toFixed(2)
   urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
@@ -871,14 +857,14 @@ function showPostSurvey() {
     <p>If there was a difference in your decision accuracy between the first 25 and last 25 tasks, what do you feel led to that difference?</p>
     <textarea name="difference" rows="4" cols="50"></textarea></p>` 
 
-  if ([2,3,5,6].includes(condition)) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of the passenger's expectations, in-flight experience, and delays. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
+  
+    document.getElementById("postSurveyPage").innerHTML += `<p>We introduced the concepts of the passenger's value, in-flight experience, delays, and reason for travel. Did you find these concepts intuituitive and relevant to the task of predicting passenger satisfaction?</p>
     <textarea name="conceptsIntuitive" rows="4" cols="50"></textarea>`
 
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you find thinking about the problem in terms of concepts helpful? Why or why not?</p>
     <textarea name="conceptsHelpful" rows="4" cols="50"></textarea>`
 
-  }
+  
 
   if (condition != 0) {
     document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the improvement plan you received after you completed the first part of the experiment. To view that plan again, click the button below.</p>
@@ -970,11 +956,9 @@ function checkTaskAnswers() {
   if (taskNum == 2 & attn2answer == null) {
       return false; }
 
-  if ([2,3,5,6].includes(condition)) {
-    return ((q1_ans && q4_ans && q5_ans && q6_ans) != null)
-  } else {
-    return (q6_ans != null)
-  }
+  
+  return (q6_ans != null)
+  
 
   
 
@@ -1076,44 +1060,22 @@ function showTask(currentTask) {
       <p>Cleanliness: <span id="cleanliness"></span></p>
       <p>Departure/Arrival Time Convenient: <span id="departureArrivalTime"></span></p>
     </div>
+  </div>
+  
+  <!-- Section 4: Key Concept Values-->
+    <div class="section4">
+      <h2>Key Concept Values</h2>
+      <p>The information above has been used to calculate the key concept values for this passenger, shown below:</p>
+      <p>Passenger Value: <span id="cvalue"></span></p>
+      <p>In-Flight Experience: <span id="cinflight"></span></p>
+      <p>Delays: <span id="cdelays"></span></p>
+      <p>Reason: <span id="creason"></span></p>
+    </div>
   </div>`;
 
   
 
-  if ([2,3].includes(condition)) {
-  task_concept_text = `<div class="question">
-  <p>Did this passenger have high expectations prior to their flight?</p>
-  <div class="choices">
-  <label><input type="radio" name="q1" value="1"> 1 (Low)&emsp;&emsp;&ensp;&ensp;&ensp;&nbsp;&ensp;&ensp; </label>
-  <label><input type="radio" name="q1" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q1" value="5"> 5 (High)</label>
-  </div>
-</div>
-<div class="question">
-  <p>Was this passenger satisfied with their in-flight experience?</p>
-  <div class="choices">
-  <label> <input type="radio" name="q4" value="1"> 1 (Not Satisfied)&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label> <input type="radio" name="q4" value="5"> 5 (Very Satisfied)</label>
-  </div>
-</div>
-<div class="question">
-  <p>Did this passenger experience delays?</p>
-  <div class="choices">
-  <label> <input type="radio" name="q5" value="1"> 1 (No Delays)&emsp;&ensp;&ensp;</label>   
-  <label><input type="radio" name="q5" value="2"> 2&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q5" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q5" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
-  <label><input type="radio" name="q5" value="5"> 5 (Significant Delays)</label>
-  </div>
-</div> ` 
-
-if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
-  else { task_concept_text = `` }
+ 
 
   if (currentTask == 4) {
   attention_check1 = `<div class="question">
@@ -1124,14 +1086,10 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
   <label> <input type="radio" name="attn1" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn1" value="5"> 5 (Very Satisfied)</label>
-  </div>`;
-  if ([2,3].includes(condition)) {
-    attention_check1 += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
+  </div>`;}
   else {attention_check1 = ``}
 
   if (currentTask == 2) {
-
-  
   attention_check2 = `<div class="question">
   <p>Select value "4" below.</p>
   <div class="choices">
@@ -1140,9 +1098,7 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
   <label> <input type="radio" name="attn2" value="3"> 3&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="4"> 4&emsp;&emsp;&emsp;&ensp;&ensp;</label>
   <label> <input type="radio" name="attn2" value="5"> 5 (Very Satisfied)</label>
-  </div>`;
-  if ([2,3].includes(condition)) {
-    attention_check2 += `<p><b>Please consider your concept ratings above when answering the following question.</b></p>`}}
+  </div>`;}
   else {
     attention_check2 = ``}
   
@@ -1154,13 +1110,13 @@ if (currentTask != 4 & currentTask != 2) {task_concept_text += `<p><b>Please con
   }
   
   document.getElementById("taskPages").innerHTML = profileInfo + `
-    <div class="task">` + task_concept_text + attention_check1 + attention_check2 + `
+    <div class="task">` + attention_check1 + attention_check2 + `
     
     <div class="question">
-      <p>Which action do you recommend for this passenger?</p>
+      <p>Was this passenger overall satisfied with the flight?</p>
       <div class="choices">
-      <label><input type="radio" name="q6" value="not_satisfied"> Send Cash Coupon&ensp;&ensp;&ensp;&ensp;&ensp;</label>
-      <label><input type="radio" name="q6" value="satisfied"> Send Word Apology</label>
+      <label><input type="radio" name="q6" value="not_satisfied"> Not Satisfied&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+      <label><input type="radio" name="q6" value="satisfied"> Satisfied</label>
       </div>
     </div>
 
@@ -1218,6 +1174,43 @@ function populateDataFromJSON(currentTask) {
   document.getElementById('onlineBooking').innerText = taskData['Ease of Online booking'];
   document.getElementById('cleanliness').innerText = taskData['Cleanliness'];
   document.getElementById('departureArrivalTime').innerText = taskData['Departure/Arrival time convenient'];
+
+  conceptValues[currentTask-1] = {}
+  conceptValues[currentTask-1]['value'] = 1
+  if (taskData["Customer Type_Loyal Customer"] === 1) {
+    conceptValues[currentTask-1]['value'] += 1
+  }
+  if (getClass(taskData) == 'Business') {
+    conceptValues[currentTask-1]['value'] += 2
+  }
+  if (getClass(taskData) == 'Economy Plus') {
+    conceptValues[currentTask-1]['value'] += 1
+  }
+
+  conceptValues[currentTask-1]['inflight'] = math.round(collect([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']]).average())
+  var delayTotal = taskData['Departure Delay in Minutes'] + taskData['Arrival Delay in Minutes']
+  conceptValues[currentTask-1]['delay'] = 1
+  if (delayTotal > 0) {
+    conceptValues[currentTask-1]['delay'] += 1
+  }
+  if (delayTotal > 30) {
+    conceptValues[currentTask-1]['delay'] += 1
+  }
+  if (delayTotal > 60) {
+    conceptValues[currentTask-1]['delay'] += 1
+  }
+  if (delayTotal > 90) {
+    conceptValues[currentTask-1]['delay'] += 1
+  }
+
+  conceptValues[currentTask-1]['reason'] = 0
+  if (taskData['Type of Travel_Business travel'] == 1) {
+    conceptValues[currentTask-1]['reason'] += 1
+  }
+
+  document.getElementById('cvalue').innerText = conceptValues[currentTask-1]['value'];
+  document.getElementById('cinflight').innerText = conceptValues[currentTask-1]['inflight'];
+
 
   
 }
@@ -1333,38 +1326,33 @@ function showAttentionFailPage() {
 function finishSurvey() {
       times['experimentTime'] = Date.now() - experimentStartTime;
       urlParams['completed'] = true;
-      corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
-      bonus = corrs*0.1;
-      urlParams['bonus'] = bonus;
       participantPush(unique_id, condition);
       // Get the user's responses for all input fields and store them in postSurveyResponses
-      //postSurveyResponses.age = getRadioValue('age');
-      //postSurveyResponses.education = getRadioValue('education');
-      //postSurveyResponses.gender = getRadioValue('gender');
-      //postSurveyResponses.stats= getRadioValue('stats');
-      //postSurveyResponses.race = getRadioValue('race');
-      //postSurveyResponses.flights = getRadioValue('flights');
-      //postSurveyResponses.difference = getTextareaValue('difference');
-      //postSurveyResponses.general = getTextareaValue('general');
-      //if (condition != 0) {
-      //  postSurveyResponses.interpretation = getTextareaValue('interpretation');
-      //  postSurveyResponses.captures = getTextareaValue('captures');
-      //  postSurveyResponses.improvement = getTextareaValue('improvement');
-      //}
+      postSurveyResponses.age = getRadioValue('age');
+      postSurveyResponses.education = getRadioValue('education');
+      postSurveyResponses.gender = getRadioValue('gender');
+      postSurveyResponses.stats= getRadioValue('stats');
+      postSurveyResponses.race = getRadioValue('race');
+      postSurveyResponses.flights = getRadioValue('flights');
+      postSurveyResponses.difference = getTextareaValue('difference');
+      postSurveyResponses.general = getTextareaValue('general');
+      if (condition != 0) {
+        postSurveyResponses.interpretation = getTextareaValue('interpretation');
+        postSurveyResponses.captures = getTextareaValue('captures');
+        postSurveyResponses.improvement = getTextareaValue('improvement');
+      }
       
-      //if ([2,3,5,6].includes(condition)) {
-      //  postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
-      //  postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
+      if ([2,3,5,6].includes(condition)) {
+        postSurveyResponses.conceptsIntuitive = getTextareaValue('conceptsIntuitive');
+        postSurveyResponses.conceptsHelpful = getTextareaValue('conceptsHelpful');}
 
       // You can now use the postSurveyResponses object to send the data to the server or process it as needed
-      //console.log(postSurveyResponses);
-      midpointPush(unique_id, condition);
-      //postSurveyPush(unique_id, condition);
+      console.log(postSurveyResponses);
+      postSurveyPush(unique_id, condition);
       timesPush(unique_id, condition);
 
       // Hide the survey and show the thank you page
       document.getElementById('postSurveyPage').style.display = 'none';
-      document.getElementById('finishTrainingPage').style.display = 'none';
       document.getElementById('thankYou').style.display = 'block';
       
 
@@ -1389,6 +1377,5 @@ function finishSurvey() {
     function getTextareaValue(name) {
       return document.getElementsByName(name)[0].value;
     }
-
 
 

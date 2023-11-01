@@ -64,6 +64,11 @@ img {
   grid-row: 1 / span 2; /* Section 3 in the first row, spanning two rows */
 }
 
+.section4 {
+  border: 1px solid black;
+  padding: 10px;
+}
+
 
 
 
