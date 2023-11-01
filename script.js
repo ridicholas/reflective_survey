@@ -1187,7 +1187,7 @@ function populateDataFromJSON(currentTask) {
     conceptValues[currentTask-1]['value'] += 1
   }
 
-  conceptValues[currentTask-1]['inflight'] = Math.round(collect([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']]).average())
+  conceptValues[currentTask-1]['inflight'] = calculateAverage([taskData['Inflight wifi service'], taskData['On-board service'], taskData['Food and drink'], taskData['Seat comfort'], taskData['Inflight entertainment'], taskData['Cleanliness']])
   var delayTotal = taskData['Departure Delay in Minutes'] + taskData['Arrival Delay in Minutes']
   conceptValues[currentTask-1]['delay'] = 1
   if (delayTotal > 0) {
@@ -1379,5 +1379,17 @@ function finishSurvey() {
     function getTextareaValue(name) {
       return document.getElementsByName(name)[0].value;
     }
+
+    function calculateAverage(array) {
+      var total = 0;
+      var count = 0;
+  
+      array.forEach(function(item, index) {
+          total += item;
+          count++;
+      });
+  
+      return total / count;
+  }
 
 
