@@ -456,8 +456,8 @@ function loadProgress() {
     if (current_element == "titlePage") {
       document.getElementById("titlePage").style.display = "block";
     } else if (current_element == "questionPage") {
-      showQuestionPage(); }
-    else if (current_element == "improvementPlanTutorialPage") {
+      showQuestionPage(); 
+    } else if (current_element == "improvementPlanTutorialPage") {
       showImprovementPlanTutorial();
     } else if (current_element == "improvementPlanResultPage") {
       showImprovementPlanResult();
@@ -467,8 +467,6 @@ function loadProgress() {
       showTrainingTaskInstructions();
     } else if (current_element == "trainingTaskInstructionsPagePassed") {
       showTrainingTaskInstructions();
-    } else if (current_element == "evalTaskInstructionsPage") {
-      showEvalTaskInstructions();
     } else if (current_element == "taskPages") {
       document.getElementById("taskPages").style.display = "block";
       showTask(taskNum);
@@ -496,6 +494,11 @@ function loadProgress() {
   }
 }
 
+
+
+// Show the instruction page initially
+document.getElementById("titlePage").style.display = "block";
+
 // Call the loadProgress function on page load to resume the participant's progress
 document.addEventListener("DOMContentLoaded", loadProgress);
 
@@ -506,8 +509,6 @@ document.addEventListener("DOMContentLoaded", loadProgress);
 
 
 
-// Show the instruction page initially
-document.getElementById("titlePage").style.display = "block";
 pullTasks(unique_id, condition);
 
 // Show the questionnaire page and hide the instruction page
