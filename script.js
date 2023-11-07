@@ -391,7 +391,7 @@ function saveProgress(currentPage) {
     participantPassedQuiz: participantPassedQuiz,
     taskDataJSON: taskDataJSON,
     respDataJSON: respDataJSON,
-    temp_respDataJSON,
+    temp_respDataJSON: temp_respDataJSON,
     atPostSurvey: atPostSurvey,
     evalStarted: evalStarted,
     times: times,
