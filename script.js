@@ -497,7 +497,7 @@ function loadProgress() {
 }
 
 // Call the loadProgress function on page load to resume the participant's progress
-//document.addEventListener("DOMContentLoaded", loadProgress);
+document.addEventListener("DOMContentLoaded", loadProgress);
 
 
 
