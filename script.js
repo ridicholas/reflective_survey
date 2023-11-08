@@ -498,6 +498,7 @@ function loadProgress() {
 
 // Show the instruction page initially
 document.getElementById("titlePage").style.display = "block";
+saveProgress("titlePage");
 
 // Call the loadProgress function on page load to resume the participant's progress
 document.addEventListener("DOMContentLoaded", loadProgress);
