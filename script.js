@@ -485,6 +485,8 @@ function loadProgress() {
       document.getElementById("finishPage").style.display = "block";
     } else if (current_element == 'attentionFailPage') { 
       showAttentionFailPage();
+    } else if (current_element == "evalTaskInstructionsPage") {
+      showEvalTaskInstructions();
     } 
 
     
@@ -498,7 +500,7 @@ function loadProgress() {
 
 // Show the instruction page initially
 document.getElementById("titlePage").style.display = "block";
-saveProgress("titlePage");
+
 
 // Call the loadProgress function on page load to resume the participant's progress
 document.addEventListener("DOMContentLoaded", loadProgress);
@@ -625,8 +627,10 @@ const concept_introduction = `<p>In addition to factors - which are direct attri
     document.getElementById("evalTaskInstructionsPage").innerHTML += concept_introduction}
 
   if (document.getElementById("evalTaskInstructionsPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Continue</button>`) == -1) {
-  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; } }
-  saveProgress("evalTaskInstructionsPage");
+  document.getElementById("evalTaskInstructionsPage").innerHTML += `<button onclick="startEvalTasks()">Continue</button>`; } 
+
+  saveProgress("evalTaskInstructionsPage");}
+
 
 
 function showConceptInstructions() {
