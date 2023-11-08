@@ -604,14 +604,15 @@ function showImprovementPlanTutorial() {
   saveProgress("improvementPlanResultPage");
   
 }
-const concept_introduction = `<p>In addition to factors - which are direct attributes (information) about either the passenger, the flight, or the passenger's survey responses - we also provide you with a set of key concepts to consider: passenger value, in-flight experience, delays, and reason for travel. 
- A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight. Each concept is calculated using some of the factors already avaialable, and thus contains no additional information about the passenger. Concepts are ways of combining factors to create a more abstract representation of the passenger's experience that can be useful towards making predictions.
-  Each concept is defined as follows: </p>
-  <p><b>Passenger Value (1 (Low) - 5 (High))</b> - This concept makes use of the passenger class and customer loyalty factors. A disloyal passenger in economy class gets a value rating of 1. If a passenger is loyal, +1 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</p>
-  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied))</b> - This concept consider's the passenger's survey responses that describe their experience during the flight. It is calculated by averaging the following factors: 'Inflight wifi service','Food and drink', 'Seat comfort', 'Inflight entertainment', 'On-board service','Inflight service', 'Cleanliness.'</p>
-  <p><b>Delays (1 (No Delays) - 5 (Significant Delays))</b> - This concept considers the delays experienced by the passenger on this flight. First, the sum of arrival and departure delay time in minutes is calculated. If the sum is 0, the delays concept gets a rating of 1. If the sum is greater than 0 but less than 30, the delays value gets a rating of 2. The delays value then increases by 1 at each 30 minute increment, with total delays greater than 90 minutes receiving a rating of 5.</p>
-  <p><b>Delays (0 (Personal) - 1 (Business))</b> - The final concept is the passenger's reason for travel. This concept is derived from a single factor. If the passenger was traveling for personal reasons, this concept gets a value of 0, otherwise, it gets a value of 1.</p>
-  <p>These final concept values will be calculated and presented to you for each task. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction.</p>`
+const concept_introduction = `<p>We provide you with a set of key concepts to help you synthesize information above: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. The concepts below are shown to play an important role in passenger satisfaction according to research. </p>
+  <p><b>Passenger Status (1 (Low) - 5 (High)):</b> Passenger status means the status that passengers hold in airline passenger management, which indicates the service quality that the airline provides. This concept uses the passenger class and customer loyalty. A disloyal passenger in economy class gets a status rating of 1. If a passenger is loyal, +1 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</p>
+  <p><b>In-Flight Experience (1 (Satisfied) - 5 (Unsatisfied)):</b> In-flight experience their experience during the flight. It is calculated by averaging the following factors: 'Inflight wifi service','Food and drink', 'Seat comfort', 'Inflight entertainment', 'On-board service','Inflight service', 'Cleanliness.'
+  </p>
+  <p><b>Delays (1 (No Delays) - 5 (Significant Delays)):</b> Delays indicate delays experienced by the passenger at various points of their journey. First, the sum of arrival and departure delay time in minutes is calculated. If the sum is 0, the delays concept gets a rating of 1. If the sum is greater than 0 but less than 30, the delays value gets a rating of 2. The delays value then increases by 1 at each 30-minute increment, with total delays greater than 90 minutes receiving a rating of 5.
+  </p>
+  <p><b>Reason for travel (0 (Personal) - 1 (Business)):</b> Reason for travel indicates whether passengers traveled for personal versus business reasons. If the passenger was traveling for personal reasons, this concept gets a value of 0, otherwise, it gets a value of 1.</p>
+  <p>These concept values will be calculated and presented to you for each task. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction.
+  </p>`
 
   function showEvalTaskInstructions() {
   document.getElementById("improvementPlanResultPage").style.display = "none";
@@ -1077,10 +1078,10 @@ function showTask(currentTask) {
     <div class="section4">
       <h2>Key Concept Values</h2>
       <p>The information above has been used to calculate the key concept values for this passenger, shown below:</p>
-      <p>Passenger Value: <span id="cvalue"></span></p>
+      <p>Passenger Status: <span id="cvalue"></span></p>
       <p>In-Flight Experience: <span id="cinflight"></span></p>
       <p>Delays: <span id="cdelays"></span></p>
-      <p>Reason: <span id="creason"></span></p>
+      <p>Reason For Travel: <span id="creason"></span></p>
     </div>
   </div>`;
 
