@@ -353,7 +353,7 @@ var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
 
-urlParams['type'] = 'pre-pilot2'
+urlParams['type'] = 'nick_test3'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
@@ -373,7 +373,7 @@ var participantPassedQuiz = false;
 var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
-var condition = getRandomInt(4);
+var condition = getRandomInt(6);
 var atPostSurvey = false;
 var conceptValues = {};
 urlParams['condition'] = condition
@@ -518,21 +518,7 @@ pullTasks(unique_id, condition);
 function showQuestionPage() {
   document.getElementById("trainingTaskInstructionsPageFirst").style.display = "none";
   document.getElementById("conceptTrainingInstructionsPage").style.display = "none";
-
   document.getElementById("questionPage").style.display = "block";
-  if ([0,1,2,3,4,5,6].includes(condition)) {
-    if (document.getElementById("questionPage").innerHTML.indexOf("Question 3") == -1) {
-    document.getElementById("questionPage").innerHTML += `<div class="question">
-  <p>Question 3: A concept is an intermediate descriptor of the passenger's airline experience that can be useful towards deducing whether a passenger was ultimately satisfied or dissatisfied with their flight.</p>
-  <input type="radio" name="q3" value="option1"> True
-  <input type="radio" name="q3" value="option2"> False
-</div>
-<div class="question">
-  <p>Question 4: The concept ratings you provide will be compared to ground truth ("correct") concept values.</p>
-  <input type="radio" name="q4" value="option1"> True
-  <input type="radio" name="q4" value="option2"> False
-</div>`
-  } }
   if (document.getElementById("questionPage").innerHTML.indexOf("showTrainingTaskInstructions()") == -1) {
   document.getElementById("questionPage").innerHTML += `<button onclick="showTrainingTaskInstructions()">Back</button>
   <button onclick="checkAnswers()">Submit</button>
@@ -548,7 +534,7 @@ function showImprovementPlanTutorial() {
   midpointPush(unique_id, condition);
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON);
   urlParams['part1correct'] = corrs
-  bonus = corrs * 0.04;
+  bonus = corrs * 0.05;
   urlParams['bonus'] = bonus
   participantPush(unique_id, condition)
   document.getElementById("finishTrainingPage").style.display = "none";
@@ -560,7 +546,7 @@ function showImprovementPlanTutorial() {
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. </p>`;
   if (condition == 0) {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
-    You will again be given a bonus of $0.04 for each question you answer correctly. </p>
+    You will again be given a bonus of $0.05 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
@@ -690,16 +676,8 @@ function checkAnswers() {
   // Get the selected answers
   var answer1 = document.querySelector('input[name="q1"]:checked');
   var answer2 = document.querySelector('input[name="q2"]:checked');
-
-
-  if ([2,3,5,6].includes(condition)) {
   var answer3 = document.querySelector('input[name="q3"]:checked');
   var answer4 = document.querySelector('input[name="q4"]:checked');
-  } else {
-    var answer3 = document.querySelector('input[name="q1"]:checked')
-    var answer4 = document.querySelector('input[name="q2"]:checked')
-
-  }
 
   // Check if all questions are answered
   if (answer1 && answer2 && answer3 && answer4) {
@@ -811,12 +789,12 @@ function showPostSurvey() {
   endCorrects = compareQ6ResponsesWithAnswers(26, 50, evalTaskResponses, respDataJSON)
   corrs = compareQ6ResponsesWithAnswers(1, 25, trainingTaskResponses, respDataJSON)
   urlParams['part2correct'] = endCorrects;
-  endBonus = endCorrects * 0.04;
-  fullBonus = ((corrs + endCorrects) * 0.04).toFixed(2)
+  endBonus = endCorrects * 0.05;
+  fullBonus = ((corrs + endCorrects) * 0.05).toFixed(2)
   urlParams['bonus'] = fullBonus
   if (document.getElementById("postSurveyPage").innerHTML.indexOf(`Thank you for completing the prediction tasks!`) == -1) {
   document.getElementById("postSurveyPage").innerHTML += `<p>Thank you for completing the prediction tasks! 
-  In the second part, you answered ${endCorrects} out of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.04).toFixed(2)}. </p> 
+  In the second part, you answered ${endCorrects} out of 25 questions correctly, earning you a bonus of $${endBonus.toFixed(2)}. As a reminder, in the first part, you answered ${corrs} out of 25 correctly. Overall, you answered ${corrs + endCorrects} out of 50 correctly, earning you a total bonus of $${((corrs + endCorrects) * 0.05).toFixed(2)}. </p> 
   <p>Before you go, please answer a few more questions about your experience.</p>
   <p>What is your age?</p>
     <input type="radio" name="age" value="18-24"> 18-24
