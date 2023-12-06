@@ -893,7 +893,7 @@ function showPostSurvey() {
 
   if (condition in [3, 4, 5, 6]) {
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you try using the guidance arrows and text to improve your decisions? If so, how? If not, why?</p>
-    <textarea name="improvement" rows="4" cols="50"></textarea>}`
+    <textarea name="improvement" rows="4" cols="50"></textarea>}`}
 
   document.getElementById("postSurveyPage").innerHTML += `<p>How would you describe your experience with this survey in general?</p>
     <textarea name="general" rows="4" cols="50"></textarea>`
