@@ -549,12 +549,35 @@ function showImprovementPlanTutorial() {
     You will again be given a bonus of $0.05 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
+    if (condition in [1, 3, 5]) {
+      var word1 = "passenger's flight information and survey responses";
+      var word2 = "piece of information";
+      var word3 = "feature (piece of information)";
+      var word4 = "feature (information)";
+      var word5 = "feature";  
+    } 
+
+    if (condition in [2, 4, 6]) {
+      var word1 = "key concepts";
+      var word2 = "concept";
+      var word3 = "concept";
+      var word4 = "concept";
+      var word5 = "concept";        
+    }
+
+    if (condition in [1, 2]){
+      arrow_guidance = ""
+    }
+
+    else {
+      arrow_guidance = "<p>In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust how you use the information provided based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>"
+    }
     document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
-    <p> On the next page you will see a horizontal bar plot that shows you how you used either the factors or concepts to come to your final decisions. For each factor/concept, a high value (blue bar extending to the right from 0) means that you generally assumed that factor/concept has a positive relationship with the passenger's overall satisfaction, 
-    while a low value (red bar extending to the left from 0) means that you generally assumed that factor/concept has a negative relationship with the passenger's overall satisfaction. </p>
-    <p>Note that a positive relationship between a factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to select that the passenger was overall satisfied. 
-    A negative relationship between the factor/concept, such as Age, and the passenger's satisfaction, means that the higher the value for the factor/concept (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
-    <p> In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust the relationship you use for each factor/concept based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>
+    <p> On the next page you will see a horizontal bar plot that shows you how you used the ${passflightinfo} to come to your final decisions. For each ${word2}, a high value (blue bar extending to the right from 0) indicates that that ${word2} had a positive relationship with your prediction of the passenger's overall satisfaction, 
+    while a low value (red bar extending to the left from 0) means that that ${word2} had a negative relationship with your prediction of the passenger's overall satisfaction. </p>
+    <p>Note that a positive relationship between a ${word3}, such as Age, and your prediction of the passenger's satisfaction, means that the higher the value for the ${word5} (the higher the age), the more likely you were to select that the passenger was overall satisfied. 
+    A negative relationship between the ${word4}, such as Age, and the passenger's satisfaction, means that the higher the value for the ${word5} (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
+    ${arrow_guidance}
     <button onclick="showImprovementPlanResult()">Next</button>`
   } }
 }
