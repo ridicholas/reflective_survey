@@ -880,21 +880,20 @@ function showPostSurvey() {
   
 
   if (condition != 0) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the improvement plan you received after you completed the first part of the experiment. To view that plan again, click the button below.</p>
-    <button onclick="showImprovementPlanResult()">Show Improvement Plan</button>`
+    document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the moment of reflection page you viewed after you completed the first part of the experiment. To view that page again, click the button below.</p>
+    <button onclick="showImprovementPlanResult()">Show Reflection</button>`
 
 
-    document.getElementById("postSurveyPage").innerHTML += `<p>How did you interpret the improvement plan?</p>
+    document.getElementById("postSurveyPage").innerHTML += `<p>How did you interpret the plot shown to you?</p>
     <textarea name="interpretation" rows="4" cols="50"></textarea>
 
-    <p>To what extent do you feel the bar chart of the improvement plan (without guidance of the arrows) captures important aspects of your decision making behavior over the first 25 tasks?</p>
-    <textarea name="captures" rows="4" cols="50"></textarea>
-
-    
-
-    <p>Did you try using the improvement plan to improve your decisions? If so, how? If not, why?</p>
-    <textarea name="improvement" rows="4" cols="50"></textarea>`
+    <p>To what extent do you feel the bar chart captures important aspects of your decision making behavior over the first 25 tasks?</p>
+    <textarea name="captures" rows="4" cols="50"></textarea>`
   }
+
+  if (condition in [3, 4, 5, 6]) {
+    document.getElementById("postSurveyPage").innerHTML += `<p>Did you try using the guidance arrows and text to improve your decisions? If so, how? If not, why?</p>
+    <textarea name="improvement" rows="4" cols="50"></textarea>}`
 
   document.getElementById("postSurveyPage").innerHTML += `<p>How would you describe your experience with this survey in general?</p>
     <textarea name="general" rows="4" cols="50"></textarea>`
@@ -1116,7 +1115,7 @@ function showTask(currentTask) {
     attention_check2 = ``}
   
   if (condition != 0 && taskType == "eval") {
-    improvementPlanButton = `<button onclick="showImprovementPlanResult()">Show Improvement Plan</button>`
+    improvementPlanButton = `<button onclick="showImprovementPlanResult()">Show Reflection</button>`
   }
   else {
     improvementPlanButton = ``
