@@ -1354,6 +1354,9 @@ function finishSurvey() {
       if (condition != 0) {
         postSurveyResponses.interpretation = getTextareaValue('interpretation');
         postSurveyResponses.captures = getTextareaValue('captures');
+      }
+
+      if ([3,4,5,6].includes(condition)) {
         postSurveyResponses.improvement = getTextareaValue('improvement');
       }
       
