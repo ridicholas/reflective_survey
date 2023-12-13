@@ -1082,6 +1082,7 @@ function showTask(currentTask) {
       <p>In-Flight Experience: <span id="cinflight"></span></p>
       <p>Delays: <span id="cdelays"></span></p>
       <p>Reason For Travel: <span id="creason"></span></p>
+      <p>You can view the calculations used to produce these key concepts values at any time by viewing the task instructions.</p>
     </div>
   </div>`;
 
