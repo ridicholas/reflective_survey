@@ -549,7 +549,7 @@ function showImprovementPlanTutorial() {
     You will again be given a bonus of $0.05 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
-    if (int(condition) in [1, 3, 5]) {
+    if (condition in [1, 3, 5]) {
       var word1 = "passenger's flight information and survey responses";
       var word2 = "piece of information";
       var word3 = "feature (piece of information)";
@@ -557,7 +557,7 @@ function showImprovementPlanTutorial() {
       var word5 = "feature";  
     } 
 
-    if (int(condition) in [2, 4, 6]) {
+    if (condition in [2, 4, 6]) {
       var word1 = "key concepts";
       var word2 = "concept";
       var word3 = "concept";
