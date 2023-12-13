@@ -549,7 +549,7 @@ function showImprovementPlanTutorial() {
     You will again be given a bonus of $0.05 for each question you answer correctly. </p>
     <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
-    if (condition in [1, 3, 5]) {
+    if ([1, 3, 5].includes(condition)) {
       var word1 = "passenger's flight information and survey responses";
       var word2 = "piece of information";
       var word3 = "feature (piece of information)";
@@ -557,7 +557,7 @@ function showImprovementPlanTutorial() {
       var word5 = "feature";  
     } 
 
-    if (condition in [2, 4, 6]) {
+    if ([2, 4, 6].includes(condition)) {
       var word1 = "key concepts";
       var word2 = "concept";
       var word3 = "concept";
@@ -565,7 +565,7 @@ function showImprovementPlanTutorial() {
       var word5 = "concept";        
     }
 
-    if (condition in [1, 2]){
+    if ([1, 2].includes(condition)){
       arrow_guidance = ""
     }
 
@@ -891,7 +891,7 @@ function showPostSurvey() {
     <textarea name="captures" rows="4" cols="50"></textarea>`
   }
 
-  if (condition in [3, 4, 5, 6]) {
+  if ([3, 4, 5, 6].includes(condition)) {
     document.getElementById("postSurveyPage").innerHTML += `<p>Did you try using the guidance arrows and text to improve your decisions? If so, how? If not, why?</p>
     <textarea name="improvement" rows="4" cols="50"></textarea>}`}
 
