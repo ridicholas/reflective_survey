@@ -146,14 +146,34 @@ function removeButtons(curr_page) {
   }
 }
 
+
 function midpointPullImage(id, condition) {
   const improvementPlanResultPage = document.getElementById('improvementPlanResultPage');
+  if (timesTriedToPullImage == 0) {
+    firstPullImageTime = Date.now()
+  }
+
+  pullTimeDiff = Date.now() - firstPullImageTime
+  timesTriedToPullImage += 1;
+
+  if (pullTimeDiff < 120000) {
+    pullImageErrMessage = 'Your reflective image has not yet loaded, it may take up to 2 minutes. Please wait up to 2 minutes and refresh the page if the image has not yet loaded.'
+  }
+
+  else {
+    pullImageErrMessage = 'Something may have gone wrong loading your image. Please proceed to the next page and continue with the rest of the experiment to continue claiming your bonus for correctly answering questions.'
+  }
 
   const url = apiEndpoint + `pull_improvement_plan_image/${id}/${condition}`;
 
   fetch(url, { method: 'GET' })
     .then(response => response.blob())
     .then(imageBlob => {
+      if (imageBlob.size === 0) {
+      const pElement = document.createElement('p');
+      pElement.appendChild(pullImageErrMessage);
+    }
+    else {
       const imageURL = URL.createObjectURL(imageBlob);
       const imageElement = document.createElement('img');
       imageElement.src = imageURL;
@@ -164,7 +184,7 @@ function midpointPullImage(id, condition) {
       imageElement.style.margin = '0 auto';
 
       const pElement = document.createElement('p');
-      pElement.appendChild(imageElement);
+      pElement.appendChild(imageElement); }
 
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
@@ -329,6 +349,7 @@ function compareQ6ResponsesWithAnswers(startingTaskNum, endingTaskNum, trainingT
 
 
 var quizResponses = {};
+var timesTriedToPullImage = 0;
 var selectedTasks = {};
 var trainingTaskResponses = {};
 var indices = [];
@@ -352,6 +373,8 @@ var urlParams = new URLSearchParams(queryString);
 var unique_id = urlParams.get('participantId');
 var assignment_id = urlParams.get('assignmentId');
 var project_id = urlParams.get('projectId');
+var firstPullImageTime = Date.now();
+var pullImageErrMessage = "";
 
 urlParams['type'] = 'nick_test3'
 urlParams['completed'] = false
@@ -376,6 +399,7 @@ var taskNum = 1;
 var condition = getRandomInt(6);
 var atPostSurvey = false;
 var conceptValues = {};
+var pullTimeDiff = 0;
 urlParams['condition'] = condition
 
 function saveProgress(currentPage) {
@@ -403,9 +427,11 @@ function saveProgress(currentPage) {
     urlParams: urlParams,
     coming_from: coming_from, 
     selectedTasks: selectedTasks,
-    indices: indices
-
-
+    indices: indices, 
+    timesTriedToPullImage: timesTriedToPullImage,
+    pullTimeDiff: pullTimeDiff,
+    firstPullImageTime: firstPullImageTime;
+    pullImageErrMessage: pullImageErrMessage;
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
@@ -439,6 +465,10 @@ function loadProgress() {
     selectedTasks = progressData.selectedTasks;
     indices = progressData.indices;
     temp_respDataJSON = progressData.temp_respDataJSON;
+    timesTriedToPullImage = progressData.timesTriedToPullImage;
+    pullTimeDiff = progressData.pullTimeDiff;
+    firstPullImageTime = progressData.firstPullImageTime;
+    pullImageErrMessage = progressData.pullImageErrMessage;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
@@ -1216,9 +1246,9 @@ function populateDataFromJSON(currentTask) {
     conceptValues[currentTask-1]['delay'] += 1
   }
 
-  conceptValues[currentTask-1]['reason'] = 0
+  conceptValues[currentTask-1]['reason'] = '0 (Personal/Leisure)'
   if (taskData['Type of Travel_Business travel'] == 1) {
-    conceptValues[currentTask-1]['reason'] += 1
+    conceptValues[currentTask-1]['reason'] = '1 (Business)'
   }
 
   document.getElementById('cvalue').innerText = conceptValues[currentTask-1]['value'];
