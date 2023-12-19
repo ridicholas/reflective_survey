@@ -184,7 +184,8 @@ function midpointPullImage(id, condition) {
       imageElement.style.margin = '0 auto';
 
       const pElement = document.createElement('p');
-      pElement.appendChild(imageElement); }
+      try {
+      pElement.appendChild(imageElement);} }
 
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
