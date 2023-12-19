@@ -185,9 +185,9 @@ function midpointPullImage(id, condition) {
 
       const pElement = document.createElement('p');
       try {
-      pElement.appendChild(imageElement);} }
+      pElement.appendChild(imageElement);} 
 
-      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}
+      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}}
 
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
