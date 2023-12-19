@@ -187,6 +187,8 @@ function midpointPullImage(id, condition) {
       try {
       pElement.appendChild(imageElement);} }
 
+      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}
+
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
         if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
@@ -222,7 +224,6 @@ function midpointPullImage(id, condition) {
     })
     .catch(error => {
       console.error('Error: Image not found, please wait a few seconds and refresh the page.');
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`
     }); 
 }
 
