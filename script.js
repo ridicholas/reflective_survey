@@ -430,8 +430,8 @@ function saveProgress(currentPage) {
     indices: indices, 
     timesTriedToPullImage: timesTriedToPullImage,
     pullTimeDiff: pullTimeDiff,
-    firstPullImageTime: firstPullImageTime;
-    pullImageErrMessage: pullImageErrMessage;
+    firstPullImageTime: firstPullImageTime,
+    pullImageErrMessage: pullImageErrMessage
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
