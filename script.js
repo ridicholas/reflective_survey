@@ -221,6 +221,7 @@ function midpointPullImage(id, condition) {
     })
     .catch(error => {
       console.error('Error: Image not found, please wait a few seconds and refresh the page.');
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`
     }); 
 }
 
