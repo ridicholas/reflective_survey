@@ -169,11 +169,8 @@ function midpointPullImage(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.blob())
     .then(imageBlob => {
-      if (imageBlob.size === 0) {
-      const pElement = document.createElement('p');
-      pElement.appendChild(pullImageErrMessage);
-    }
-    else {
+
+      try {
       const imageURL = URL.createObjectURL(imageBlob);
       const imageElement = document.createElement('img');
       imageElement.src = imageURL;
@@ -184,7 +181,7 @@ function midpointPullImage(id, condition) {
       imageElement.style.margin = '0 auto';
 
       const pElement = document.createElement('p');
-      try {
+      
       pElement.appendChild(imageElement);} 
 
       catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}}
