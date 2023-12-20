@@ -167,10 +167,22 @@ function midpointPullImage(id, condition) {
   const url = apiEndpoint + `pull_improvement_plan_image/${id}/${condition}`;
 
   fetch(url, { method: 'GET' })
-    .then(response => response.blob())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+    }
+
+    // Check the content type of the response
+    const contentType = response.headers.get('content-type');
+    if (!contentType.startsWith('image')) {
+      throw new Error('Image not found on the server.');
+    }
+
+    return response.blob();
+  })
     .then(imageBlob => {
 
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>blobsize: ${imageBlob.size}</p>`
+      
       const imageURL = URL.createObjectURL(imageBlob);
       const imageElement = document.createElement('img');
       imageElement.src = imageURL;
