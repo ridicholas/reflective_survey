@@ -224,7 +224,7 @@ function midpointPullImage(id, condition) {
     })
     .catch(error => {
       console.error('Error: Image not found, please wait a few seconds and refresh the page.');
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch3</p>`
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`
     }); 
 }
 
@@ -238,11 +238,15 @@ function midpointPullImage(id, condition) {
     .then(data => {
       textDataJSON = data;
         //loop through elements of textDataJSON dictionary
+    try {
     for (const [key, value] of Object.entries(textDataJSON)) { 
       //append each element to page as a paragraph
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
         document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>` }
-    }
+    } }
+
+    catch (error) {
+      console.log(error)}
     }
     )
     .catch(error => {
