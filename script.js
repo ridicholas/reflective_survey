@@ -184,7 +184,7 @@ function midpointPullImage(id, condition) {
       
       pElement.appendChild(imageElement);} 
 
-      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}
+      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch1</p>`}
 
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
@@ -218,12 +218,13 @@ function midpointPullImage(id, condition) {
         improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-buttons.length]);
         image_not_appended = false;}
 
-        catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}
+        catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch2</p>`}
       }
       
     })
     .catch(error => {
       console.error('Error: Image not found, please wait a few seconds and refresh the page.');
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch3</p>`
     }); 
 }
 
