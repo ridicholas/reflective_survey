@@ -236,9 +236,10 @@ function midpointPullImage(id, condition) {
   fetch(url, { method: 'GET' })
     .then(response => response.json())
     .then(data => {
+      try {
       textDataJSON = data;
         //loop through elements of textDataJSON dictionary
-    try {
+    
     for (const [key, value] of Object.entries(textDataJSON)) { 
       //append each element to page as a paragraph
       if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
