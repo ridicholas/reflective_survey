@@ -170,7 +170,7 @@ function midpointPullImage(id, condition) {
     .then(response => response.blob())
     .then(imageBlob => {
 
-      
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>blobsize: ${imageBlob.size}</p>`
       const imageURL = URL.createObjectURL(imageBlob);
       const imageElement = document.createElement('img');
       imageElement.src = imageURL;
