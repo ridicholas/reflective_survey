@@ -441,7 +441,7 @@ var project_id = urlParams.get('projectId');
 var firstPullImageTime = Date.now();
 var pullImageErrMessage = "";
 
-urlParams['type'] = 'nick_test3'
+urlParams['type'] = 'pilot3'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
