@@ -217,8 +217,11 @@ function midpointPullImage(id, condition) {
       if (image_not_appended) {
         var inner = document.getElementById('improvementPlanResultPage')
         var buttons = inner.getElementsByTagName('button');
+        try {
         improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-buttons.length]);
-        image_not_appended = false;
+        image_not_appended = false;}
+
+        catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`}
       }
       
     })
