@@ -237,6 +237,30 @@ function midpointPullImage(id, condition) {
     .catch(error => {
       console.error('Error: Image not found, please wait a few seconds and refresh the page.');
       document.getElementById("improvementPlanResultPage").innerHTML += `<p>${pullImageErrMessage}</p>`
+      if (atPostSurvey) {
+        removeButtons('improvementPlanResultPage');
+        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
+          document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
+          document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="showEvalTaskInstructions()">Next</button>`, ``)
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>` }
+      }
+      else {
+        if (evalStarted) {
+          var inner = document.getElementById('improvementPlanResultPage')
+          var buttons = inner.getElementsByTagName('button');
+          if (buttons) {
+            for (var i = 0; i < buttons.length; i++) {
+              buttons[i].remove();
+            }
+          }
+          if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Return To Survey</button>`) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return To Survey</button>` }
+        }
+        else {
+        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showImprovementPlanTutorial()">Back</button>`
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
+      }
     }); 
 }
 
