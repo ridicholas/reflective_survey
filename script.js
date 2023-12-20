@@ -232,8 +232,28 @@ function midpointPullImage(id, condition) {
   
 
   const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
+  try {
+  const response = await fetch(url, { method: 'GET' });
 
-  fetch(url, { method: 'GET' })
+  if (!response.ok) {
+    // Check if the response indicates an error
+    console.error(`Error: ${response.status} - ${response.statusText}`);
+    return;
+  }
+
+  const data = await response.json();
+
+  // Proceed with processing the response data
+  for (const [key, value] of Object.entries(data)) {
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>`;
+    }
+  }
+} catch (error) {
+  console.error('Error fetching or processing data:', error);
+}
+}
+    /*
     .then(response => response.json())
     .then(data => {
       try {
@@ -255,7 +275,7 @@ function midpointPullImage(id, condition) {
     }
     );
 
-}
+} */
 
 
 function pullTasks(id, condition) {
