@@ -170,7 +170,7 @@ function midpointPullImage(id, condition) {
     .then(response => response.blob())
     .then(imageBlob => {
 
-      try {
+      
       const imageURL = URL.createObjectURL(imageBlob);
       const imageElement = document.createElement('img');
       imageElement.src = imageURL;
@@ -182,9 +182,9 @@ function midpointPullImage(id, condition) {
 
       const pElement = document.createElement('p');
       
-      pElement.appendChild(imageElement);} 
+      pElement.appendChild(imageElement);
 
-      catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch1</p>`}
+      
 
       if (atPostSurvey) {
         removeButtons('improvementPlanResultPage');
@@ -214,11 +214,11 @@ function midpointPullImage(id, condition) {
       if (image_not_appended) {
         var inner = document.getElementById('improvementPlanResultPage')
         var buttons = inner.getElementsByTagName('button');
-        try {
+        
         improvementPlanResultPage.insertBefore(pElement, improvementPlanResultPage.childNodes[improvementPlanResultPage.childNodes.length-buttons.length]);
-        image_not_appended = false;}
+        image_not_appended = false;
 
-        catch {document.getElementById("improvementPlanResultPage").innerHTML += `<p>catch2</p>`}
+       
       }
       
     })
