@@ -1148,9 +1148,9 @@ function showTask(currentTask) {
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
       <h2>Completed Flight Details</h2>
-      <p>Flight Distance: <span id="flightDistance"></span> km</p>
-      <p>Departure Delay (Minutes): <span id="departureDelay"></span></p>
-      <p>Arrival Delay (Minutes): <span id="arrivalDelay"></span></p>
+      <div class="tooltip">Flight Distance: <span class="tooltiptext">The total flight distance in kilometers.</span><span id="flightDistance"></span> km</div>
+      <div class="tooltip">Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> km</div>
+      <div class="tooltip">Arrival Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual arrival time.</span><span id="arrivalDelay"></span> km</div>
     </div>
 
     <!-- Section 3: Passenger's flight satisfaction survey responses -->
