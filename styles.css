@@ -69,11 +69,16 @@ img {
   padding: 10px;
 }
 
+/* Style for the container of the tooltip to make it appear clickable */
 .tooltip {
   position: relative;
   display: inline-block;
+  font-weight: bold; /* Make the text bold */
+  color: #007bff; /* Set the default color to blue */
+  cursor: pointer; /* Change cursor to indicate interactivity */
 }
 
+/* Style for the tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
   width: 120px;
@@ -83,16 +88,27 @@ img {
   border-radius: 6px;
   padding: 5px 0;
 
-  /* Position the tooltip */
+  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 50%;
   margin-left: -60px;
+
+  /* Transitions for smooth appearance */
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
+/* Change the style of the container on hover to indicate interactivity */
+.tooltip:hover {
+  color: #0056b3; /* Darker shade of blue on hover */
+}
+
+/* Make the tooltip text visible on hover */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+  opacity: 1;
 }
 
 
