@@ -98,7 +98,7 @@ img {
   text-align: left;
   border-radius: 6px;
   padding: 5px 10px;
-  font-size: 0.85em; /* Smaller font size for tooltip text */
+  font-size: 0.5em; /* Smaller font size for tooltip text */
 
   /* Position the tooltip text */
   position: absolute;
