@@ -78,22 +78,34 @@ img {
   cursor: pointer; /* Change cursor to indicate interactivity */
 }
 
-/* Style for the tooltip text */
-.tooltip .tooltiptext {
+.header-tooltip {
+  position: relative;
+  display: inline-block;
+  font-weight: bold; /* Keep text bold */
+  color: #d63384; /* Set the default color to a distinct shade, e.g., a pinkish tone */
+  cursor: help; /* Change cursor to indicate information is available */
+  font-size: 1.5em; /* Keep the font size larger for headers */
+}
+
+/* Style for the tooltip text, common for both fields and headers */
+.tooltip .tooltiptext,
+.header-tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  min-width: 180px; /* Set a minimum width for the tooltip */
+  max-width: 300px; /* Set a maximum width to prevent overly wide tooltips */
   background-color: black;
   color: #fff;
-  text-align: center;
+  text-align: left;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 5px 10px;
 
   /* Position the tooltip text */
   position: absolute;
   z-index: 1;
   bottom: 100%;
   left: 50%;
-  margin-left: -60px;
+  transform: translateX(-50%); /* Center the tooltip */
+  
 
   /* Transitions for smooth appearance */
   opacity: 0;
@@ -101,11 +113,13 @@ img {
 }
 
 /* Change the style of the container on hover to indicate interactivity */
+.header-tooltip:hover,
 .tooltip:hover {
-  color: #0056b3; /* Darker shade of blue on hover */
+  color: #c30052; /* A darker shade for hover state */
 }
 
 /* Make the tooltip text visible on hover */
+.header-tooltip:hover .tooltiptext,
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;

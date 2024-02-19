@@ -1134,10 +1134,12 @@ function showTask(currentTask) {
   }
 
   const profileInfo =  `<h1>Airline Passenger Profile ${displayTask}/${totalTasks}</h1>
+  <p>You can view the section header, attribute, and key concept definitions below at any time by hovering over their values.</p>
   <div class="container">
     <!-- Section 1: Passenger's basic flight information -->
     <div class="section1">
-      <h2>Passenger Ticket Information</h2>
+      <h2><div class="header-tooltip">Passenger Ticket Information<span class="tooltiptext">Basic information about the passenger's ticket and demographics.</span></div>
+      </h2>
 
       <p><div class="tooltip">Age: <span class="tooltiptext">The passenger's age.</span><span id="age"></span></div></p>
       <p><div class="tooltip">Gender: <span class="tooltiptext">The passenger's gender.</span><span id="gender"></span></div></p>
@@ -1150,6 +1152,8 @@ function showTask(currentTask) {
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
       <h2>Completed Flight Details</h2>
+      <h2><div class="header-tooltip">Completed Flight Details<span class="tooltiptext">Information about the passenger's flight times and distance.</span></div></h2>
+
       <p><div class="tooltip">Flight Distance: <span class="tooltiptext">The total flight distance in kilometers. (For reference, a flight from New York City to London is 5,567km.) </span><span id="flightDistance"></span> km</div></p>
       <p><div class="tooltip">Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> km</div></p>
       <p><div class="tooltip">Arrival Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual arrival time.</span><span id="arrivalDelay"></span> km</div></p>
@@ -1157,6 +1161,9 @@ function showTask(currentTask) {
 
     <!-- Section 3: Passenger's flight satisfaction survey responses -->
     <div class="section3">
+
+      <h2>Passenger Satisfaction Survey Responses</h2>
+      <h2><div class="header-tooltip">Passenger Satisfaction Survey Responses<span class="tooltiptext">Passenger's responses to a post-flight satisfaction survey.</span></div></h2>
 
       <p><div class="tooltip">Inflight Wi-Fi Service: <span class="tooltiptext">Passenger's rating of the inflight Wi-Fi service.</span><span id="inflightWifi"></span></div></p>
       <p><div class="tooltip">On-Board Service: <span class="tooltiptext">Passenger's rating of the on-board service. The on-board service includes all aspects of service provided by the flight's attendants while on board the aircraft. </span><span id="onBoardService"></span></div></p>
@@ -1178,6 +1185,8 @@ function showTask(currentTask) {
   <!-- Section 4: Key Concept Values-->
     <div class="section4">
       <h2>Key Concept Values</h2>
+      <h2><div class="header-tooltip">Key Concept Values<span class="tooltiptext">We provide you with a set of key concepts to help you synthesize information above: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. The concepts below are shown to play an important role in passenger satisfaction according to research. </span></div></h2>
+
 
       <p><div class="tooltip">Passenger Status: <span class="tooltiptext">Passenger status means the status that passengers hold in airline passenger management, which indicates the service quality that the airline provides. This concept uses the passenger class and customer loyalty. A disloyal passenger in economy class gets a status rating of 1. If a passenger is loyal, +2 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</span><span id="cvalue"></span></div></p>
       <p><div class="tooltip">In-Flight Experience: <span class="tooltiptext">In-flight experience their experience during the flight. It is calculated by averaging the following factors: 'Inflight wifi service','Food and drink', 'Seat comfort', 'Inflight entertainment', 'On-board service','Inflight service', 'Cleanliness.' </span><span id="cinflight"></span></div></p>
@@ -1185,7 +1194,7 @@ function showTask(currentTask) {
       <p><div class="tooltip">Reason For Travel: <span class="tooltiptext">Reason for travel indicates whether passengers traveled for personal versus business reasons. If the passenger was traveling for personal reasons, this concept gets a value of 0, otherwise, it gets a value of 1. This concept is a repetition of the 'Reason for Travel' field because it alone has been found to be an important concept when determining a passenger's satisfaction.</span><span id="creason"></span></div></p>
 
 
-      <p>You can view the field definitions and the calculations used to produce the key concept values at any time by hovering over their values.</p>
+      
     </div>
   </div>`;
 
