@@ -1138,47 +1138,54 @@ function showTask(currentTask) {
     <!-- Section 1: Passenger's basic flight information -->
     <div class="section1">
       <h2>Passenger Ticket Information</h2>
-      <p>Age: <span id="age"></span></p>
-      <p>Gender: <span id="gender"></span></p>
-      <p>Class: <span id="class"></span></p>
-      <p>Type of Travel: <span id="typeOfTravel"></span></p>
-      <p>Customer Type: <span id="customerType"></span></p>
+
+      <p><div class="tooltip">Age: <span class="tooltiptext">The passenger's age.</span><span id="age"></span></div></p>
+      <p><div class="tooltip">Gender: <span class="tooltiptext">The passenger's gender.</span><span id="gender"></span></div></p>
+      <p><div class="tooltip">Class: <span class="tooltiptext">The class the passenger traveled in (Economy, Economy Plus, Business).</span><span id="class"></span></div></p>
+      <p><div class="tooltip">Reason For Travel: <span class="tooltiptext">The reason for the passenger's travel (business or leisure).</span><span id="typeOfTravel"></span></div></p>
+      <p><div class="tooltip">Customer Loyalty: <span class="tooltiptext">The passenger's loyalty to the airline. Loyal customers frequently use the same airline and participate in the airline's rewards programs. </span><span id="customerType"></span></div></p>
+
     </div>
 
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
       <h2>Completed Flight Details</h2>
-      <p><div class="tooltip">Flight Distance: <span class="tooltiptext">The total flight distance in kilometers.</span><span id="flightDistance"></span> km</div></p>
+      <p><div class="tooltip">Flight Distance: <span class="tooltiptext">The total flight distance in kilometers. (For reference, a flight from New York City to London is 5,567km.) </span><span id="flightDistance"></span> km</div></p>
       <p><div class="tooltip">Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> km</div></p>
       <p><div class="tooltip">Arrival Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual arrival time.</span><span id="arrivalDelay"></span> km</div></p>
     </div>
 
     <!-- Section 3: Passenger's flight satisfaction survey responses -->
     <div class="section3">
-      <h2>Flight Satisfaction Survey Responses</h2>
-      <p>Inflight Wi-Fi Service: <span id="inflightWifi"></span></p>
-      <p>On-Board Service: <span id="onBoardService"></span></p>
-      <p>Check-In Service: <span id="checkInService"></span></p>
-      <p>Baggage Handling: <span id="baggageHandling"></span></p>
-      <p>Gate Location: <span id="gateLocation"></span></p>
-      <p>Food and Drink: <span id="foodAndDrink"></span></p>
-      <p>Seat Comfort: <span id="seatComfort"></span></p>
-      <p>Inflight Entertainment: <span id="inflightEntertainment"></span></p>
-      <p>Ease of Online Booking: <span id="onlineBooking"></span></p>
-      <p>Cleanliness: <span id="cleanliness"></span></p>
-      <p>Departure/Arrival Time Convenient: <span id="departureArrivalTime"></span></p>
+
+      <p><div class="tooltip">Inflight Wi-Fi Service: <span class="tooltiptext">Passenger's rating of the inflight Wi-Fi service.</span><span id="inflightWifi"></span></div></p>
+      <p><div class="tooltip">On-Board Service: <span class="tooltiptext">Passenger's rating of the on-board service. The on-board service includes all aspects of service provided by the flight's attendants while on board the aircraft. </span><span id="onBoardService"></span></div></p>
+      <p><div class="tooltip">Check-In Service: <span class="tooltiptext">Passenger's rating of the check-in service. The check-in service includes the process of checking in to the flight either online or at the airport.</span><span id="checkInService"></span></div></p>
+      <p><div class="tooltip">Baggage Handling: <span class="tooltiptext">Passenger's rating of the baggage handling. Baggage handling consists of the process of dropping-off and picking-up luggage.</span><span id="baggageHandling"></span></div></p>
+      <p><div class="tooltip">Gate Location: <span class="tooltiptext">Passenger's rating of the gate location. The gate area is where the passenger boards their flight. The passenger may also choose to wait for their flight at the gate.</span><span id="gateLocation"></span></div></p>
+      <p><div class="tooltip">Food and Drink: <span class="tooltiptext">Passenger's rating of the food and drink. The food and drink includes all food and drink options provided or purchased while on the aircraft.</span><span id="foodAndDrink"></span></div></p>
+      <p><div class="tooltip">Seat Comfort: <span class="tooltiptext">Passenger's rating of the seat comfort. The seat comfort includes the comfort of the passenger's seat and the space available to the passenger.</span><span id="seatComfort"></span></div></p>
+      <p><div class="tooltip">Inflight Entertainment: <span class="tooltiptext">Passenger's rating of the inflight entertainment. The inflight entertainment includes all entertainment options provided or purchased while on the aircraft.</span><span id="inflightEntertainment"></span></div></p>
+      <p><div class="tooltip">Ease of Online Booking: <span class="tooltiptext">Passenger's rating of the ease of online booking. The ease of online booking includes the process of booking the flight online.</span><span id="onlineBooking"></span></div></p>
+      <p><div class="tooltip">Cleanliness: <span class="tooltiptext">Passenger's rating of the cleanliness. The cleanliness includes the cleanliness of the aircraft and the facilities available to the passenger.</span><span id="cleanliness"></span></div></p>
+      <p><div class="tooltip">Departure/Arrival Time Convenient: <span class="tooltiptext">Passenger's rating of the convenience of the departure and arrival times - did the passenger find the departure and arrival time convenient?</span><span id="departureArrivalTime"></span></div></p>
+
+
+
     </div>
   </div>
   
   <!-- Section 4: Key Concept Values-->
     <div class="section4">
       <h2>Key Concept Values</h2>
-      <p>The information above has been used to calculate the key concept values for this passenger, shown below:</p>
-      <p>Passenger Status: <span id="cvalue"></span></p>
-      <p>In-Flight Experience: <span id="cinflight"></span></p>
-      <p>Delays: <span id="cdelays"></span></p>
-      <p>Reason For Travel: <span id="creason"></span></p>
-      <p>You can view the calculations used to produce these key concepts values at any time by viewing the task instructions.</p>
+
+      <p><div class="tooltip">Passenger Status: <span class="tooltiptext">Passenger status means the status that passengers hold in airline passenger management, which indicates the service quality that the airline provides. This concept uses the passenger class and customer loyalty. A disloyal passenger in economy class gets a status rating of 1. If a passenger is loyal, +2 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</span><span id="cvalue"></span></div></p>
+      <p><div class="tooltip">In-Flight Experience: <span class="tooltiptext">In-flight experience their experience during the flight. It is calculated by averaging the following factors: 'Inflight wifi service','Food and drink', 'Seat comfort', 'Inflight entertainment', 'On-board service','Inflight service', 'Cleanliness.' </span><span id="cinflight"></span></div></p>
+      <p><div class="tooltip">Delays: <span class="tooltiptext">Delays indicate delays experienced by the passenger at various points of their journey. First, the sum of arrival and departure delay time in minutes is calculated. If the sum is 0, the delays concept gets a rating of 1. If the sum is greater than 0 but less than 30, the delays value gets a rating of 2. The delays value then increases by 1 at each 30-minute increment, with total delays greater than 90 minutes receiving a rating of 5. </span><span id="cdelays"></span></div></p>
+      <p><div class="tooltip">Reason For Travel: <span class="tooltiptext">Reason for travel indicates whether passengers traveled for personal versus business reasons. If the passenger was traveling for personal reasons, this concept gets a value of 0, otherwise, it gets a value of 1. This concept is a repetition of the 'Reason for Travel' field because it alone has been found to be an important concept when determining a passenger's satisfaction.</span><span id="creason"></span></div></p>
+
+
+      <p>You can view the field definitions and the calculations used to produce the key concept values at any time by hovering over their values.</p>
     </div>
   </div>`;
 
