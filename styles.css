@@ -98,7 +98,7 @@ img {
   text-align: left;
   border-radius: 6px;
   padding: 5px 10px;
-  font-size: 0.5em; /* Smaller font size for tooltip text */
+  
 
   /* Position the tooltip text */
   position: absolute;
@@ -111,6 +111,14 @@ img {
   /* Transitions for smooth appearance */
   opacity: 0;
   transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext {
+  font-size: 0.85em; /* Smaller font size for tooltip text */
+}
+
+.header-tooltip .tooltiptext {
+  font-size: 0.5em; /* Smaller font size for tooltip text */
 }
 
 /* Change the style of the container on hover to indicate interactivity */
