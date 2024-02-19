@@ -84,7 +84,7 @@ img {
   font-weight: bold; /* Keep text bold */
   color: black; /* Set the default color to a distinct shade, e.g., a pinkish tone */
   cursor: help; /* Change cursor to indicate information is available */
-  font-size: 1.5em; /* Keep the font size larger for headers */
+  font-size: 1.1em; /* Keep the font size larger for headers */
 }
 
 /* Style for the tooltip text, common for both fields and headers */
