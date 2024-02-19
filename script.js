@@ -1151,7 +1151,7 @@ function showTask(currentTask) {
 
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
-      <h2>Completed Flight Details</h2>
+      
       <h2><div class="header-tooltip">Completed Flight Details<span class="tooltiptext">Information about the passenger's flight times and distance.</span></div></h2>
 
       <p><div class="tooltip">Flight Distance: <span class="tooltiptext">The total flight distance in kilometers. (For reference, a flight from New York City to London is 5,567km.) </span><span id="flightDistance"></span> km</div></p>
@@ -1162,7 +1162,7 @@ function showTask(currentTask) {
     <!-- Section 3: Passenger's flight satisfaction survey responses -->
     <div class="section3">
 
-      <h2>Passenger Satisfaction Survey Responses</h2>
+      
       <h2><div class="header-tooltip">Passenger Satisfaction Survey Responses<span class="tooltiptext">Passenger's responses to a post-flight satisfaction survey.</span></div></h2>
 
       <p><div class="tooltip">Inflight Wi-Fi Service: <span class="tooltiptext">Passenger's rating of the inflight Wi-Fi service.</span><span id="inflightWifi"></span></div></p>
@@ -1184,7 +1184,7 @@ function showTask(currentTask) {
   
   <!-- Section 4: Key Concept Values-->
     <div class="section4">
-      <h2>Key Concept Values</h2>
+      
       <h2><div class="header-tooltip">Key Concept Values<span class="tooltiptext">We provide you with a set of key concepts to help you synthesize information above: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. The concepts below are shown to play an important role in passenger satisfaction according to research. </span></div></h2>
 
 

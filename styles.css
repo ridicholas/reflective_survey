@@ -75,14 +75,14 @@ img {
   display: inline-block;
   font-weight: bold; /* Make the text bold */
   color: #007bff; /* Set the default color to blue */
-  cursor: pointer; /* Change cursor to indicate interactivity */
+  cursor: help; /* Change cursor to indicate interactivity */
 }
 
 .header-tooltip {
   position: relative;
   display: inline-block;
   font-weight: bold; /* Keep text bold */
-  color: #d63384; /* Set the default color to a distinct shade, e.g., a pinkish tone */
+  color: black; /* Set the default color to a distinct shade, e.g., a pinkish tone */
   cursor: help; /* Change cursor to indicate information is available */
   font-size: 1.5em; /* Keep the font size larger for headers */
 }
@@ -98,6 +98,7 @@ img {
   text-align: left;
   border-radius: 6px;
   padding: 5px 10px;
+  font-size: 0.85em; /* Smaller font size for tooltip text */
 
   /* Position the tooltip text */
   position: absolute;
