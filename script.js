@@ -264,10 +264,36 @@ function midpointPullImage(id, condition) {
     }); 
 }
 
-  async function midpointPullText(id, condition) {
+  async function midpointPullReflectionText(id, condition) {
   
 
-  const url = apiEndpoint + `pull_improvement_plan_text/${id}/${condition}`;
+  const url = apiEndpoint + `pull_improvement_plan_reflection_text/${id}/${condition}`;
+  try {
+  const response = await fetch(url, { method: 'GET' });
+
+  if (!response.ok) {
+    // Check if the response indicates an error
+    console.error(`Error: ${response.status} - ${response.statusText}`);
+    return;
+  }
+
+  const data = await response.json();
+
+  // Proceed with processing the response data
+  for (const [key, value] of Object.entries(data)) {
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>`;
+    }
+  }
+} catch (error) {
+  console.error('Error fetching or processing data:', error);
+}
+}
+
+async function midpointPullAdviceText(id, condition) {
+  
+
+  const url = apiEndpoint + `pull_improvement_plan_advice_text/${id}/${condition}`;
   try {
   const response = await fetch(url, { method: 'GET' });
 
@@ -462,7 +488,7 @@ var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
 var conditions = [2, 4, 6]
-var condition = conditions[Math.floor(Math.random() * conditions.length)];
+var condition = 4 //conditions[Math.floor(Math.random() * conditions.length)];
 var atPostSurvey = false;
 var conceptValues = {};
 var pullTimeDiff = 0;
@@ -639,42 +665,18 @@ function showImprovementPlanTutorial() {
   saveProgress("improvementPlanTutorialPage");
   if (document.getElementById("improvementPlanTutorialPage").innerHTML.indexOf("Thank you for completing the first 25 tasks!") == -1) {
   document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the first 25 tasks!</p>
-  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. </p>`;
+  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. Before answering the next set of 25 questions, we ask that you take a moment to reflect on your decision-making patterns from the first part of the experiment. To help you reflect, we ask that you type your responses to several reflection questions as though you are 'thinking aloud.'</p>
+  
+  <p>Please describe how you made predictions on the first 25 tasks. Which information (features or concepts) about the passenger and their flight did you find to be most influential in your decision-making?</p>
+  <textarea name="reflection1" rows="6" cols="50"></textarea></p> 
+
+  <p>Do you think you can do anything differently to improve your decisions for the next set of 25 tasks? What would you try and change about your decision-making process to improve your predictions (if anything)? </p>
+  <textarea name="reflection2" rows="6" cols="50"></textarea></p> 
+  `;
   if (condition == 0) {
-    document.getElementById("improvementPlanTutorialPage").innerHTML += `<p>You will now be asked to complete the remaining 25 tasks. 
-    You will again be given a bonus of $0.05 for each question you answer correctly. </p>
-    <button onclick="showEvalTaskInstructions()">Next</button>`
+    document.getElementById("improvementPlanTutorialPage").innerHTML += ` <button onclick="showEvalTaskInstructions()">Next</button>`
   } else {
-    if ([1, 3, 5].includes(condition)) {
-      var word1 = "passenger's flight information and survey responses";
-      var word2 = "piece of information";
-      var word3 = "feature (piece of information)";
-      var word4 = "feature (information)";
-      var word5 = "feature";  
-    } 
-
-    if ([2, 4, 6].includes(condition)) {
-      var word1 = "key concepts";
-      var word2 = "concept";
-      var word3 = "concept";
-      var word4 = "concept";
-      var word5 = "concept";        
-    }
-
-    if ([1, 2].includes(condition)){
-      arrow_guidance = ""
-    }
-
-    else {
-      arrow_guidance = "<p>In addition to the bar chart describing your behavior, there will be arrows overlaid on top of some of the bars. These arrows are your guide towards making better decisions. Adjust how you use the information provided based on the arrow to improve your accuracy for the next set of tasks!  Each arrow will also be paired with a textual interpretation of the arrow. </p>"
-    }
-    document.getElementById("improvementPlanTutorialPage").innerHTML += `<p> We will now assess your decision making behavior based on your responses to the first 25 tasks and will generate an improvement plan to help you increase your accuracy for the next 25 tasks. </p>
-    <p> On the next page you will see a horizontal bar plot that shows you how you used the ${word1} to come to your final decisions. For each ${word2}, a high value (blue bar extending to the right from 0) indicates that that ${word2} had a positive relationship with your prediction of the passenger's overall satisfaction, 
-    while a low value (red bar extending to the left from 0) means that that ${word2} had a negative relationship with your prediction of the passenger's overall satisfaction. </p>
-    <p>Note that a positive relationship between a ${word3}, such as Age, and your prediction of the passenger's satisfaction, means that the higher the value for the ${word5} (the higher the age), the more likely you were to select that the passenger was overall satisfied. 
-    A negative relationship between the ${word4}, such as Age, and the passenger's satisfaction, means that the higher the value for the ${word5} (the higher the age), the more likely you were to predict that the passenger was overall dissatisfied.</p>
-    ${arrow_guidance}
-    <button onclick="showImprovementPlanResult()">Next</button>`
+    document.getElementById("improvementPlanTutorialPage").innerHTML += `<button onclick="showImprovementPlanResult()">Next</button>`
   } }
 }
 
@@ -686,7 +688,26 @@ function showImprovementPlanTutorial() {
   document.getElementById("improvementPlanResultPage").style.display = "block";
 
 
-  await midpointPullText(unique_id, condition);
+  
+  if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("We have analyzed your predictions for the first 25 tasks and have generated a description of your decision-making process (based only on your predictions). Please take a moment to review the description of your decision-making process and answer the questions that follow.") == -1) {
+  document.getElementById("improvementPlanResultPage").innerHTML += `<p>We have analyzed your predictions for the first 25 tasks and have generated a description of your decision-making process (based only on your predictions). Please take a moment to review the description of your decision-making process and answer the questions that follow.</p>`}
+  await midpointPullReflectionText(unique_id, condition);
+
+  if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("Do you believe our description of your decision-making process accurately describes what you found most important when making predictions?") == -1) {
+  document.getElementById("improvementPlanResultPage").innerHTML += `<p>Do you believe our description of your decision-making process accurately describes what you found most important when making predictions? Why or why not?</p>
+  <textarea name="reflection3" rows="6" cols="50"></textarea></p>`}
+
+  if ([3,4,5,6].includes(condition)) {
+  if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("Given our own understanding of the task and our understanding of your decision-making process, we are also providing you with a piece of advice that can help you improve your decision-making in the future. Please review the advice and respond to the question that follows.") == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>Given our own understanding of the task and our understanding of your decision-making process, we are also providing you with a piece of advice that can help you improve your decision-making in the future. Please review the advice and respond to the question that follows.</p>`}
+    await midpointPullAdviceText(unique_id, condition);
+    
+  }
+
+  if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("After spending some more time reflecting on your decision-making process and reading our analysis, do you plan to make any additional changes to your decision-making process for the next 25 tasks? If so, how do you plan to make predictions differently? If not, why not?") == -1) {
+    document.getElementById("improvementPlanResultPage").innerHTML += `<p>After spending some more time reflecting on your decision-making process and reading our analysis, do you plan to make any additional changes to your decision-making process for the next 25 tasks? If so, how do you plan to make predictions differently? If not, why not?</p>
+    <textarea name="reflection4" rows="6" cols="50"></textarea></p>`}
+
 
 
   
@@ -697,7 +718,6 @@ function showImprovementPlanTutorial() {
   
   
   
-  midpointPullImage(unique_id, condition);
 
 
 
