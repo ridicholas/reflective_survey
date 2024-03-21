@@ -281,8 +281,8 @@ function midpointPullImage(id, condition) {
 
   // Proceed with processing the response data
   for (const [key, value] of Object.entries(data)) {
-    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>`;
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(data) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${data}</p>`;
     }
   }
 } catch (error) {
@@ -304,11 +304,11 @@ async function midpointPullAdviceText(id, condition) {
   }
 
   const data = await response.json();
-
+  console.log(data)
   // Proceed with processing the response data
   for (const [key, value] of Object.entries(data)) {
-    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(value) == -1) {
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${value}</p>`;
+    if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(data) == -1) {
+      document.getElementById("improvementPlanResultPage").innerHTML += `<p>${data}</p>`;
     }
   }
 } catch (error) {
