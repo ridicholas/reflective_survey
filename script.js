@@ -311,6 +311,31 @@ async function midpointPullAdviceText(id, condition) {
       document.getElementById("improvementPlanResultPage").innerHTML += `<p>${data}</p>`;
     }
   }
+
+        if (atPostSurvey) {
+        removeButtons('improvementPlanResultPage');
+        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showPostSurvey()">Back to Post-Survey</button>`) == -1) {
+          document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="startEvalTasks()">Return To Survey</button>`, ``)
+          document.getElementById("improvementPlanResultPage").innerHTML.replace(`<button onclick="showEvalTaskInstructions()">Next</button>`, ``)
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showPostSurvey()">Back to Post-Survey</button>` }
+      }
+      else {
+        if (evalStarted) {
+          var inner = document.getElementById('improvementPlanResultPage')
+          var buttons = inner.getElementsByTagName('button');
+          if (buttons) {
+            for (var i = 0; i < buttons.length; i++) {
+              buttons[i].remove();
+            }
+          }
+          if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="startEvalTasks()">Return To Survey</button>`) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="startEvalTasks()">Return To Survey</button>` }
+        }
+        else {
+        if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf(`<button onclick="showEvalTaskInstructions()">Next</button>`) == -1) {
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showImprovementPlanTutorial()">Back</button>`
+        document.getElementById("improvementPlanResultPage").innerHTML += `<button onclick="showEvalTaskInstructions()">Next</button>` }}
+      }
 } catch (error) {
   console.error('Error fetching or processing data:', error);
 }
@@ -682,6 +707,9 @@ function showImprovementPlanTutorial() {
 
  async function showImprovementPlanResult() {
   
+
+  postSurveyResponses.reflection1 = getTextareaValue('reflection1');
+  postSurveyResponses.reflection2 = getTextareaValue('reflection2');
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
@@ -733,6 +761,22 @@ const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with 
 `
 
   function showEvalTaskInstructions() {
+
+  if ([0].includes(condition)) {
+      postSurveyResponses.reflection1 = getTextareaValue('reflection1');
+      postSurveyResponses.reflection2 = getTextareaValue('reflection2');
+  } else {
+    if ([1, 2, 3, 4, 5, 6].includes(condition)) {
+      postSurveyResponses.reflection3 = getTextareaValue('reflection3');
+
+      if ([3,4,5,6].includes(condition)) {
+        postSurveyResponses.reflection4 = getTextareaValue('reflection4');
+      }
+      
+
+    }
+  }
+
   document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("evalTaskInstructionsPage").style.display = "block";
