@@ -548,7 +548,8 @@ function saveProgress(currentPage) {
     timesTriedToPullImage: timesTriedToPullImage,
     pullTimeDiff: pullTimeDiff,
     firstPullImageTime: firstPullImageTime,
-    pullImageErrMessage: pullImageErrMessage
+    pullImageErrMessage: pullImageErrMessage,
+    postSurveyResponses: postSurveyResponses
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
@@ -586,6 +587,7 @@ function loadProgress() {
     pullTimeDiff = progressData.pullTimeDiff;
     firstPullImageTime = progressData.firstPullImageTime;
     pullImageErrMessage = progressData.pullImageErrMessage;
+    postSurveyResponses = progressData.postSurveyResponses;
 
     // hide all possible elements
     document.getElementById("titlePage").style.display = "none";
