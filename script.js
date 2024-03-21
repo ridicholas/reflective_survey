@@ -707,7 +707,14 @@ function showImprovementPlanTutorial() {
 
  async function showImprovementPlanResult() {
   
+  try {
+      postSurveyResponses.reflection1 = getTextareaValue('reflection1');
+      postSurveyResponses.reflection2 = getTextareaValue('reflection2');
+  }
 
+  catch {
+    console.log('couldnt save r1 and r2')
+  }
   postSurveyResponses.reflection1 = getTextareaValue('reflection1');
   postSurveyResponses.reflection2 = getTextareaValue('reflection2');
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
