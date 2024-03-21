@@ -716,6 +716,8 @@ function showImprovementPlanTutorial() {
     console.log('couldnt save r1 and r2')
   }
 
+  saveProgress("improvementPlanResultPage");
+
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
   document.getElementById("postSurveyPage").style.display = "none";
   document.getElementById("taskPages").style.display = "none";
