@@ -706,7 +706,7 @@ function showImprovementPlanTutorial() {
 
   
   if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("We have analyzed your predictions for the first 25 tasks and have generated a description of your decision-making process (based only on your predictions). Please take a moment to review the description of your decision-making process and answer the questions that follow.") == -1) {
-  document.getElementById("improvementPlanResultPage").innerHTML += `<p>We have analyzed your predictions for the first 25 tasks and have generated a description of your decision-making process (based only on your predictions). Please take a moment to review the description of your decision-making process and answer the questions that follow.</p>`}
+  document.getElementById("improvementPlanResultPage").innerHTML += ``}
   await midpointPullReflectionText(unique_id, condition);
 
   if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("Do you believe our description of your decision-making process accurately describes what you found most important when making predictions?") == -1) {
@@ -715,7 +715,7 @@ function showImprovementPlanTutorial() {
 
   if ([3,4,5,6].includes(condition)) {
   if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("Given our own understanding of the task and our understanding of your decision-making process, we are also providing you with a piece of advice that can help you improve your decision-making in the future. Please review the advice and respond to the question that follows.") == -1) {
-      document.getElementById("improvementPlanResultPage").innerHTML += `<p>Given our own understanding of the task and our understanding of your decision-making process, we are also providing you with a piece of advice that can help you improve your decision-making in the future. Please review the advice and respond to the question that follows.</p>`}
+      document.getElementById("improvementPlanResultPage").innerHTML += ``}
     await midpointPullAdviceText(unique_id, condition);
     
   }
