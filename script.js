@@ -787,7 +787,7 @@ const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with 
       }
       
 
-    }
+    
   
   
 
