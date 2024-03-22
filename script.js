@@ -1300,6 +1300,8 @@ function showTask(currentTask) {
   //else {
   //  improvementPlanButton = ``
   //}
+
+  improvementPlanButton = ``
   
   document.getElementById("taskPages").innerHTML = profileInfo + `
     <div class="task">` + attention_check1 + attention_check2 + `
