@@ -1222,8 +1222,8 @@ function showTask(currentTask) {
       <h2><div class="header-tooltip">Completed Flight Details<span class="tooltiptext">Information about the passenger's flight times and distance.</span></div></h2>
 
       <p><div class="tooltip">&#9432Flight Distance: <span class="tooltiptext">The total flight distance in kilometers. (For reference, a flight from New York City to London is 5,567km.) </span><span id="flightDistance"></span> km</div></p>
-      <p><div class="tooltip">&#9432Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> km</div></p>
-      <p><div class="tooltip">&#9432Arrival Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual arrival time.</span><span id="arrivalDelay"></span> km</div></p>
+      <p><div class="tooltip">&#9432Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> </div></p>
+      <p><div class="tooltip">&#9432Arrival Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual arrival time.</span><span id="arrivalDelay"></span> </div></p>
     </div>
 
     <!-- Section 3: Passenger's flight satisfaction survey responses -->
@@ -1395,9 +1395,9 @@ function populateDataFromJSON(currentTask) {
     conceptValues[currentTask-1]['delay'] += 1
   }
 
-  conceptValues[currentTask-1]['reason'] = '0 (Personal/Leisure)'
+  conceptValues[currentTask-1]['reason'] = 'Personal'
   if (taskData['Type of Travel_Business travel'] == 1) {
-    conceptValues[currentTask-1]['reason'] = '1 (Business)'
+    conceptValues[currentTask-1]['reason'] = 'Business'
   }
 
   document.getElementById('cvalue').innerText = conceptValues[currentTask-1]['value'];
