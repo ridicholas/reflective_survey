@@ -694,6 +694,8 @@ function showImprovementPlanTutorial() {
   }
 
 
+
+
   saveProgress("improvementPlanResultPage");
 
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
@@ -769,7 +771,7 @@ function showImprovementPlanTutorial() {
 
   
 }
-const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with a set of key concepts to help you synthesize information presented for each task: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. These concept values will be calculated and presented to you for each task. Concepts are not values that were directly provided by the passenger. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction. The concepts provided have been shown to play an important role in passenger satisfaction according to research. </p>
+const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with a set of key concepts to help you synthesize information presented for each task: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that consist of one or more pieces of information grouped together. These concept values will be calculated and presented to you for each task. Concepts are not values that were directly provided by the passenger. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction. The concepts provided have been shown to play an important role in passenger satisfaction according to research. </p>
 `
 
   function showEvalTaskInstructions() {
