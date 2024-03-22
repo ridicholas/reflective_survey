@@ -1294,12 +1294,12 @@ function showTask(currentTask) {
   else {
     attention_check2 = ``}
   
-  if (condition != 0 && taskType == "eval") {
-    improvementPlanButton = `<button onclick="showImprovementPlanResult()">Show Reflection</button>`
-  }
-  else {
-    improvementPlanButton = ``
-  }
+  //if (condition != 0 && taskType == "eval") {
+  //  improvementPlanButton = `<button onclick="showImprovementPlanResult()">Show Reflection</button>`
+  //}
+  //else {
+  //  improvementPlanButton = ``
+  //}
   
   document.getElementById("taskPages").innerHTML = profileInfo + `
     <div class="task">` + attention_check1 + attention_check2 + `
