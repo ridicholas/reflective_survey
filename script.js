@@ -672,10 +672,10 @@ function showImprovementPlanTutorial() {
   document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the first 25 tasks!</p>
   <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. Before answering the next set of 25 questions, we ask that you take a moment to reflect on your decision-making patterns from the first part of the experiment. To help you reflect, we ask that you type your responses to several reflection questions as though you are 'thinking aloud.'</p>
   
-  <p>Please describe how you made predictions on the first 25 tasks. Which information (features or concepts) about the passenger and their flight did you find to be most influential in your decision-making?</p>
+  <p>Please describe how you made predictions on the first 25 tasks. Which information (features or concepts) about the passenger and their flight did you find to be most influential in your decision-making and how did you use these features/concepts? Is there any information you tended to ignore?</p>
   <textarea name="reflection1" rows="6" cols="50"></textarea></p> 
 
-  <p>Do you think you can do anything differently to improve your decisions for the next set of 25 tasks? What would you try and change about your decision-making process to improve your predictions (if anything)? </p>
+  <p>Do you think you can do anything differently to improve your decisions for the next set of 25 tasks? Why or why not? If so, what would you try and change about your decision-making process to improve your predictions (if anything)? </p>
   <textarea name="reflection2" rows="6" cols="50"></textarea></p> 
   `;
   if (condition == 0) {
@@ -710,7 +710,8 @@ function showImprovementPlanTutorial() {
   await midpointPullReflectionText(unique_id, condition);
 
   if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("Do you believe our description of your decision-making process accurately describes what you found most important when making predictions?") == -1) {
-  document.getElementById("improvementPlanResultPage").innerHTML += `<p>Do you believe our description of your decision-making process accurately describes what you found most important when making predictions? Why or why not?</p>
+  document.getElementById("improvementPlanResultPage").innerHTML += `<p>Do you believe our description of your decision-making process accurately describes what you found most important when making predictions? Please describe your reasoning. What about the description was accurate and why? What about the description was inaccurate and why? 
+</p>
   <textarea name="reflection3" rows="6" cols="50"></textarea></p>`}
 
   if ([3,4,5,6].includes(condition)) {
@@ -721,7 +722,8 @@ function showImprovementPlanTutorial() {
   }
 
   if (document.getElementById("improvementPlanResultPage").innerHTML.indexOf("After spending some more time reflecting on your decision-making process and reading our analysis, do you plan to make any additional changes to your decision-making process for the next 25 tasks? If so, how do you plan to make predictions differently? If not, why not?") == -1) {
-    document.getElementById("improvementPlanResultPage").innerHTML += `<p>After spending some more time reflecting on your decision-making process and reading our analysis, do you plan to make any additional changes to your decision-making process for the next 25 tasks? If so, how do you plan to make predictions differently? If not, why not?</p>
+    document.getElementById("improvementPlanResultPage").innerHTML += `<p>After spending some more time reflecting on your decision-making process and reading our analysis, do you plan to make any additional changes to your decision-making process for the next 25 tasks? If so, how do you plan to make predictions differently? If not, why not?
+</p>
     <textarea name="reflection4" rows="6" cols="50"></textarea></p>`}
 
 
@@ -769,7 +771,7 @@ function showImprovementPlanTutorial() {
 
   
 }
-const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with a set of key concepts to help you synthesize information presented for each task: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. These concept values will be calculated and presented to you for each task. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction. The concepts provided have been shown to play an important role in passenger satisfaction according to research. </p>
+const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with a set of key concepts to help you synthesize information presented for each task: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. These concept values will be calculated and presented to you for each task. Concepts are not values that were directly provided by the passenger. When solving this task, think about how the concept ratings can be used to predict the airline passenger's overall flight satisfaction. The concepts provided have been shown to play an important role in passenger satisfaction according to research. </p>
 `
 
   function showEvalTaskInstructions() {
@@ -1044,21 +1046,17 @@ function showPostSurvey() {
 
   
 
-  if (condition != 0) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the moment of reflection page you viewed after you completed the first part of the experiment. To view that page again, click the button below.</p>
-    <button onclick="showImprovementPlanResult()">Show Reflection</button>`
+  if ([0, 1, 2, 3, 4, 5, 6].includes(condition)) {
 
+    document.getElementById("postSurveyPage").innerHTML += `<p>The following questions relate to the moment of reflection page you viewed after you completed the first part of the experiment.</p>`
+    
 
-    document.getElementById("postSurveyPage").innerHTML += `<p>How did you interpret the plot shown to you?</p>
-    <textarea name="interpretation" rows="4" cols="50"></textarea>
-
-    <p>To what extent do you feel the bar chart captures important aspects of your decision making behavior over the first 25 tasks?</p>
-    <textarea name="captures" rows="4" cols="50"></textarea>`
-  }
-
-  if ([3, 4, 5, 6].includes(condition)) {
-    document.getElementById("postSurveyPage").innerHTML += `<p>Did you try using the guidance arrows and text to improve your decisions? If so, how? If not, why?</p>
+    document.getElementById("postSurveyPage").innerHTML += `<p>During the moment of reflection, were you able to reflect on your predictions from the first part of the study? What impact, if any, did this moment of reflection have on your decision-making?</p>
     <textarea name="improvement" rows="4" cols="50"></textarea>}`}
+
+
+    
+
 
   document.getElementById("postSurveyPage").innerHTML += `<p>How would you describe your experience with this survey in general?</p>
     <textarea name="general" rows="4" cols="50"></textarea>`
@@ -1532,12 +1530,9 @@ function finishSurvey() {
       postSurveyResponses.flights = getRadioValue('flights');
       postSurveyResponses.difference = getTextareaValue('difference');
       postSurveyResponses.general = getTextareaValue('general');
-      if (condition != 0) {
-        postSurveyResponses.interpretation = getTextareaValue('interpretation');
-        postSurveyResponses.captures = getTextareaValue('captures');
-      }
+      
 
-      if ([3,4,5,6].includes(condition)) {
+      if ([0, 1,2, 3,4,5,6].includes(condition)) {
         postSurveyResponses.improvement = getTextareaValue('improvement');
       }
       
