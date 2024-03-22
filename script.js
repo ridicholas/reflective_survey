@@ -531,6 +531,7 @@ function saveProgress(currentPage) {
   };
 
   localStorage.setItem("participantProgress", JSON.stringify(progressData));
+  current_element = currentPage;
 }
 
 function loadProgress() {
