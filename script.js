@@ -687,14 +687,11 @@ function showImprovementPlanTutorial() {
 
  async function showImprovementPlanResult() {
   
-  try {
+  if (current_element == "improvementPlanTutorialPage") {
       postSurveyResponses.reflection1 = getTextareaValue('reflection1');
       postSurveyResponses.reflection2 = getTextareaValue('reflection2');
   }
 
-  catch {
-    console.log('couldnt save r1 and r2')
-  }
 
   saveProgress("improvementPlanResultPage");
 
@@ -776,20 +773,25 @@ const concept_introduction = `<p><b>Key Concepts:</b></p><p>We provide you with 
 
   function showEvalTaskInstructions() {
 
-  if ([0].includes(condition)) {
-      postSurveyResponses.reflection1 = getTextareaValue('reflection1');
-      postSurveyResponses.reflection2 = getTextareaValue('reflection2');
-  } else {
-    if ([1, 2, 3, 4, 5, 6].includes(condition)) {
-      postSurveyResponses.reflection3 = getTextareaValue('reflection3');
+  if (current_element == "improvementPlanTutorialPage") {
 
-      if ([3,4,5,6].includes(condition)) {
-        postSurveyResponses.reflection4 = getTextareaValue('reflection4');
+      
+    postSurveyResponses.reflection1 = getTextareaValue('reflection1');
+    postSurveyResponses.reflection2 = getTextareaValue('reflection2');
+  } 
+
+  if (current_element == "improvementPlanResultPage") {
+    
+      postSurveyResponses.reflection3 = getTextareaValue('reflection3');
+      postSurveyResponses.reflection4 = getTextareaValue('reflection4');
       }
       
 
     }
-  }
+  
+  
+
+
 
   document.getElementById("improvementPlanResultPage").style.display = "none";
   document.getElementById("improvementPlanTutorialPage").style.display = "none";
