@@ -1560,7 +1560,7 @@ function finishSurvey() {
     };
 
     function redirect() {
-      window.location.replace("https://connect.cloudresearch.com/participant/project/acb3e3f16b4a439d9bbf999688fc3515/complete");
+      window.location.replace("https://connect.cloudresearch.com/participant/project/09d4ce93bb3946c7aeef3ca8bf9c81ee/complete");
     }
 
     // Function to get the value of the selected radio button
