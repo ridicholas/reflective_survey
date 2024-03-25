@@ -1210,7 +1210,7 @@ function showTask(currentTask) {
   <div class="container">
     <!-- Section 1: Passenger's basic flight information -->
     <div class="section1">
-      <h2><div class="header-tooltip">Passenger Ticket Information<span class="tooltiptext">Basic information about the passenger's ticket and demographics.</span></div>
+      <h2><div class="header-tooltip">&#9432Passenger Ticket Information<span class="tooltiptext">Basic information about the passenger's ticket and demographics.</span></div>
       </h2>
 
       <p><div class="tooltip">&#9432Age: <span class="tooltiptext">The passenger's age.</span><span id="age"></span></div></p>
@@ -1224,7 +1224,7 @@ function showTask(currentTask) {
     <!-- Section 2: Information related to the completed flight -->
     <div class="section2">
       
-      <h2><div class="header-tooltip">Completed Flight Details<span class="tooltiptext">Information about the passenger's flight times and distance.</span></div></h2>
+      <h2><div class="header-tooltip">&#9432Completed Flight Details<span class="tooltiptext">Information about the passenger's flight times and distance.</span></div></h2>
 
       <p><div class="tooltip">&#9432Flight Distance: <span class="tooltiptext">The total flight distance in kilometers. (For reference, a flight from New York City to London is 5,567km.) </span><span id="flightDistance"></span> km</div></p>
       <p><div class="tooltip">&#9432Departure Delay (Minutes): <span class="tooltiptext">The difference in number of minutes between the scheduled and actual departure time.</span><span id="departureDelay"></span> </div></p>
@@ -1257,7 +1257,7 @@ function showTask(currentTask) {
   <!-- Section 4: Key Concept Values-->
     <div class="section4">
       
-      <h2><div class="header-tooltip">Key Concept Values<span class="tooltiptext">We provide you with a set of key concepts to help you synthesize information above: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. The concepts below are shown to play an important role in passenger satisfaction according to research. </span></div></h2>
+      <h2><div class="header-tooltip">&#9432Key Concept Values<span class="tooltiptext">We provide you with a set of key concepts to help you synthesize information above: passenger status, in-flight experience, delays, and reason for travel. By concepts, we mean higher-level ideas that information or a set of different information represent as a group. The concepts below are shown to play an important role in passenger satisfaction according to research. </span></div></h2>
 
 
       <p><div class="tooltip">&#9432Passenger Status: <span class="tooltiptext">Passenger status means the status that passengers hold in airline passenger management, which indicates the service quality that the airline provides. Higher value indicates higher status. This concept uses the passenger class and customer loyalty. A disloyal passenger in economy class gets a status rating of 1. If a passenger is loyal, +2 is added to their rating. If a passenger is in Economy Plus, +1 is added to their value rating. If a passenger is in Business Class, +2 is added to their value rating.</span><span id="cvalue"></span></div></p>
