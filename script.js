@@ -1008,7 +1008,7 @@ function showPostSurvey() {
     <input type="radio" name="education" value="Doctorate or higher"> Doctorate or higher
     <input type="radio" name="education" value="I don't wish to answer"> I don't wish to answer
 
-    <p>3. What is your gender?</p>
+    <p>What is your gender?</p>
     <input type="radio" name="gender" value="Male"> Male
     <input type="radio" name="gender" value="Female"> Female
     <input type="radio" name="gender" value="Non-Binary"> Non-Binary
