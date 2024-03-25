@@ -1057,7 +1057,7 @@ function showPostSurvey() {
     
 
     document.getElementById("postSurveyPage").innerHTML += `<p>During the moment of reflection, were you able to reflect on your predictions from the first part of the study? What impact, if any, did this moment of reflection have on your decision-making?</p>
-    <textarea name="improvement" rows="4" cols="50"></textarea>}`
+    <textarea name="improvement" rows="4" cols="50"></textarea>`
 
 
     
