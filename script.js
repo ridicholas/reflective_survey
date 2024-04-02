@@ -469,13 +469,14 @@ var project_id = urlParams.get('projectId');
 var firstPullImageTime = Date.now();
 var pullImageErrMessage = "";
 
-urlParams['type'] = 'pilot3'
+urlParams['type'] = 'stageNullPilot'
 urlParams['completed'] = false
 urlParams['bonus'] = 0
 urlParams['commitFail'] = false
 urlParams['participantID'] = unique_id
 urlParams['assignmentId'] = assignment_id
 urlParams['projectId'] = project_id
+
 
 
 
@@ -507,6 +508,7 @@ var atPostSurvey = false;
 var conceptValues = {};
 var pullTimeDiff = 0;
 urlParams['condition'] = condition
+urlParams['sub_condition'] = sub_condition
 
 function saveProgress(currentPage) {
   const progressData = {
