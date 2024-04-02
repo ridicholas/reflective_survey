@@ -355,12 +355,12 @@ function pullTasks(id, condition) {
       var numItems = 50;
       
       
-      while (indices.length < numItems) {
-        const randomIndex = Math.floor(Math.random() * totalItems);
-        if (!indices.includes(randomIndex)) {
-          indices.push(randomIndex);
-        }
-      }
+      //while (indices.length < numItems) {
+      //  const randomIndex = Math.floor(Math.random() * totalItems);
+      //  if (!indices.includes(randomIndex)) {
+      //    indices.push(randomIndex);
+      //  }
+      //}
       
       var i = 0;
       indices.forEach(index => {
@@ -446,7 +446,6 @@ var quizResponses = {};
 var timesTriedToPullImage = 0;
 var selectedTasks = {};
 var trainingTaskResponses = {};
-var indices = [];
 var taskDataJSON = {};
 var respDataJSON = {};
 var temp_respDataJSON = {};
@@ -491,7 +490,17 @@ var totalTrainingTasks = 25;
 var totalEvalTasks = 25;
 var taskNum = 1;
 var conditions = [2, 4, 6]
-var condition = 4 //conditions[Math.floor(Math.random() * conditions.length)];
+var condition = 0 //conditions[Math.floor(Math.random() * conditions.length)];
+var array = [1,2]
+var task1indices = shuffle([9, 205, 29, 181, 10, 206, 186, 94, 230, 81, 244, 294, 19, 56, 95, 272, 242, 70, 45, 263, 256, 281, 193, 161, 214])
+var task2indices = shuffle([209, 158, 51, 208, 219, 266, 22, 76, 215, 79, 99, 68, 126, 221, 146, 129, 125, 173, 83, 216, 234, 34, 13, 114, 108])
+var sub_condition = array[Math.floor(Math.random() * array.length)];
+if (sub_condition == 1) {
+  var indices = task1indices.concat(task2indices);
+}
+else {
+  var indices = task2indices.concat(task1indices);
+}
 var atPostSurvey = false;
 var conceptValues = {};
 var pullTimeDiff = 0;
@@ -670,19 +679,19 @@ function showImprovementPlanTutorial() {
   document.getElementById("improvementPlanTutorialPage").style.display = "block";
   saveProgress("improvementPlanTutorialPage");
   if (document.getElementById("improvementPlanTutorialPage").innerHTML.indexOf("Thank you for completing the first 25 tasks!") == -1) {
-  document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the first 25 tasks!</p>
-  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. Before answering the next set of 25 questions, we ask that you take a moment to reflect on your decision-making patterns from the first part of the experiment. To help you reflect, we ask that you type your responses to several reflection questions as though you are 'thinking aloud.'</p>
+  document.getElementById("improvementPlanTutorialPage").innerHTML += ` <p>Thank you for completing the tasks!</p>
+  <p> You correctly answered ${corrs} out of 25 questions, earning you a bonus of ${bonus.toFixed(2)}$. Before completing this survey, we ask that you take a moment to reflect on your decision-making patterns from the first part of the experiment. To help you reflect, we ask that you type your responses to several reflection questions as though you are 'thinking aloud.'</p>
   
-  <p>Please describe how you made predictions on the first 25 tasks. Which information (features or concepts) about the passenger and their flight did you find to be most influential in your decision-making and how did you use these features/concepts? Is there any information you tended to ignore?</p>
+  <p>Please describe how you made predictions on the tasks. Which information (features or concepts) about the passenger and their flight did you find to be most influential in your decision-making and how did you use these features/concepts? Is there any information you tended to ignore?</p>
   <textarea name="reflection1" rows="6" cols="50"></textarea></p> 
 
-  <p>Do you think you can do anything differently to improve your decisions for the next set of 25 tasks? Why or why not? If so, what would you try and change about your decision-making process to improve your predictions (if anything)? </p>
+  <p>Do you think you can do anything differently to improve your decisions if you had to solve more airline passenger prediction tasks? Why or why not? If so, what would you try and change about your decision-making process to improve your predictions (if anything)? </p>
   <textarea name="reflection2" rows="6" cols="50"></textarea></p> 
   `;
   if (condition == 0) {
-    document.getElementById("improvementPlanTutorialPage").innerHTML += ` <button onclick="showEvalTaskInstructions()">Next</button>`
+    document.getElementById("improvementPlanTutorialPage").innerHTML += ` <button onclick="finishSurveyQuick()">Next</button>`
   } else {
-    document.getElementById("improvementPlanTutorialPage").innerHTML += `<button onclick="showImprovementPlanResult()">Next</button>`
+    document.getElementById("improvementPlanTutorialPage").innerHTML += `<button onclick="finishSurveyQuick()">Next</button>`
   } }
 }
 
@@ -1523,6 +1532,19 @@ function showAttentionFailPage() {
   saveProgress("attentionFailPage");
 }
 
+
+function finishSurveyQuick() {
+      postSurveyResponses.reflection1 = getTextareaValue('reflection1');
+      postSurveyResponses.reflection2 = getTextareaValue('reflection2');
+      postSurveyPush(unique_id, condition);
+      timesPush(unique_id, condition);
+
+      // Hide the survey and show the thank you page
+      document.getElementById('improvementPlanTutorialPage').style.display = 'none';
+      document.getElementById('thankYou').style.display = 'block';
+
+
+}
 // Add event listener to the form submission
 function finishSurvey() {
       times['experimentTime'] = Date.now() - experimentStartTime;
@@ -1590,5 +1612,21 @@ function finishSurvey() {
   
       return total / count;
   }
+
+  function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
 
 
