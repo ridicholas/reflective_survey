@@ -492,8 +492,10 @@ var taskNum = 1;
 var conditions = [2, 4, 6]
 var condition = 0 //conditions[Math.floor(Math.random() * conditions.length)];
 var array = [1,2]
-var task1indices = shuffle([9, 205, 29, 181, 10, 206, 186, 94, 230, 81, 244, 294, 19, 56, 95, 272, 242, 70, 45, 263, 256, 281, 193, 161, 214])
-var task2indices = shuffle([209, 158, 51, 208, 219, 266, 22, 76, 215, 79, 99, 68, 126, 221, 146, 129, 125, 173, 83, 216, 234, 34, 13, 114, 108])
+var task1indices = [9, 205, 29, 181, 10, 206, 186, 94, 230, 81, 244, 294, 19, 56, 95, 272, 242, 70, 45, 263, 256, 281, 193, 161, 214]
+var task2indices = [209, 158, 51, 208, 219, 266, 22, 76, 215, 79, 99, 68, 126, 221, 146, 129, 125, 173, 83, 216, 234, 34, 13, 114, 108]
+shuffle(task1indices)
+shuffle(task2indices)
 var sub_condition = array[Math.floor(Math.random() * array.length)];
 if (sub_condition == 1) {
   var indices = task1indices.concat(task2indices);
