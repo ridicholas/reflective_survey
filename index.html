@@ -11,7 +11,7 @@
     <h1 id="unique"></h1>
     <p>This HIT is part of a scientific research project conducted by the University of Texas. Your decision to complete this HIT is voluntary, and your responses are anonymous. The results of the research may be presented at scientific meetings, published in scientific journals, or made publicly available to other researchers. Clicking on the 'Accept' button on the bottom of the page indicates that you are at least 18 years of age, you are able to read and write comfortably in English, and you agree to complete the HIT voluntarily.<p>
 
-    <p>You will be shown a series of airline passenger profiles and survey responses and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight along with other possible questions. You will use information about the passenger's trip (travel class, reason for travel, etc.) and the passenger's survey responses on how they felt about various components of the flight to make your prediction decision.
+    <p>You will be shown a series of airline passenger profiles and survey responses and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight along with other possible questions. You will use information about the passenger's trip (travel class, reason for travel, etc.) and the passenger's survey responses on how they felt about various components of the flight to make your prediction decision. This prediction task is broken up into two stages. You will complete half of the tasks in the first stage. You will then be provided with additional information not available to you in the first stage. You will then be asked to make predictions for the remaining tasks.
 </p>
     <button onclick="showConsentPage()">Accept</button>
   </div>
@@ -24,7 +24,7 @@
 
 <p>NOTE: This is an initial pilot version of the study. If you run into any technical issues while taking this study, even if they do not prevent you from completing the study, please reach out to the main researcher (contact info below), this will help us ensure that the study platform works as intended. Thank you!</p>
 <p><b>Procedures:</b><br>
-If you choose to be in the study, you will be asked to complete a series of tasks. The experiment should take around 10-15 minutes to complete.
+If you choose to be in the study, you will be asked to complete a series of tasks. The experiment should take around 35-45 minutes to complete.
 </p>
 <p><b>Confidentiality:</b><br>
 Your Mechanical Turk Worker ID will be used to distribute the payment to you, but we will not store your worker ID with your survey responses. Please be aware that your MTurk Workers ID can potentially be linked to information about you on your Amazon Public Profile page, however we will not access any personally identifying information from your Amazon Public Profile. Additionally, your MTurk worker IDs will NOT be shared with anyone. 
@@ -33,10 +33,10 @@ Your Mechanical Turk Worker ID will be used to distribute the payment to you, bu
 This is a study about identifying which factors and concepts related to airline travel can be used to predict airline passenger satisfaction. The goal is to accurately predict whether airline passengers would be satisfied with their journeys given information about their specific flight experiences. 
 </p>
 <p><b>What we will ask you to do:</b><br>
-You will be introduced via a tutorial to the airline passenger satisfaction prediction task. The tutorial will describe the prediction goal and all factors/features that will be available to you with definitions. After the tutorial you will be asked to answer a series of questions about the content in the tutorial page to confirm you understood the tutorial. You will then move on to the prediction task during which you will be shown a series of passenger profiles and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight. The passenger's ultimate (dis)satisfaction with their flight has a ground truth response that was provided by the passenger but will not be revealed to you. Therefore, there is a correct answer for each task that you will be predicting. 
+This study will be divided into several components. First, you will then be introduced via a tutorial to the airline passenger satisfaction prediction task. The tutorial will describe the prediction goal and all factors/features that will be available to you with definitions. After the tutorial you will be asked to answer a series of questions about the content in the tutorial page to confirm you understood the tutorial. You will then move on to the prediction task during which you will be shown a series of passenger profiles and asked to predict whether the passenger was ultimately satisfied or dissatisfied with their flight. The passenger's ultimate (dis)satisfaction with their flight has a ground truth response that was provided by the passenger but will not be revealed to you. Therefore, there is a correct answer for each task that you will be predicting. After the first round of questions, you will have a short break and will be provided with information on how you did over the first set of questions. You will then be asked to answer another set of questions, just like in the previous round. Finally, you will be asked to answer some more demographic and survey style questions describing your experience with the experiment. 
 </p>
 <p><b>Costs/Payments:</b><br>
-This study will pay a base of $2.50 for completion of the study and should not take more than 15 minutes to complete. You will also be provided with additional incentive compensation dependent on how many prediction tasks you answer correctly, at a rate of $0.05 per correct task answer. There are 25 tasks eligible for the additional incentive bonus, so you can receive a maximum additional incentive compensation of $1.25. You must complete the experiment in its entirety to be eligible for payment. MTurk worker IDs will be collected for the purposes of distributing compensation. 
+This study will pay a base of $7.50 for completion of the study and should not take more than 45 minutes to complete. You will also be provided with additional incentive compensation dependent on how many prediction tasks you answer correctly, at a rate of $0.05 per correct task answer. There are 50 tasks eligible for the additional incentive bonus, so you can receive a maximum additional incentive compensation of $2.50. You must complete the experiment in its entirety to be eligible for payment. MTurk worker IDs will be collected for the purposes of distributing compensation. 
 </p>
 <p><b>PLEASE NOTE: This study contains a number of attention checks to make sure that participants are finishing the tasks honestly and completely. As long as you read the instructions and complete the tasks in good faith, your HIT will be approved. If you fail the attention checks, your HIT will be rejected. </b></p>
 <p><b>Disclaimer: </b><br>
@@ -86,7 +86,7 @@ The main researcher conducting this study is Nicholas Wolczynski, a researcher a
   </div>
 
   <div id="trainingTaskInstructionsPageFirst" class="page">
-    <h1>Task Instructions</h1>
+    <h1>Part 1 Task Instructions</h1>
     <p><b>Task instruction:</b> You will be shown a series of airline passenger satisfaction survey responses filled out by passengers after their flight. Each passenger rated their satisfaction of various flight experiences .  Basic passenger information such as their age, the class they flew in, their airline loyalty status, the amount of time they flew, and whether they experienced delays on the flight is also presented.  Synthesizing this information, your task is to predict how the passenger responded to the question: "How satisfied were you with the flight overall?" Note that around 43% of passenger's responded that they were satisfied with their flight experience.
       Your goal is to predict the passenger's satisfaction as accurately as possible. We have passengers' answers to the satisfaction question, which we will use to calculate your task accuracy. For each passenger that you correctly predicted you will earn an additional $0.05. 
        </p>
@@ -95,7 +95,7 @@ The main researcher conducting this study is Nicholas Wolczynski, a researcher a
 
 
   <div id="trainingTaskInstructionsPagePassed" class="page">
-    <h1>Task Instructions</h1>
+    <h1>Part 1 Task Instructions</h1>
 
     <p>Great job! You succesfully answered all comprehension questions correctly, and can now begin making predictions. Below you will again find the task instructions for your convenience. Additionally, once you begin making predictions, you will be able to navigate back to the instructions page at any time.</p>
     <p><b>Task instruction:</b> You will be shown a series of airline passenger satisfaction survey responses filled out by passengers after their flight. Each passenger rated their satisfaction of various flight experiences.  Basic passenger information such as their age, the class they flew in, their airline loyalty status, the amount of time they flew, and whether they experienced delays on the flight is also presented.  Synthesizing this information, your task is to predict how the passenger responded to the question: "How satisfied were you with the flight overall?" Note that around 43% of passenger's responded that they were satisfied with their flight experience.
